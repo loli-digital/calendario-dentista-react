@@ -26,7 +26,6 @@ function Reviews() {
           768: { slidesPerView: 2 },
           1024: { slidesPerView: 3 }
         }}
-        className='w-full h-[450px]'
       >
         {reviews.map((review) => (
           <SwiperSlide key={review.id}>
