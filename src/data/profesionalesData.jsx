@@ -24,7 +24,7 @@ const profesionales = [
     numColegiado: 'ODONTÓLOGO col. 1234',
     especializacion1: 'Medicina bucal',
     especializacion2: 'Cirugía oral',
-    especializacion3: 'Implantología',
+    especializacion3: 'Estética dental',
     estudios: 'Valencia',
     experiencia: '12'
   }

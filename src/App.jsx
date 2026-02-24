@@ -5,10 +5,7 @@ import Footer from './components/Footer';
 
 import { Routes, Route } from 'react-router-dom';
 import MisCitas from './pages/MisCitas';
-
-//import MisCitas from './pages/MisCitas';
-//import ReservaCita from './pages/ReservaCita';
-
+import ReservarCita from './pages/ReservarCita';
 
 function App() {
 
@@ -18,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/mis-citas" element={<MisCitas />} />
-        {/*<Route path="/reserva" element={<ReservaCita />} />*/}
+        <Route path="/reserva" element={<ReservarCita />} />
       </Routes>
       <Footer />
     </>
