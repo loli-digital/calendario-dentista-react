@@ -1,65 +1,35 @@
-const servicios = [
+const serviciosCita = [
 
     {
         id: 1,
-        imagenAVIF: new URL('../assets/img/cerrar-dentista-ayudando-al-paciente.avif', import.meta.url).href,
-        imagenWEBP: new URL('../assets/img/cerrar-dentista-ayudando-al-paciente.webp', import.meta.url).href,
-        imagen: new URL('../assets/img/cerrar-dentista-ayudando-al-paciente.jpg', import.meta.url).href,
-        alt: 'Dentista realizando limpieza bucal con instrumentos',
-        icono: 'M240 24c0-13.3 10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 56 56 0c13.3 0 24 10.7 24 24l0 48c0 13.3-10.7 24-24 24l-56 0 0 56c0 13.3-10.7 24-24 24l-48 0c-13.3 0-24-10.7-24-24l0-56-56 0c-13.3 0-24-10.7-24-24l0-48c0-13.3 10.7-24 24-24l56 0 0-56zM66.7 384l42.5-42.5c24-24 56.6-37.5 90.5-37.5L352 304c17.7 0 32 14.3 32 32s-14.3 32-32 32l-72 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l112.6 0 119.7-88.2c17.8-13.1 42.8-9.3 55.9 8.5s9.3 42.8-8.5 55.9L433.1 485.5c-23.4 17.2-51.6 26.5-80.7 26.5L32 512c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l34.7 0z',
-        titulo: 'Limpieza',
-        descripcion: 'Eliminación de placa y sarro para mantener dientes y encías sanas, previniendo caries y enfermedades periodontales',
+        nombre: 'Limpieza',
+        profesionalId: [1, 2]
     },
     {
         id: 2,
-        imagenAVIF: new URL('../assets/img/dentista-examinando-una-paciente-con-herramientas.avif', import.meta.url).href,
-        imagenWEBP: new URL('../assets/img/dentista-examinando-una-paciente-con-herramientas.webp', import.meta.url).href,
-        imagen: new URL('../assets/img/dentista-examinando-una-paciente-con-herramientas.jpg', import.meta.url).href,
-        alt: 'Dentista examinando a una paciente con herramientas',
-        icono: 'M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376C296.3 401.1 253.9 416 208 416 93.1 416 0 322.9 0 208S93.1 0 208 0 416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z',
-        titulo: 'Revisión',
-        descripcion: 'Evaluación completa de la salud bucal, detección temprana de problemas y planificación de tratamientos personalizados',
+        nombre: 'Revisión',
+        profesionalId: [1, 2]
     },
     {
         id: 3,
-        imagenAVIF: new URL('../assets/img/disparo-de-dientes-de-nino-con-tirantes.avif', import.meta.url).href,
-        imagenWEBP: new URL('../assets/img/disparo-de-dientes-de-nino-con-tirantes.webp', import.meta.url).href,
-        imagen: new URL('../assets/img/disparo-de-dientes-de-nino-con-tirantes.jpg', import.meta.url).href,
-        alt: 'Persona sonriendo con brackets en los dientes',
-        icono: 'M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM144 208l0 24c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-24c0-26.5-21.5-48-48-48s-48 21.5-48 48zm128 0l0 24c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-24c0-26.5-21.5-48-48-48s-48 21.5-48 48zM80 176c-17.7 0-32 14.3-32 32l0 24c0 13.3 10.7 24 24 24l16 0c13.3 0 24-10.7 24-24l0-24c0-17.7-14.3-32-32-32zm320 32l0 24c0 13.3 10.7 24 24 24l16 0c13.3 0 24-10.7 24-24l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32zM48 336c0 17.7 14.3 32 32 32s32-14.3 32-32l0-16c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16l0 16zm144 48c26.5 0 48-21.5 48-48l0-16c0-8.8-7.2-16-16-16l-64 0c-8.8 0-16 7.2-16 16l0 16c0 26.5 21.5 48 48 48zm128 0c26.5 0 48-21.5 48-48l0-16c0-8.8-7.2-16-16-16l-64 0c-8.8 0-16 7.2-16 16l0 16c0 26.5 21.5 48 48 48zm112-16c17.7 0 32-14.3 32-32l0-16c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16l0 16c0 17.7 14.3 32 32 32z',
-        titulo: 'Ortodoncia',
-        descripcion: 'Corrección de la posición dental y mandibular mediante brackets o alineadores, mejorando estética y funcionalidad',
+        nombre: 'Ortodoncia',
+        profesionalId: [1, 2]
     },
     {
         id: 4,
-        imagenAVIF: new URL('../assets/img/dentista-revisando-un-hombre-adulto-medio-con-luz-ultravioleta-en-una-clinica-dental.avif', import.meta.url).href,
-        imagenWEBP: new URL('../assets/img/dentista-revisando-un-hombre-adulto-medio-con-luz-ultravioleta-en-una-clinica-dental.webp', import.meta.url).href,
-        imagen: new URL('../assets/img/dentista-revisando-un-hombre-adulto-medio-con-luz-ultravioleta-en-una-clinica-dental.jpg', import.meta.url).href,
-        alt: 'Dentista realizando un blanqueamiento dental a un paciente',
-        icono: 'M309.5-18.9c-4.1-8-12.4-13.1-21.4-13.1s-17.3 5.1-21.4 13.1L193.1 125.3 33.2 150.7c-8.9 1.4-16.3 7.7-19.1 16.3s-.5 18 5.8 24.4l114.4 114.5-25.2 159.9c-1.4 8.9 2.3 17.9 9.6 23.2s16.9 6.1 25 2L288.1 417.6 432.4 491c8 4.1 17.7 3.3 25-2s11-14.2 9.6-23.2L441.7 305.9 556.1 191.4c6.4-6.4 8.6-15.8 5.8-24.4s-10.1-14.9-19.1-16.3L383 125.3 309.5-18.9z',
-        titulo: 'Estética dental',
-        descripcion: 'Mejora de la apariencia de la sonrisa con blanqueamientos, carillas y técnicas mínimamente invasivas',
+        nombre: 'Estética dental',
+        profesionalId: [2]
     },
     {
         id: 5,
-        imagenAVIF: new URL('../assets/img/paciente-nino-en-dentista.avif', import.meta.url).href,
-        imagenWEBP: new URL('../assets/img/paciente-nino-en-dentista.webp', import.meta.url).href,
-        imagen: new URL('../assets/img/paciente-nino-en-dentista.jpg', import.meta.url).href,
-        alt: 'Niño sentado en la silla médica sonriendo',
-        icono: 'M256 64a64 64 0 1 0 -128 0 64 64 0 1 0 128 0zM152.9 169.3c-23.7-8.4-44.5-24.3-58.8-45.8L74.6 94.2C64.8 79.5 45 75.6 30.3 85.4S11.6 115 21.4 129.8L40.9 159c18.1 27.1 42.8 48.4 71.1 62.4L112 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96 32 0 0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-258.4c29.1-14.2 54.4-36.2 72.7-64.2l18.2-27.9c9.6-14.8 5.4-34.6-9.4-44.3s-34.6-5.5-44.3 9.4L291 122.4c-21.8 33.4-58.9 53.6-98.8 53.6-12.6 0-24.9-2-36.6-5.8-.9-.3-1.8-.7-2.7-.9z',
-        titulo: 'Odontopediatría',
-        descripcion: 'Atención especializada para niños, enfocada en prevención, tratamientos adaptados y educación en higiene oral',
+        nombre: 'Odontopediatría',
+        profesionalId: [1, 2]
     },
     {
         id: 6,
-        imagenAVIF: new URL('../assets/img/un-primer-plano-de-los-instrumentos-dentales.avif', import.meta.url).href,
-        imagenWEBP: new URL('../assets/img/un-primer-plano-de-los-instrumentos-dentales.webp', import.meta.url).href,
-        imagen: new URL('../assets/img/un-primer-plano-de-los-instrumentos-dentales.jpg', import.meta.url).href,
-        alt: 'Instrumentos dentales',
-        icono: 'M145 5.7L224 32 303 5.7C314.3 1.9 326 0 337.9 0 398.7 0 448 49.3 448 110.1l0 68.5c0 29.4-9.5 58.1-27.2 81.6l-1.1 1.5c-12.9 17.2-21.3 37.4-24.3 58.7L373.7 471.9c-3.3 23-23 40.1-46.2 40.1-22.8 0-42.3-16.5-46-39L261.3 351.6c-3-18.2-18.8-31.6-37.3-31.6s-34.2 13.4-37.3 31.6L166.5 473c-3.8 22.5-23.2 39-46 39-23.2 0-42.9-17.1-46.2-40.1L52.6 320.5c-3-21.3-11.4-41.5-24.3-58.7l-1.1-1.5C9.5 236.7 0 208.1 0 178.7l0-68.5C0 49.3 49.3 0 110.1 0 122 0 133.7 1.9 145 5.7z',
-        titulo: 'Prótesis',
-        descripcion: 'Reemplazo de piezas dentales ausentes con soluciones fijas o removibles, recuperando función y estética',
+        nombre: 'Prótesis',
+        profesionalId: [1]
     }
 ];
 
-export default servicios;
+export default serviciosCita;

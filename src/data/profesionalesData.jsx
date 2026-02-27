@@ -12,7 +12,8 @@ const profesionales = [
     especializacion2: 'Cirugía oral',
     especializacion3: 'Implantología',
     estudios: 'Valencia',
-    experiencia: '10'
+    experiencia: '10',
+    servicios: [1, 2, 3, 5, 6]
   },
   {
     id: '2',
@@ -26,7 +27,8 @@ const profesionales = [
     especializacion2: 'Cirugía oral',
     especializacion3: 'Estética dental',
     estudios: 'Valencia',
-    experiencia: '12'
+    experiencia: '12',
+    servicios: [1, 2, 3, 4, 5]
   }
 ];
 

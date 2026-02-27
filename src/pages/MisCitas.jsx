@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 
 function MisCitas() {
 
+  const citas = JSON.parse(localStorage.getItem("citas")) || [];
+  const [telefonoBusqueda, setTelefonoBusqueda] = useState('');
+  const citasUsuario = citas.filter(c => c.telefono === telefonoBusqueda);
+
   return (
 
     <section className='w-full min-h-screen py-10 px-5'>
@@ -9,12 +13,12 @@ function MisCitas() {
       <h2 className='py-10 text-cyan-800 text-center text-4xl font-bold'>Mis citas</h2>
 
       <div className="max-w-3xl mx-auto pt-5 flex flex-col justify-center items-center gap-20">
-        {/* Aquí iría la lista de citas */}
-        <p className="text-center text-gray-600">
-          Todavía no tienes citas reservadas.
-        </p>
+        
+        {/* Citas */}
+        
+        
 
-        {/* Botón escritorio */}
+        {/* Botón "Reservar cita" */}
         <div className=''>
           <Link
             to='/reserva'

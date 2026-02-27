@@ -124,3 +124,79 @@ section .swiper-button-next {
         display: flex;
     }
 }
+
+/*Estilos input formulario*/
+
+select,
+::picker(select) {
+  appearance: base-select;
+  border: none;
+  border: 2px solid oklch(52% 0.105 223.128);
+}
+
+::picker(select) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+select::picker-icon {
+    padding-right: 10px;
+    color: oklch(52% 0.105 223.128);
+}
+
+option::checkmark {
+    padding-left: 10px;
+}
+
+option:last-child {
+    border-bottom: 1px solid oklch(52% 0.105 223.128);
+}
+
+option:hover {
+    background-color: oklch(60.9% 0.126 221.723);
+    color: #fff;
+}
+
+option:focus {
+    background-color: oklch(52% 0.105 223.128);
+    color: #fff;
+}
+
+/*Estilos react datepicker*/
+
+.react-datepicker__header {
+    background-color: oklch(52% 0.105 223.128) !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__navigation,
+.react-datepicker-time__header {
+    color: #fff !important;
+}
+
+.react-datepicker__time-list-item {
+    line-height: 20px;
+}
+
+.react-datepicker__day:hover,
+.react-datepicker__time-list-item:hover {
+    background-color: oklch(60.9% 0.126 221.723) !important;
+    color: #fff;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__time-list-item--selected {
+    background-color: oklch(52% 0.105 223.128) !important;
+    color: #fff;
+    font-weight: bold;
+}
+
+.react-datepicker__calendar-icon {
+    fill: oklch(52% 0.105 223.128) !important;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled {
+    display: none;
+}

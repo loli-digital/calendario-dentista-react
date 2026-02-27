@@ -1,5 +1,5 @@
 import ServiciosCard from './ServiciosCard';
-import servicios from '../data/serviciosData';
+import servicios from '../data/serviciosCardData';
 
 
 function Servicios() {
