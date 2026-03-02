@@ -5,7 +5,7 @@ function Profesionales() {
 
   return (
 
-    <section class='w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center'>
+    <section class='w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center bg-cyan-50'>
 
       <h2 class='py-10 text-cyan-800 text-center text-4xl font-bold'>PROFESIONALES</h2>
 

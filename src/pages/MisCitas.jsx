@@ -8,7 +8,7 @@ function MisCitas() {
 
   return (
 
-    <section className='w-full min-h-screen py-10 px-5'>
+    <section className='w-full min-h-screen py-10 px-5 bg-cyan-50'>
 
       <h2 className='py-10 text-cyan-800 text-center text-4xl font-bold'>Mis citas</h2>
 

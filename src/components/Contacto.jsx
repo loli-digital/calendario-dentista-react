@@ -4,7 +4,7 @@ function Contacto() {
 
   return (
 
-    <section className='w-full'>
+    <section className='w-full bg-cyan-50'>
 
       <h2 className='py-10 text-cyan-800 text-center text-4xl font-bold'>CONTACTO</h2>
 

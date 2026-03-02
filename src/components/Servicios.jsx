@@ -6,7 +6,7 @@ function Servicios() {
 
   return (
 
-    <section className='w-full min-h-screen px-5 py-16 relative flex flex-col justify-center items-center gap-10 bg-white'>
+    <section className='w-full min-h-screen px-5 py-16 relative flex flex-col justify-center items-center gap-10 bg-cyan-50'>
 
       {/* Forma para detrás de las cards */}
 

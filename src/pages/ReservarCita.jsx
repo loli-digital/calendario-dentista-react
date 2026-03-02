@@ -84,7 +84,7 @@ function ReservarCita() {
 
   return (
 
-    <section className='w-full min-h-dvh py-10 px-5 relative flex flex-col justify-center items-center gap-10 bg-white'>
+    <section className='w-full min-h-dvh py-10 px-5 relative flex flex-col justify-center items-center gap-10 bg-cyan-50'>
 
       {/* Forma para detrás de las cards */}
 
