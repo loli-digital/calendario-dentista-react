@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../App.css';
 import profesionales from '../data/profesionalesData';
 import serviciosCita from '../data/serviciosData';
+import { Link } from 'react-router-dom';
 
 // Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
@@ -23,7 +24,7 @@ function ReservarCita() {
 
   const filtrarHorasPasadas = (time) => {
     const ahora = new Date();
-    const fechaSeleccionada = fecha; // Tu estado 'fecha'
+    const fechaSeleccionada = fecha;
 
     if (fechaSeleccionada.toDateString() === ahora.toDateString()) {
       return ahora.getTime() < time.getTime();
@@ -83,7 +84,7 @@ function ReservarCita() {
 
   return (
 
-    <section className='w-full min-h-dvh py-10 px-5 relative flex flex-col justify-center items-center gap-10 bg-cyan-50'>
+    <section className='w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center bg-cyan-50'>
 
       {/* Forma para detrás de las cards */}
 
@@ -97,17 +98,21 @@ function ReservarCita() {
 
       <h2 className='relative py-10 text-cyan-800 text-center text-4xl font-bold'>Reservar cita</h2>
 
+
       {/* Mensaje de confirmación de cita */}
       {mensaje && (
-        <div className='w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-600 text-green-700 p-4 rounded shadow-md'>
+
+        <div className='w-full lg:w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-600 text-green-700 p-4 rounded shadow-md'>
           <h3 className='font-bold text-lg mb-2'>Cita reservada correctamente</h3>
+
           <p><strong>Nombre y apellido/s:</strong> {mensaje.nombre} {mensaje.apellido}</p>
           <p><strong>Teléfono:</strong> {mensaje.telefono}</p>
           <p><strong>Servicio:</strong> {mensaje.servicio}</p>
           <p><strong>Profesional:</strong> {mensaje.profesional}</p>
           <p><strong>Día:</strong> {mensaje.fecha}</p>
           <p><strong>Hora:</strong> {mensaje.hora}</p>
-          <p>Para acceder a sus citas, haga click en el menú de navegación en <b>Mis Citas</b> e introduzca su número de teléfono para verla.</p>
+          <p>Para acceder a sus citas, haga click en <span className='font-bold underline underline-offset-2'><Link to='/mis-citas' >Mis citas</Link></span> e introduzca su número de teléfono.</p>
+          
         </div>
 
       )}
@@ -115,13 +120,17 @@ function ReservarCita() {
       {/* Formulario */}
       {!mensaje && (
 
-        <form onSubmit={manejarSubmit} className='w-96 lg:w-xl mx-auto py-10 relative flex flex-col justify-center gap-6'>
+        <div>
 
-          <div className='lg:w-full lg:mb-10 lg:flex lg:flex-row lg:justify-center lg:gap-10'>
+        <p className='relative pb-10 text-cyan-800 text-center text-lg font-medium'>Para pedir cita, rellene todos los campos</p>
+
+        <form onSubmit={manejarSubmit} className='w-[350px] lg:w-xl mx-auto relative flex flex-col justify-center lg:space-y-10'>
+
+          <div className='w-full flex flex-col lg:flex-row justify-center gap-5 lg:gap-10'>
 
             <div className='w-full flex flex-col gap-5'>
 
-              <label htmlFor='nombre' className='font-medium'>Nombre<span className='text-red-700' aria-label='required'>*</span></label>
+              <label htmlFor='nombre' className='font-medium text-cyan-800'>Nombre</label>
               <input
                 id='nombre'
                 type='text'
@@ -137,7 +146,7 @@ function ReservarCita() {
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
-              <label htmlFor='apellido' className='font-medium'>Apellido/s<span className='text-red-700' aria-label='required'>*</span></label>
+              <label htmlFor='apellido' className='font-medium text-cyan-800'>Apellido/s</label>
               <input
                 id='apellido'
                 type='text'
@@ -152,7 +161,7 @@ function ReservarCita() {
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
-              <label htmlFor='telefono' className='font-medium'>Teléfono<span className='text-red-700' aria-label='required'>*</span></label>
+              <label htmlFor='telefono' className='font-medium text-cyan-800'>Teléfono</label>
               <input
                 id='telefono'
                 type='tel'
@@ -170,7 +179,7 @@ function ReservarCita() {
             <div className='w-full flex flex-col gap-5'>
 
               {/* Servicio */}
-              <label htmlFor='servicio' className='font-medium'>Servicio<span className='text-red-700' aria-label='required'>*</span></label>
+              <label htmlFor='servicio' className='font-medium text-cyan-800'>Servicio</label>
               <select
                 id='servicio'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white'
@@ -188,7 +197,7 @@ function ReservarCita() {
               </select>
 
               {/* Profesional */}
-              <label htmlFor='profesional' className='font-medium'>Profesional<span className='text-red-700' aria-label='required'>*</span></label>
+              <label htmlFor='profesional' className='font-medium text-cyan-800'>Profesional</label>
               <select
                 id='profesional'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white'
@@ -207,7 +216,7 @@ function ReservarCita() {
               </select>
 
               {/* Calendario */}
-              <label htmlFor='fecha-hora' className='font-medium'>Selecciona el día<span className='text-red-700' aria-label='required'>*</span></label>
+              <label htmlFor='fecha-hora' className='font-medium text-cyan-800'>Selecciona el día</label>
               <DatePicker
                 id='fecha-hora'
                 showIcon
@@ -235,6 +244,9 @@ function ReservarCita() {
           <input type='submit' value='Confirmar cita' className='w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600' />
 
         </form>
+
+        </div>
+
 
       )}
 

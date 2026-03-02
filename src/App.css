@@ -127,6 +127,16 @@ section .swiper-button-next {
 
 /*Estilos input formulario*/
 
+input:focus {
+    border: 2px solid oklch(30.152% 0.0565 230.191);
+    background-color: oklch(98.412% 0.01893 201.193);
+}
+
+input[type=submit]:focus {
+    border: none;
+    background-color: oklch(52% 0.105 223.128);
+}
+
 select,
 ::picker(select) {
     appearance: base-select;
