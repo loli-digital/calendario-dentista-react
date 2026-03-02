@@ -164,11 +164,6 @@ option:focus {
     color: #fff;
 }
 
-input:invalid {
-    border: 2px solid red;
-}
-
-
 /*Estilos react datepicker*/
 
 .react-datepicker__header {

@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../App.css';
 import profesionales from '../data/profesionalesData';
 import serviciosCita from '../data/serviciosData';
-import { Link } from 'react-router-dom';
 
 // Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
@@ -19,7 +18,7 @@ function ReservarCita() {
   const [telefono, setTelefono] = useState('');
   const [servicio, setServicio] = useState('');
   const [profesional, setProfesional] = useState('');
-  const [fecha, setFecha] = useState(setHours(setMinutes(new Date(), 0), 9));
+  const [fecha, setFecha] = useState(new Date());
   const [mensaje, setMensaje] = useState('');
 
   const filtrarHorasPasadas = (time) => {
@@ -116,11 +115,11 @@ function ReservarCita() {
       {/* Formulario */}
       {!mensaje && (
 
-        <form onSubmit={manejarSubmit} className='w-xl mx-auto py-10 relative flex flex-col justify-center gap-6'>
+        <form onSubmit={manejarSubmit} className='w-96 lg:w-xl mx-auto py-10 relative flex flex-col justify-center gap-6'>
 
           <div className='lg:w-full lg:mb-10 lg:flex lg:flex-row lg:justify-center lg:gap-10'>
 
-            <div className='w-full lg:flex lg:flex-col lg:gap-5'>
+            <div className='w-full flex flex-col gap-5'>
 
               <label htmlFor='nombre' className='font-medium'>Nombre<span className='text-red-700' aria-label='required'>*</span></label>
               <input
@@ -131,7 +130,10 @@ function ReservarCita() {
                 onChange={(e) => setNombre(e.target.value)}
                 placeholder='Introduce tu nombre'
                 required
-                pattern='[A-Za-z]+{3,40}'
+                autoFocus
+                minLength='3'
+                maxLength='40'
+                pattern='[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+'
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
@@ -144,7 +146,9 @@ function ReservarCita() {
                 onChange={(e) => setApellido(e.target.value)}
                 placeholder='Introduce tu/s apellido/s'
                 required
-                pattern='[A-Za-z]+{3,40}'
+                minlength='3'
+                maxlength='40'
+                pattern='[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+'
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
@@ -163,7 +167,7 @@ function ReservarCita() {
 
             </div>
 
-            <div className='w-full lg:flex lg:flex-col lg:gap-5'>
+            <div className='w-full flex flex-col gap-5'>
 
               {/* Servicio */}
               <label htmlFor='servicio' className='font-medium'>Servicio<span className='text-red-700' aria-label='required'>*</span></label>
@@ -219,8 +223,8 @@ function ReservarCita() {
                 timeFormat='HH:mm'
                 timeCaption='Hora'
                 filterTime={filtrarHorasPasadas}
-                filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}
                 // 6 es sábado y 0 es domingo
+                filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}
                 className='w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white'
               />
 
@@ -233,7 +237,6 @@ function ReservarCita() {
         </form>
 
       )}
-
 
     </section>
   );
