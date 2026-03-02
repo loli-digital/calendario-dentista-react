@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { setHours, setMinutes } from "date-fns";
+import { setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../App.css';
 import profesionales from '../data/profesionalesData';
 import serviciosCita from '../data/serviciosData';
 import { Link } from 'react-router-dom';
 
-// Registra el locale "es" para el calendario en España
+// Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
 
 function ReservarCita() {
@@ -56,11 +56,11 @@ function ReservarCita() {
       hora: fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    const citasGuardadas = JSON.parse(localStorage.getItem("citas")) || [];
+    const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
 
     citasGuardadas.push(nuevaCita);
 
-    localStorage.setItem("citas", JSON.stringify(citasGuardadas));
+    localStorage.setItem('citas', JSON.stringify(citasGuardadas));
 
     // Muestra el mensaje de confirmación de cita
     setMensaje({
@@ -69,7 +69,7 @@ function ReservarCita() {
       telefono,
       servicio: servicioSeleccionado.nombre,
       profesional: profesionalSeleccionado.nombre,
-      fecha: fecha.toLocaleDateString("es-ES"),
+      fecha: fecha.toLocaleDateString('es-ES'),
       hora: nuevaCita.hora
     });
 
@@ -100,15 +100,15 @@ function ReservarCita() {
 
       {/* Mensaje de confirmación de cita */}
       {mensaje && (
-        <div className="w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-600 text-green-700 p-4 rounded shadow-md">
-          <h3 className="font-bold text-lg mb-2">Cita reservada correctamente</h3>
-          <p><strong>Nombre:</strong> {mensaje.nombre} {mensaje.apellido}</p>
+        <div className='w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-600 text-green-700 p-4 rounded shadow-md'>
+          <h3 className='font-bold text-lg mb-2'>Cita reservada correctamente</h3>
+          <p><strong>Nombre y apellido/s:</strong> {mensaje.nombre} {mensaje.apellido}</p>
           <p><strong>Teléfono:</strong> {mensaje.telefono}</p>
           <p><strong>Servicio:</strong> {mensaje.servicio}</p>
           <p><strong>Profesional:</strong> {mensaje.profesional}</p>
           <p><strong>Día:</strong> {mensaje.fecha}</p>
           <p><strong>Hora:</strong> {mensaje.hora}</p>
-          <p>Para acceder a sus citas, haga click en el menú de navegación en "Mis Citas" e introduzca su número de teléfono para verla.</p>
+          <p>Para acceder a sus citas, haga click en el menú de navegación en <b>Mis Citas</b> e introduzca su número de teléfono para verla.</p>
         </div>
 
       )}
@@ -122,34 +122,43 @@ function ReservarCita() {
 
             <div className='w-full lg:flex lg:flex-col lg:gap-5'>
 
-              <label htmlFor='nombre' className='font-medium'>Nombre<span className='text-red-700'>*</span></label>
+              <label htmlFor='nombre' className='font-medium'>Nombre<span className='text-red-700' aria-label='required'>*</span></label>
               <input
                 id='nombre'
-                type="text"
+                type='text'
+                name='nombre'
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 placeholder='Introduce tu nombre'
                 required
+                pattern='[A-Za-z]+{3,40}'
+                title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
-              <label htmlFor='apellido' className='font-medium'>Apellido/s<span className='text-red-700'>*</span></label>
+              <label htmlFor='apellido' className='font-medium'>Apellido/s<span className='text-red-700' aria-label='required'>*</span></label>
               <input
                 id='apellido'
-                type="text"
+                type='text'
+                name='apellido'
                 value={apellido}
                 onChange={(e) => setApellido(e.target.value)}
                 placeholder='Introduce tu/s apellido/s'
                 required
+                pattern='[A-Za-z]+{3,40}'
+                title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
-              <label htmlFor='telefono' className='font-medium'>Teléfono<span className='text-red-700'>*</span></label>
+              <label htmlFor='telefono' className='font-medium'>Teléfono<span className='text-red-700' aria-label='required'>*</span></label>
               <input
                 id='telefono'
                 type='tel'
+                name='telefono'
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
                 placeholder='Introduce tu teléfono móvil'
                 required
+                pattern='[0-9]{9}'
+                title='Escribe un teléfono de 9 dígitos'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
             </div>
@@ -157,7 +166,7 @@ function ReservarCita() {
             <div className='w-full lg:flex lg:flex-col lg:gap-5'>
 
               {/* Servicio */}
-              <label htmlFor='servicio' className='font-medium'>Servicio<span className='text-red-700'>*</span></label>
+              <label htmlFor='servicio' className='font-medium'>Servicio<span className='text-red-700' aria-label='required'>*</span></label>
               <select
                 id='servicio'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white'
@@ -175,7 +184,7 @@ function ReservarCita() {
               </select>
 
               {/* Profesional */}
-              <label htmlFor='profesional' className='font-medium'>Profesional<span className='text-red-700'>*</span></label>
+              <label htmlFor='profesional' className='font-medium'>Profesional<span className='text-red-700' aria-label='required'>*</span></label>
               <select
                 id='profesional'
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white'
@@ -194,7 +203,7 @@ function ReservarCita() {
               </select>
 
               {/* Calendario */}
-              <label htmlFor='fecha-hora' className='font-medium'>Selecciona el día<span className='text-red-700'>*</span></label>
+              <label htmlFor='fecha-hora' className='font-medium'>Selecciona el día<span className='text-red-700' aria-label='required'>*</span></label>
               <DatePicker
                 id='fecha-hora'
                 showIcon
@@ -219,7 +228,7 @@ function ReservarCita() {
 
           </div>
 
-          <input type="submit" value="Confirmar cita" className='w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600' />
+          <input type='submit' value='Confirmar cita' className='w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600' />
 
         </form>
 

@@ -129,9 +129,9 @@ section .swiper-button-next {
 
 select,
 ::picker(select) {
-  appearance: base-select;
-  border: none;
-  border: 2px solid oklch(52% 0.105 223.128);
+    appearance: base-select;
+    border: none;
+    border: 2px solid oklch(52% 0.105 223.128);
 }
 
 ::picker(select) {
@@ -163,6 +163,11 @@ option:focus {
     background-color: oklch(52% 0.105 223.128);
     color: #fff;
 }
+
+input:invalid {
+    border: 2px solid red;
+}
+
 
 /*Estilos react datepicker*/
 
