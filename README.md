@@ -4,6 +4,10 @@ Este proyecto trata sobre una clínica dental ficticia desarrollada en **React 1
 
 La web tiene componentes donde se muestra la información de los servicios, profesionales, CTA, reseñas, contacto, menú de navegación y footer.
 
+Puedes verla aquí: 
+<br />
+[Proyecto Clínica Dental](https://calendario-dentista-react.pages.dev/)
+
 ## Características principales
 
 - Reserva de citas con validación completa  
@@ -39,9 +43,7 @@ Aquí se encuentran los datos de:
 En esta carpeta se encuentran las páginas de *Home*, *MisCitas* y *ReservarCita*
 
 - Home: se muestran los componentes hero-section, servicios, CTA, profesionales, reviews y contacto.
-
 - Mis citas: se muestra una pantalla para escribir el número de teléfono que se ha registrado para pedir cita.
-
 - Reservar cita: se muestra un formulario en el que hay que introducir los datos para pedir cita.
 
 
@@ -115,6 +117,14 @@ Se muestra la cita reservada, que se puede eliminar.
 <br />
 
 ![Ver cita reservada](mostrar-cita-reservada.png)
+
+## Diseño
+
+La web se ha diseñado en Tailwind v4.2 y se ha creado un skeleton para las páginas: *Home*, *Mis Citas* y *Reservar Cita*.
+
+Puedes verla aquí: 
+<br />
+[Proyecto Clínica Dental](https://calendario-dentista-react.pages.dev/)
 
 ## Bibliografía
 
