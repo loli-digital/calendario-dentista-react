@@ -5,11 +5,11 @@ function Profesionales() {
 
   return (
 
-    <section class='w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center bg-cyan-50'>
+    <section className='w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center bg-cyan-50'>
 
-      <h2 class='py-10 text-cyan-800 text-center text-4xl font-bold'>PROFESIONALES</h2>
+      <h2 className='py-10 text-cyan-800 text-center text-4xl font-bold'>PROFESIONALES</h2>
 
-      <div class='px-5 flex flex-wrap md:flex-nowrap justify-center items-center gap-10'>
+      <div className='px-5 flex flex-wrap md:flex-nowrap justify-center items-center gap-10'>
 
        {profesionales.map(profesional => (
           <ProfesionalesCard
