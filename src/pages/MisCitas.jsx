@@ -72,7 +72,7 @@ function MisCitas() {
       <div className='max-w-3xl mx-auto relative flex flex-col justify-center items-center gap-20'>
 
         {/* Formulario búsqueda de cita */}
-        <form onSubmit={buscarCitas} className='w-60 flex flex-col gap-10 justify-center items-center'>
+        <form onSubmit={buscarCitas} className='w-60 lg:w-96 flex flex-col gap-10 justify-center items-center'>
 
           <label htmlFor='telefono' className='text-lg font-semibold text-cyan-800'>Introduce tu teléfono móvil:</label>
           <input
@@ -98,13 +98,13 @@ function MisCitas() {
 
         {/* Lista de citas */}
         {citasPaciente.length > 0 && (
-          <div className='w-full max-w-xl flex flex-col gap-6'>
+          <div className='w-86 lg:w-xl flex flex-col gap-6'>
             {citasPaciente.map((cita) => (
               <div
                 key={cita.id}
                 className='bg-white text-cyan-700 border-2 border-cyan-700 rounded p-4 shadow'
               >
-                <p><strong>Nombre y apellido/s:</strong> {cita.nombre} {cita.apellido}</p>
+                <p className='wrap-anywhere'><strong>Nombre y apellido/s:</strong> {cita.nombre} {cita.apellido}</p>
                 <p><strong>Teléfono:</strong> {cita.telefono}</p>
                 <p><strong>Servicio:</strong> {cita.servicio}</p>
                 <p><strong>Profesional:</strong> {cita.profesional}</p>

@@ -136,14 +136,14 @@ function ReservarCita() {
                 type='text'
                 name='nombre'
                 value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
                 placeholder='Introduce tu nombre'
-                required
-                autoFocus
-                minLength='3'
-                maxLength='40'
+                minLength={3}
+                maxLength={40}
                 pattern='[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+'
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
+                autoFocus
+                required
+                onChange={(e) => setNombre(e.target.value)}
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
               <label htmlFor='apellido' className='font-medium text-cyan-800'>Apellido/s</label>
@@ -152,13 +152,13 @@ function ReservarCita() {
                 type='text'
                 name='apellido'
                 value={apellido}
-                onChange={(e) => setApellido(e.target.value)}
                 placeholder='Introduce tu/s apellido/s'
                 required
-                minlength='3'
-                maxlength='40'
+                minLength={3}
+                maxLength={40}
                 pattern='[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+'
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
+                onChange={(e) => setApellido(e.target.value)}
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
               <label htmlFor='telefono' className='font-medium text-cyan-800'>Teléfono</label>
@@ -246,7 +246,6 @@ function ReservarCita() {
         </form>
 
         </div>
-
 
       )}
 
