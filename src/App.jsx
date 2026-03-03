@@ -1,12 +1,19 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
 import Footer from './components/Footer';
 
 import { Routes, Route } from 'react-router-dom';
-import MisCitas from './pages/MisCitas';
-import ReservarCita from './pages/ReservarCita';
 import "react-datepicker/dist/react-datepicker.css";
+
+import { lazy, Suspense } from 'react';
+import HomeSkeleton from './components/HomeSkeleton';
+import MisCitasSkeleton from './components/MisCitasSkeleton';
+import ReservarCitaSkeleton from './components/ReservarCitaSkeleton';
+
+const Home = lazy(() => import('./pages/Home'));
+const MisCitas = lazy(() => import('./pages/MisCitas'));
+const ReservarCita = lazy(() => import('./pages/ReservarCita'));
+
 
 function App() {
 
@@ -14,9 +21,21 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/mis-citas" element={<MisCitas />} />
-        <Route path="/reserva" element={<ReservarCita />} />
+        <Route path="/" element={
+          <Suspense fallback={<HomeSkeleton />}>
+            <Home />
+          </Suspense>
+      } />
+        <Route path="/mis-citas" element={
+          <Suspense fallback={<MisCitasSkeleton />}>
+            <MisCitas />
+          </Suspense>
+      } />
+        <Route path="/reserva" element={
+          <Suspense fallback={<ReservarCitaSkeleton />}>
+            <ReservarCita />
+          </Suspense>
+      } />
       </Routes>
       <Footer />
     </>
