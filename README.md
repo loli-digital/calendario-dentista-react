@@ -39,11 +39,11 @@ Aquí se encuentran los datos de:
 En esta carpeta se encuentran las páginas de *Home*, *MisCitas* y *ReservarCita*
 
 - Home: se muestran los componentes hero-section, servicios, CTA, profesionales, reviews y contacto.
-![Página Home](home.png)
+
 - Mis citas: se muestra una pantalla para escribir el número de teléfono que se ha registrado para pedir cita.
-![Página Mis Citas](mis-citas.png)
+
 - Reservar cita: se muestra un formulario en el que hay que introducir los datos para pedir cita.
-![Página Reservar Cita](reservar-cita.png)
+
 
 ## Tecnologías
 
@@ -102,12 +102,18 @@ Para el calendario que aparece en el formulario, se ha usado **React DatePicker*
 
 ![Página Reservar Cita](reservar-cita.png)
 <br />
+Se muestra la confirmación de la cita reservada
+<br />
+
 ![Página con la cita reservada](cita-reservada.png)
 
 ### Mis Citas
 
 ![Página Mis Citas](mis-citas.png)
 <br />
+Se muestra la cita reservada, que se puede eliminar.
+<br />
+
 ![Ver cita reservada](mostrar-cita-reservada.png)
 
 ## Bibliografía
