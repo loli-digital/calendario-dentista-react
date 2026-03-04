@@ -9,8 +9,8 @@ function ServiciosCard({imagenAVIF, imagenWEBP, imagen, alt, icono, titulo, desc
       <picture>
         <source srcSet={ imagenAVIF } type='image/avif' />
         <source srcSet={ imagenWEBP } type='image/webp' />
-        <img loading='lazy' src={ imagen }
-          alt={ alt } className='w-full h-full rounded-t-lg' />
+        <img fetchPriority='high' src={ imagen }
+          alt={ alt } className='w-72 h-48 rounded-t-lg' />
       </picture>
 
       <div className='p-4 pb-5 relative border-b-2 border-x-2 border-cyan-800 rounded-b-lg bg-white'>

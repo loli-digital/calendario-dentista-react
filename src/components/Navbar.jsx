@@ -16,8 +16,9 @@ function Navbar() {
         <Link to='/'>
           <img
             src={logo}
+            fetchPriority='high'
             alt='Logo Clínica Dental Navarro'
-            className='w-20 h-auto cursor-pointer lg:w-30'
+            className='w-20 xl:w-30 h-auto xl:h-20 cursor-pointer'
           />
         </Link>
       </div>
