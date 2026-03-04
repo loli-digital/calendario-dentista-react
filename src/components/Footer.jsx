@@ -13,7 +13,7 @@ function Footer() {
 
         { /* Logo */}
         <div className='w-30 xl:w-40'>
-          <img src={logo} loading='lazy' alt='Logo Clínica Dental Navarro' className='w-30 xl:w-40 h-auto xl:h-30' />
+          <img src={logo} loading='lazy' alt='Logo Clínica Dental Navarro' className='w-30 xl:w-40 h-auto object-contain' />
         </div>
 
         { /* Dirección */}

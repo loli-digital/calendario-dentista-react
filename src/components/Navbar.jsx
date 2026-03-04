@@ -18,7 +18,7 @@ function Navbar() {
             src={logo}
             fetchPriority='high'
             alt='Logo Clínica Dental Navarro'
-            className='w-20 xl:w-30 h-auto xl:h-20 cursor-pointer'
+            className='w-20 xl:w-30 h-auto cursor-pointer object-contain'
           />
         </Link>
       </div>
