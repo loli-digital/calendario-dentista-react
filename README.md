@@ -126,6 +126,16 @@ Puedes verla aquí:
 <br />
 [Proyecto Clínica Dental](https://calendario-dentista-react.pages.dev/)
 
+## Google PageSpeed Insights
+
+Desktop
+![Resultados Desktop](gpsi-desktop.png)
+
+Móvil
+
+![Resultados móvil](gpsi-movil.png)
+
+
 ## Bibliografía
 
 - [React](https://es.react.dev/)
