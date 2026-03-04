@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import mujerSonriendo from '../assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.png';
+import mujerSonriendoAVIF from '../assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.avif';
+import mujerSonriendoWEBP from '../assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.webp';
 
 function HeroSection() {
 
@@ -8,14 +10,18 @@ function HeroSection() {
     <div className='w-full h-96 lg:h-[90dvh] relative flex flex-nowrap justify-center md:justify-between items-center bg-cyan-100 overflow-hidden'>
 
       {/* Imagen de la mujer */}
-      <div className='slide-in-bottom absolute inset-0 z-20 pointer-events-none opacity-0 md:opacity-100'>
+      <picture className='hidden md:block slide-in-bottom absolute inset-0 z-20 pointer-events-none'>
+
+        <source srcSet={mujerSonriendoAVIF} type="image/avif" />
+        <source srcSet={mujerSonriendoWEBP} type="image/webp" />
         <img
           src={mujerSonriendo}
           alt='Mujer sonriendo'
           fetchPriority='high'
           className='w-full h-full object-contain object-[90%_top] drop-shadow-[0_0_5px] drop-shadow-cyan-950'
         />
-      </div>
+
+      </picture>
 
       {/* Forma detrás de la imagen */}
       <div className='w-96 lg:w-xl xl:w-2xl absolute top-0 md:right-8 lg:right-0 xl:right-8 z-10 opacity-10 md:opacity-100 pointer-events-none'>
@@ -37,9 +43,9 @@ function HeroSection() {
           Reserva tu cita
         </Link>
       </div>
+
     </div>
   );
-
 }
 
 export default HeroSection;
