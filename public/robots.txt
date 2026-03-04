@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://calendario-dentista-react.pages.dev/sitemap.xml

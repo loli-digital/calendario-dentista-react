@@ -25,6 +25,7 @@ function Navbar() {
       {/* Botón menú móvil */}
       <button
         onClick={toggleMenu}
+        aria-label='Abrir menú de navegación'
         className='text-white text-3xl md:hidden focus:outline-none z-50'
       >
         {isMenuOpen ? (

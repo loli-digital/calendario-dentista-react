@@ -20,23 +20,25 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={
-          <Suspense fallback={<HomeSkeleton />}>
-            <Home />
-          </Suspense>
-      } />
-        <Route path="/mis-citas" element={
-          <Suspense fallback={<MisCitasSkeleton />}>
-            <MisCitas />
-          </Suspense>
-      } />
-        <Route path="/reserva" element={
-          <Suspense fallback={<ReservarCitaSkeleton />}>
-            <ReservarCita />
-          </Suspense>
-      } />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={
+            <Suspense fallback={<HomeSkeleton />}>
+              <Home />
+            </Suspense>
+          } />
+          <Route path="/mis-citas" element={
+            <Suspense fallback={<MisCitasSkeleton />}>
+              <MisCitas />
+            </Suspense>
+          } />
+          <Route path="/reserva" element={
+            <Suspense fallback={<ReservarCitaSkeleton />}>
+              <ReservarCita />
+            </Suspense>
+          } />
+        </Routes>
+      </main>
       <Footer />
     </>
   );
