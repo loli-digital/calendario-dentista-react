@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
+import mujerSonriendo from '../assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.png';
 
 function HeroSection() {
 
@@ -8,7 +8,13 @@ function HeroSection() {
     <div className='w-full h-96 lg:h-[90dvh] relative flex flex-nowrap justify-center md:justify-between items-center bg-cyan-100 overflow-hidden'>
 
       {/* Imagen de la mujer */}
-      <div className='slide-in-bottom absolute inset-0 bg-[url("./assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.png")] bg-no-repeat bg-position-[90%_top] bg-contain z-20 pointer-events-none drop-shadow-[0_0_5px] drop-shadow-cyan-950 opacity-0 md:opacity-100'>
+      <div className='slide-in-bottom absolute inset-0 z-20 pointer-events-none opacity-0 md:opacity-100'>
+        <img
+          src={mujerSonriendo}
+          alt='Mujer sonriendo'
+          fetchPriority='high'
+          className='w-full h-full object-contain object-[90%_top] drop-shadow-[0_0_5px] drop-shadow-cyan-950'
+        />
       </div>
 
       {/* Forma detrás de la imagen */}

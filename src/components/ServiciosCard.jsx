@@ -10,7 +10,7 @@ function ServiciosCard({imagenAVIF, imagenWEBP, imagen, alt, icono, titulo, desc
         <source srcSet={ imagenAVIF } type='image/avif' />
         <source srcSet={ imagenWEBP } type='image/webp' />
         <img loading='lazy' src={ imagen }
-          alt={ alt } className='rounded-t-lg' />
+          alt={ alt } className='w-full h-full rounded-t-lg' />
       </picture>
 
       <div className='p-4 pb-5 relative border-b-2 border-x-2 border-cyan-800 rounded-b-lg bg-white'>
