@@ -4,37 +4,54 @@ function MisCitas() {
 
   const [telefonoBusqueda, setTelefonoBusqueda] = useState('');
   const [citasPaciente, setCitasPaciente] = useState([]);
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const buscarCitas = (e) => {
 
     e.preventDefault();
 
-    const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
+    setLoading(true);
+    setError(null);
+    setCitasPaciente([]);
 
-    if (citasGuardadas.length === 0) {
-      setError('Todavía no se ha reservado una cita');
-      setCitasPaciente([]);
-      return;
+    try {
+
+      const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
+
+      //Si no hay citas citas citasGuardadas (empty state)
+
+      if (citasGuardadas.length === 0) {
+        setError('Todavía no se ha reservado ninguna cita');
+        return;
+      }
+
+      const citasFiltradas = citasGuardadas
+        .filter((cita) => cita.telefono === telefonoBusqueda)
+        .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+      //Si el teléfono registrado no tiene citas (empty state)
+
+      if (citasFiltradas.length === 0) {
+        setError('No se han encontrado citas con ese número de teléfono');
+        return;
+      }
+
+      setCitasPaciente(citasFiltradas);
+
+    } catch (err) {
+
+      setError('Ocurrió un problema al obtener las citas');
+
+    } finally {
+
+      setLoading(false);
     }
 
-    const filtradas = citasGuardadas.filter(
-      (cita) => cita.telefono === telefonoBusqueda
-    );
-
-    if (filtradas.length === 0) {
-      setError('No se han encontrado citas con ese número de teléfono.');
-      setCitasPaciente([]);
-      return;
-    }
-
-    filtradas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-
-    setError('');
-    setCitasPaciente(filtradas);
   };
 
   const eliminarCita = (id) => {
+
     const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
 
     // Filtrar fuera la cita eliminada
@@ -45,11 +62,12 @@ function MisCitas() {
 
     // Actualizar la lista mostrada
     const nuevasCitasPaciente = citasPaciente.filter((cita) => cita.id !== id);
+
     setCitasPaciente(nuevasCitasPaciente);
 
     // Si ya no quedan citas para ese teléfono
     if (nuevasCitasPaciente.length === 0) {
-      setError('Ya no tienes más citas reservadas');
+      setError('No tienes más citas reservadas');
     }
   };
 
@@ -91,12 +109,17 @@ function MisCitas() {
 
         </form>
 
+        {/* Mensaje de loading */}
+        {loading && (
+          <p className='text-cyan-800'>Buscando citas...</p>
+        )}
+
         {/* Mensaje de error */}
-        {error && (
+        {error && !loading && (
           <p>{error}</p>
         )}
 
-        {/* Lista de citas */}
+        {/* Lista de citas (success state) */}
         {citasPaciente.length > 0 && (
           <div className='w-full max-w-xl flex flex-col gap-6'>
             {citasPaciente.map((cita) => (
@@ -122,8 +145,6 @@ function MisCitas() {
             ))}
           </div>
         )}
-
-
 
       </div>
 
