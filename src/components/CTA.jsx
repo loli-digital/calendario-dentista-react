@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 function CTA() {
 
@@ -12,10 +13,12 @@ function CTA() {
         <h2 className="text-3xl text-center text-cyan-50 font-bold px-5 sm:px-0">Tratamientos personalizados para resultados duraderos</h2>
 
         {/* Botón para reservar cita */}
-        <a routerLink="/reserva"
-          className="bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600">
+        <Link
+          to='/reserva'
+          className='bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50'
+        >
           Reserva cita ya
-        </a>
+        </Link>
       </div>
     </section>
 

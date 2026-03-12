@@ -16,8 +16,9 @@ function Navbar() {
         <Link to='/'>
           <img
             src={logo}
+            fetchPriority='high'
             alt='Logo Clínica Dental Navarro'
-            className='w-20 h-auto cursor-pointer lg:w-30'
+            className='w-20 xl:w-30 h-auto cursor-pointer object-contain'
           />
         </Link>
       </div>
@@ -25,6 +26,7 @@ function Navbar() {
       {/* Botón menú móvil */}
       <button
         onClick={toggleMenu}
+        aria-label='Abrir menú de navegación'
         className='text-white text-3xl md:hidden focus:outline-none z-50'
       >
         {isMenuOpen ? (
