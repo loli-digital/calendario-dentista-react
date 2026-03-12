@@ -10,7 +10,7 @@ function ProfesionalCard({ imagenAVIF, imagenWEBP, imagen, alt, nombre, numColeg
         <source srcSet={imagenAVIF} type='image/avif' />
         <source srcSet={imagenWEBP} type='image/webp' />
         <img loading='lazy' src={imagen}
-          alt={alt} className='w-full drop-shadow-[0px_0px_7px] drop-shadow-cyan-950 transition-all duration-150 ease-in-out hover:scale-105' />
+          alt={alt} className='w-full h-full drop-shadow-[0px_0px_7px] drop-shadow-cyan-950 transition-all duration-150 ease-in-out hover:scale-105' />
       </picture>
 
       <div className='w-full px-8 py-4 relative border-2 border-cyan-800 rounded-lg bg-white transition-all duration-200 ease-in-out shadow-[0_0_10px] shadow-cyan-950 hover:shadow-[0_0_20px]'>
