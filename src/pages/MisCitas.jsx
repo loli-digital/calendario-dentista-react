@@ -6,34 +6,41 @@ function MisCitas() {
   const [citasPaciente, setCitasPaciente] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
 
   const buscarCitas = (e) => {
 
     e.preventDefault();
 
+    // Validación del teléfono
+    if (!/^\d{9}$/.test(telefonoBusqueda)) {
+      setMensaje('El teléfono introducido debe tener 9 dígitos');
+      setCitasPaciente([]);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
     setLoading(true);
     setError(null);
+    setMensaje(null);
     setCitasPaciente([]);
 
     try {
 
       const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
 
-      //Si no hay citas citas citasGuardadas (empty state)
-
-      if (citasGuardadas.length === 0) {
-        setError('Todavía no se ha reservado ninguna cita');
-        return;
-      }
-
       const citasFiltradas = citasGuardadas
         .filter((cita) => cita.telefono === telefonoBusqueda)
         .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
-      //Si el teléfono registrado no tiene citas (empty state)
+      //Si no existen citas guardadas o el teléfono registrado no tiene citas (empty state)
 
       if (citasFiltradas.length === 0) {
-        setError('No se han encontrado citas con ese número de teléfono');
+        setMensaje(
+          citasGuardadas.length === 0
+            ? 'Todavía no hay citas registradas. Reserva tu primera cita a través del formulario.'
+            : 'No hemos encontrado citas asociadas a este número de teléfono. Comprueba que el número sea correcto.');
         return;
       }
 
@@ -67,7 +74,7 @@ function MisCitas() {
 
     // Si ya no quedan citas para ese teléfono
     if (nuevasCitasPaciente.length === 0) {
-      setError('No tienes más citas reservadas');
+      setMensaje('Has eliminado todas tus citas');
     }
   };
 
@@ -105,7 +112,11 @@ function MisCitas() {
             title='Escribe un teléfono de 9 dígitos'
             className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
-          <input type='submit' value='Buscar cita' className='w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600' />
+          <input type='submit'
+            value={loading ? 'Buscando...' : 'Buscar cita'}
+            disabled={loading}
+            className={`w-40 mx-auto p-3 lg:p-4  rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in 
+            ${loading ? ' bg-cyan-400 cursor-not-allowed' : 'bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600'}`} />
 
         </form>
 
@@ -117,6 +128,11 @@ function MisCitas() {
         {/* Mensaje de error */}
         {error && !loading && (
           <p>{error}</p>
+        )}
+
+        {/* Mensaje */}
+        {mensaje && !loading && !error && (
+          <p className='text-cyan-800 text-center'>{mensaje}</p>
         )}
 
         {/* Lista de citas (success state) */}
