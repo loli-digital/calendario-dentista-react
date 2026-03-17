@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { validarTelefono } from '../utils/validarTelefono';
 
 function MisCitas() {
 
@@ -13,7 +14,7 @@ function MisCitas() {
     e.preventDefault();
 
     // Validación del teléfono
-    if (!/^\d{9}$/.test(telefonoBusqueda)) {
+    if (!validarTelefono(telefonoBusqueda)) {
       setMensaje('El teléfono introducido debe tener 9 dígitos');
       setCitasPaciente([]);
       setLoading(false);
@@ -99,11 +100,11 @@ function MisCitas() {
         {/* Formulario búsqueda de cita */}
         <form onSubmit={buscarCitas} className='w-60 lg:w-96 flex flex-col gap-10 justify-center items-center'>
 
-          <label htmlFor='telefono' className='text-lg font-semibold text-cyan-800'>Introduce tu teléfono móvil:</label>
+          <label htmlFor='telefonoBusqueda' className='text-lg font-semibold text-cyan-800'>Introduce tu teléfono móvil:</label>
           <input
-            id='telefono'
+            id='telefonoBusqueda'
             type='tel'
-            name='telefono'
+            name='telefonoBusqueda'
             value={telefonoBusqueda}
             onChange={(e) => setTelefonoBusqueda(e.target.value)}
             placeholder='Ej: 123456789'
@@ -115,6 +116,7 @@ function MisCitas() {
           <input type='submit'
             value={loading ? 'Buscando...' : 'Buscar cita'}
             disabled={loading}
+            aria-label={loading ? 'Buscando...' : 'Buscar cita'}
             className={`w-40 mx-auto p-3 lg:p-4  rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in 
             ${loading ? ' bg-cyan-400 cursor-not-allowed' : 'bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600'}`} />
 
@@ -152,6 +154,7 @@ function MisCitas() {
 
                 <button
                   onClick={() => eliminarCita(cita.id)}
+                  aria-label='Eliminar cita'
                   className="mt-3 bg-red-700 text-white p-2 rounded shadow shadow-red-950 hover:bg-red-600 transition-colors duration-200 ease-in cursor-pointer"
                 >
                   Eliminar cita
