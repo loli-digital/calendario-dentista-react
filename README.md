@@ -13,8 +13,8 @@ Puedes verla aquí:
 - Reserva de citas con validación completa  
 - Calendario personalizado con horarios reales  
 - Filtrado dinámico de profesionales  
-- Gestión de citas en localStorage  
-- Eliminación de citas  
+- Gestión de citas en base de datos con Firebase 
+- Modificación y eliminación de citas  
 - Slider de reseñas con Swiper 
 - Diseño responsive con Tailwind  
 
@@ -43,18 +43,32 @@ Aquí se encuentran los datos de:
 En esta carpeta se encuentran las páginas de *Home*, *MisCitas* y *ReservarCita*
 
 - Home: se muestran los componentes hero-section, servicios, CTA, profesionales, reviews y contacto.
+
 - Mis citas: se muestra una pantalla para escribir el número de teléfono que se ha registrado para pedir cita.
+
 - Reservar cita: se muestra un formulario en el que hay que introducir los datos para pedir cita.
 
 
-## Tecnologías
+## Tecnologías y Metodología
 
-- React 19.2
-- React Router DOM
-- React DatePicker
-- date-fns
-- Swiper
-- Tailwind CSS 4.2
+Este proyecto ha sido desarrollado utilizando un stack moderno enfocado en la experiencia de usuario y la escalabilidad:
+
+- **Frontend:** React con Vite (v19.2) | React DOM | DatePicker | date-fns | Swiper
+- **Estilos:** Tailwind CSS (v4.1) (Arquitectura Mobile-First).
+- **Base de Datos:** Firebase Cloud Firestore (Persistencia en tiempo real).
+
+### Desarrollo Asistido por IA
+
+Este proyecto representa un desafío personal de aprendizaje y crecimiento técnico. Para su realización, he adoptado un enfoque de **desarrollo guiado por IA** (utilizando **GitHub Copilot** y **Gemini**), donde la tecnología ha actuado como un mentor técnico y tutor:
+
+- **Roadmap y Estructura**: Utilicé la IA para validar la arquitectura del proyecto y definir los pasos lógicos necesarios para integrar React con Firebase de manera eficiente.
+
+- **Mentoría en Tiempo Real**: La IA me ayudó a comprender conceptos de los Hooks de React, la gestión de estados y las reglas de seguridad de Firestore.
+
+- **Implementación Crítica**: Aunque la IA sugirió fragmentos de código, cada línea ha sido revisada, probada y adaptada manualmente para asegurar que cumple con los requisitos del proyecto y para garantizar mi propio aprendizaje del stack tecnológico.
+
+- **Contexto Inteligente:** Se ha implementado un archivo `AGENTS.md` en la raíz del proyecto. Este documento actúa como una guía de estilo y reglas de negocio para los asistentes de IA, asegurando que el código generado respete  la arquitectura del proyecto, accesibilidad, estructura de datos y mejores prácticas.
+
 
 ### Librerías
 
@@ -88,10 +102,11 @@ Para el calendario que aparece en el formulario, se ha usado **React DatePicker*
 
 ### Mis citas
 
-- Uso de estados con `useState` para el teléfono de búsqueda, citas y mensaje de error.
-- Función para obtener las citas guardadas en localStorage y si no hay ninguna, mostrar un mensaje de error.
+- Uso de estados con `useState` para el teléfono de búsqueda, citas y mensajes de loading, error y éxito.
+- Función para obtener las citas guardadas en **Firebase** y si no hay ninguna, mostrar un mensaje de error.
 - Función para filtrar las citas guardadas por orden de fecha, desde la más próxima.
-- Función para eliminar una cita, mostrando las citas guardadas, actualizando, filtrando las más próximas y si no quedan más citas, mostrar un mensaje.
+- Función para modificar cita, mostrando el calendario *React DatePicker* para cambiar la fecha y hora, y actualiza la cita. Muestra un mensaje si hay error o éxito al intentar modificarla.
+- Función para eliminar una cita, mostrando las citas guardadas, actualizando, filtrando las más próximas y si no quedan más citas, muestra un mensaje.
 - Las citas se muestran a través de map, que recorre el array de citas.
 
 ## Capturas de pantalla

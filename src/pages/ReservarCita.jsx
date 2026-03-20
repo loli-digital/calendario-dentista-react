@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../App.css';
 import profesionales from '../data/profesionalesData';
 import serviciosCita from '../data/serviciosData';
+import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas'; 
 import { Link } from 'react-router-dom';
 
 // Registra el locale 'es' para el calendario en España
@@ -21,17 +22,6 @@ function ReservarCita() {
   const [profesional, setProfesional] = useState('');
   const [fecha, setFecha] = useState(new Date());
   const [mensaje, setMensaje] = useState('');
-
-  const filtrarHorasPasadas = (time) => {
-    const ahora = new Date();
-    const fechaSeleccionada = fecha;
-
-    if (fechaSeleccionada.toDateString() === ahora.toDateString()) {
-      return ahora.getTime() < time.getTime();
-    }
-
-    return true;
-  };
 
   // Filtro de profesionales según el servicio
   const profesionalesDisponibles = profesionales.filter(profesional =>
