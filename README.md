@@ -56,6 +56,23 @@ Este proyecto ha sido desarrollado utilizando un stack moderno enfocado en la ex
 - **Frontend:** React con Vite (v19.2) | React DOM | DatePicker | date-fns | Swiper
 - **Estilos:** Tailwind CSS (v4.1) (Arquitectura Mobile-First).
 - **Base de Datos:** Firebase Cloud Firestore (Persistencia en tiempo real).
+- **Diagnóstico:** [React Doctor](https://www.npmjs.com/package/react-doctor) (CLI para análisis de salud y buenas prácticas en proyectos React).
+
+### Herramienta de diagnóstico: React Doctor
+
+Para analizar y mejorar la salud del proyecto React, se ha utilizado la herramienta CLI [react-doctor](https://www.npmjs.com/package/react-doctor):
+
+**Instalación global:**
+```bash
+npx -y react-doctor@latest .
+```
+
+**Uso en el proyecto:**
+```bash
+react-doctor
+```
+
+Ejecutará un análisis de buenas prácticas, dependencias y configuración del proyecto React, mostrando advertencias y sugerencias para mejorar la calidad y el rendimiento.
 
 ### Desarrollo Asistido por IA
 
@@ -95,10 +112,12 @@ Para el calendario que aparece en el formulario, se ha usado **React DatePicker*
 - Uso de la librería *React DatePicker* para seleccionar el día y hora de la cita.
 - Función para filtrar las horas pasadas para que no aparezcan en el calendario.
 - Filtro de profesionales según el servicio elegido.
-- Guardado de las citas en localStorage.
+- Mensaje de error si los campos no están completados, si el teléfono no es válido.
+- Guardado de las citas en base de datos con **Firebase**.
+- Mensaje de error si no se ha podido registrar la cita.
 - Mensaje de confirmación de la cita con los datos aportados al reservar.
-- Uso de *onSubmit* con la función *manejarSubmit* del localStorage
-- Inputs para introducir los datos: nombre, apellido/s, teléfono, servicio, profesional y calendario de fecha y hora. Y el botón para enviar el formulario.
+- Uso de *onSubmit* con la función *manejarSubmit* en el formulario.
+- Estilos para el botón según la actividad, si está registrando cita o si ya la ha registrado.
 
 ### Mis citas
 
@@ -108,6 +127,15 @@ Para el calendario que aparece en el formulario, se ha usado **React DatePicker*
 - Función para modificar cita, mostrando el calendario *React DatePicker* para cambiar la fecha y hora, y actualiza la cita. Muestra un mensaje si hay error o éxito al intentar modificarla.
 - Función para eliminar una cita, mostrando las citas guardadas, actualizando, filtrando las más próximas y si no quedan más citas, muestra un mensaje.
 - Las citas se muestran a través de map, que recorre el array de citas.
+
+### Migración de localStorage a Firebase Cloud Firestone
+
+- Todas las citas se almacenan, consultan y actualizan a tiempo real en **Firebase Cloud Firestone**
+- Ventajas:
+  - Acceso a las citas desde cualquier dispositivo.
+  - Sincronización en tiempo real.
+  - Seguridad configurable mediante reglas de Firestone.
+- La configuración de Firebase se encuentra en el archivo *firebase.js*
 
 ## Capturas de pantalla
 
@@ -127,11 +155,25 @@ Se muestra la confirmación de la cita reservada
 ### Mis Citas
 
 ![Página Mis Citas](mis-citas.png)
+
 <br />
-Se muestra la cita reservada, que se puede eliminar.
+Se muestra la cita reservada, que se puede modificar o eliminar.
 <br />
 
 ![Ver cita reservada](mostrar-cita-reservada.png)
+
+<br />
+Modal que se muestra al hacer click en modificar la cita.
+<br />
+
+![Modificar cita](editar-cita.png)
+
+<br />
+Modal que se muestra al intentar eliminar la cita.
+<br />
+
+![Eliminar cita](eliminar-cita.png)
+
 
 ## Diseño
 
