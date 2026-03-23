@@ -159,7 +159,8 @@ Para el calendario que aparece en el formulario, se ha usado **React DatePicker*
 
 ## Mejoras
 
-En **React doctor** me avisa que tengo muchos estados en los archivos *ReservarCita.jsx* y *MisCitas.jsx* y utilice *useReducer*, pero como no sé hacerlo, no voy a copiar y pegar la respuesta de la IA.
+**React doctor** sugiere optimizar los estados en *ReservarCita.jsx* y *MisCitas.jsx* y utilizar *useReducer* en lugar de *useState*, para agruparlos y simplificar el manejo de éstos.
+Actualmente, se mantiene la implementación de *useState* por claridad y facilidad, pero se considera la migración a *useReducer* como una posible mejora.
 
 ## Capturas de pantalla
 
