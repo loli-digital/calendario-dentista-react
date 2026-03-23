@@ -155,19 +155,16 @@ Se muestra la confirmación de la cita reservada
 ### Mis Citas
 
 ![Página Mis Citas](mis-citas.png)
-
 <br />
 Se muestra la cita reservada, que se puede modificar o eliminar.
 <br />
 
 ![Ver cita reservada](mostrar-cita-reservada.png)
-
 <br />
 Modal que se muestra al hacer click en modificar la cita.
 <br />
 
 ![Modificar cita](editar-cita.png)
-
 <br />
 Modal que se muestra al intentar eliminar la cita.
 <br />
