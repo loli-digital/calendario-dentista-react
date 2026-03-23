@@ -1,6 +1,7 @@
 import logo from '../assets/img/logo-clinica.png';
 import { Link } from 'react-router-dom';
-import PoliticaPrivacidad from '../pages/PoliticaPrivacidad';
+import logoGitHub from '../assets/img/github.svg';
+import logoLinkedIn from '../assets/img/linkedin.svg';
 
 function Footer() {
 
@@ -65,11 +66,23 @@ function Footer() {
           <p>9:00h a 20:00h</p>
 
         </div>
-        { /* Política de privacidad & Copyright */}
-        <div className='w-60'>
+
+        { /* Política de privacidad & Copyright & Redes sociales */}
+        <div className='w-60 flex flex-col items-center gap-2'>
           <Link to='/privacidad' className='hover:underline'>
             Política de privacidad
           </Link>
+
+          <div className='flex gap-4 mt-2'>
+            <a href='https://www.linkedin.com/in/loli-guerrero/' target='_blank' rel='noopener noreferrer' aria-label='LinkedIn' className='w-8 h-8 hover:scale-110 transition-transform'>
+              <img src={logoLinkedIn} alt='Logo LinkedIn' />
+            </a>
+
+            <a href='https://github.com/loli-digital' target='_blank' rel='noopener noreferrer' aria-label='GitHub' className='w-8 h-8 hover:scale-110 transition-transform'>
+              <img src={logoGitHub} alt='Logo GitHub' />
+            </a>
+          </div>
+
           <p className='mt-4 text-sm'>&copy; {year} || Realizado por Loli G.F.</p>
         </div>
       </div>
