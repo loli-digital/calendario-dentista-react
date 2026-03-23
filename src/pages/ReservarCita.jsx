@@ -6,7 +6,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../App.css';
 import profesionales from '../data/profesionalesData';
 import serviciosCita from '../data/serviciosData';
-import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas'; 
+import { validarTelefono } from '../utils/validarTelefono';
+import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas';
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
 // Registra el locale 'es' para el calendario en España
@@ -20,97 +22,138 @@ function ReservarCita() {
   const [telefono, setTelefono] = useState('');
   const [servicio, setServicio] = useState('');
   const [profesional, setProfesional] = useState('');
-  const [fecha, setFecha] = useState(new Date());
-  const [mensaje, setMensaje] = useState('');
+  const [fecha, setFecha] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
 
   // Filtro de profesionales según el servicio
   const profesionalesDisponibles = profesionales.filter(profesional =>
     profesional.servicios.includes(Number(servicio))
   );
 
-  // Para localStorage
-  const manejarSubmit = (e) => {
+  // Para guardar los datos en base de datos Firebase
+  const manejarSubmit = async (e) => {
     e.preventDefault();
 
+    // Validaciones de todos los campos
+    if(!nombre || !apellido || !telefono || !servicio || !profesional){
+      setMensaje('Por favor, rellena todos los campos');
+      setError(null);
+      return;
+    }
+
+    // Validación del teléfono
+    if (!validarTelefono(telefono)) {
+      setMensaje('El teléfono introducido debe tener 9 dígitos');
+      setCitasPaciente([]);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
+    // Mensaje error si intenta registrar una fecha inválida
+    if (!fecha || fecha.getDay() === 0 || fecha.getDay() === 6) {
+      setMensaje('Seleccione una fecha entre el lunes y el viernes');
+      setError(null);
+      return;
+    }
+
     const servicioSeleccionado = serviciosCita.find(s => s.id === Number(servicio));
+
     const profesionalSeleccionado = profesionales.find(p => p.id === profesional);
 
-    const nuevaCita = {
-      id: crypto.randomUUID(),
-      nombre,
-      apellido,
-      telefono,
-      servicio: servicioSeleccionado.nombre,
-      profesional: profesionalSeleccionado.nombre,
-      fecha: fecha.toISOString(),
-      hora: fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
+    try {
 
-    const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
+      setLoading(true);
+      setError(null);
+      setMensaje(null);
 
-    citasGuardadas.push(nuevaCita);
+      await addDoc(collection(db, 'citas'), {
+        nombre,
+        apellido,
+        telefono,
+        servicio: servicioSeleccionado.nombre,
+        profesional: profesionalSeleccionado.nombre,
+        fecha: Timestamp.fromDate(fecha),
+        hora: fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
 
-    localStorage.setItem('citas', JSON.stringify(citasGuardadas));
+      // Muestra el mensaje de confirmación de cita
+      setMensaje({
+        nombre,
+        apellido,
+        telefono,
+        servicio: servicioSeleccionado.nombre,
+        profesional: profesionalSeleccionado.nombre,
+        fecha: fecha.toLocaleDateString('es-ES'),
+        hora: fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
 
-    // Muestra el mensaje de confirmación de cita
-    setMensaje({
-      nombre,
-      apellido,
-      telefono,
-      servicio: servicioSeleccionado.nombre,
-      profesional: profesionalSeleccionado.nombre,
-      fecha: fecha.toLocaleDateString('es-ES'),
-      hora: nuevaCita.hora
-    });
+      // Resetear formulario
+      setNombre('');
+      setApellido('');
+      setTelefono('');
+      setServicio('');
+      setProfesional('');
+      setFecha(null);
 
-    // Resetear formulario
-    setNombre('');
-    setApellido('');
-    setTelefono('');
-    setServicio('');
-    setProfesional('');
-    setFecha(null);
-  };
+    } catch (err) {
 
-  return (
+      setError(err.message || 'Ocurrió un problema al reservar la cita');
+    }
 
-    <section className='w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center overflow-hidden bg-cyan-50'>
+    finally {
 
-      {/* Forma para detrás de las cards */}
+      setLoading(false);
+    }
+  }
 
-      <div className='w-xl absolute top-40 lg:top-20 z-0 pointer-events-none drop-shadow-[0_0_4px] drop-shadow-cyan-800'>
-        <svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'>
-          <path fill='#CEFAFE'
-            d='M42.7,-71.6C55.9,-66.2,67.8,-56.1,73.8,-43.4C79.9,-30.6,80.2,-15.3,77.8,-1.4C75.4,12.6,70.3,25.1,65,39.1C59.7,53.1,54.1,68.6,43.2,78.6C32.3,88.6,16.2,93.2,0.4,92.5C-15.4,91.8,-30.8,85.9,-42.7,76.5C-54.7,67.1,-63.2,54.2,-71.7,40.9C-80.2,27.6,-88.7,13.8,-91.2,-1.4C-93.6,-16.6,-90,-33.2,-80.3,-44.6C-70.6,-55.9,-54.9,-61.9,-40.5,-66.6C-26.1,-71.2,-13.1,-74.5,0.8,-75.9C14.7,-77.3,29.4,-76.9,42.7,-71.6Z'
-            transform='translate(100 100)' />
-        </svg>
+};
+
+return (
+
+  <section className='w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center overflow-hidden bg-cyan-50'>
+
+    {/* Forma para detrás de las cards */}
+
+    <div className='w-xl absolute top-40 lg:top-20 z-0 pointer-events-none drop-shadow-[0_0_4px] drop-shadow-cyan-800'>
+      <svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'>
+        <path fill='#CEFAFE'
+          d='M42.7,-71.6C55.9,-66.2,67.8,-56.1,73.8,-43.4C79.9,-30.6,80.2,-15.3,77.8,-1.4C75.4,12.6,70.3,25.1,65,39.1C59.7,53.1,54.1,68.6,43.2,78.6C32.3,88.6,16.2,93.2,0.4,92.5C-15.4,91.8,-30.8,85.9,-42.7,76.5C-54.7,67.1,-63.2,54.2,-71.7,40.9C-80.2,27.6,-88.7,13.8,-91.2,-1.4C-93.6,-16.6,-90,-33.2,-80.3,-44.6C-70.6,-55.9,-54.9,-61.9,-40.5,-66.6C-26.1,-71.2,-13.1,-74.5,0.8,-75.9C14.7,-77.3,29.4,-76.9,42.7,-71.6Z'
+          transform='translate(100 100)' />
+      </svg>
+    </div>
+
+    <h2 className='relative py-10 text-cyan-800 text-center text-4xl font-bold'>Reservar cita</h2>
+
+    {/* Mensaje de error al registrar la cita */}
+    {error && !loading && (
+      <p className='text-red-900 text-xl text-center font-bold'>{error}</p>
+    )}
+
+    {/* Mensaje de confirmación de cita */}
+    {mensaje && (
+
+      <div className='w-full lg:w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-700 text-green-800 p-4 rounded shadow-md'>
+        <h3 className='font-bold text-lg mb-2'>Cita reservada correctamente</h3>
+
+        <p><strong>Nombre y apellido/s:</strong> {mensaje.nombre} {mensaje.apellido}</p>
+        <p><strong>Teléfono:</strong> {mensaje.telefono}</p>
+        <p><strong>Servicio:</strong> {mensaje.servicio}</p>
+        <p><strong>Profesional:</strong> {mensaje.profesional}</p>
+        <p><strong>Día:</strong> {mensaje.fecha}</p>
+        <p><strong>Hora:</strong> {mensaje.hora}</p>
+        <p>Para acceder a sus citas, haga click en <span className='font-bold underline underline-offset-2'><Link to='/mis-citas' >Mis citas</Link></span> e introduzca su número de teléfono.</p>
+
       </div>
 
-      <h2 className='relative py-10 text-cyan-800 text-center text-4xl font-bold'>Reservar cita</h2>
+    )}
 
+    {/* Formulario */}
+    {!mensaje && (
 
-      {/* Mensaje de confirmación de cita */}
-      {mensaje && (
-
-        <div className='w-full lg:w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-600 text-green-700 p-4 rounded shadow-md'>
-          <h3 className='font-bold text-lg mb-2'>Cita reservada correctamente</h3>
-
-          <p><strong>Nombre y apellido/s:</strong> {mensaje.nombre} {mensaje.apellido}</p>
-          <p><strong>Teléfono:</strong> {mensaje.telefono}</p>
-          <p><strong>Servicio:</strong> {mensaje.servicio}</p>
-          <p><strong>Profesional:</strong> {mensaje.profesional}</p>
-          <p><strong>Día:</strong> {mensaje.fecha}</p>
-          <p><strong>Hora:</strong> {mensaje.hora}</p>
-          <p>Para acceder a sus citas, haga click en <span className='font-bold underline underline-offset-2'><Link to='/mis-citas' >Mis citas</Link></span> e introduzca su número de teléfono.</p>
-          
-        </div>
-
-      )}
-
-      {/* Formulario */}
-      {!mensaje && (
-
-        <div>
+      <div>
 
         <p className='relative pb-10 text-cyan-800 text-center text-lg font-medium'>Para pedir cita, rellene todos los campos</p>
 
@@ -133,7 +176,11 @@ function ReservarCita() {
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
                 autoFocus
                 required
-                onChange={(e) => setNombre(e.target.value)}
+                onChange={e => {
+                  setNombre(e.target.value);
+                  setError(null);
+                  setMensaje(null);
+                }}
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
               <label htmlFor='apellido' className='font-medium text-cyan-800'>Apellido/s</label>
@@ -148,7 +195,11 @@ function ReservarCita() {
                 maxLength={40}
                 pattern='[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+'
                 title='Escribe un mínimo de 3 letras hasta un máximo de 40'
-                onChange={(e) => setApellido(e.target.value)}
+                onChange={e => {
+                  setApellido(e.target.value);
+                  setError(null);
+                  setMensaje(null);
+                }}
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
               <label htmlFor='telefono' className='font-medium text-cyan-800'>Teléfono</label>
@@ -157,7 +208,11 @@ function ReservarCita() {
                 type='tel'
                 name='telefono'
                 value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
+                onChange={e => {
+                  setTelefono(e.target.value);
+                  setError(null);
+                  setMensaje(null);
+                }}
                 placeholder='Introduce tu teléfono móvil'
                 required
                 pattern='[0-9]{9}'
@@ -175,7 +230,11 @@ function ReservarCita() {
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white'
                 required
                 value={servicio}
-                onChange={(e) => setServicio(e.target.value)}>
+                onChange={e => {
+                  setServicio(e.target.value);
+                  setError(null);
+                  setMensaje(null);
+                }}>
                 <option value=''>Selecciona un servicio</option>
 
                 {serviciosCita.map(servicio => (
@@ -193,7 +252,11 @@ function ReservarCita() {
                 className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white'
                 required
                 value={profesional}
-                onChange={(e) => setProfesional(e.target.value)}>
+                onChange={e => {
+                  setProfesional(e.target.value);
+                  setError(null);
+                  setMensaje(null);
+                }}>
                 <option value=''>Selecciona un profesional</option>
 
                 {profesionalesDisponibles.map(profesional => (
@@ -211,7 +274,11 @@ function ReservarCita() {
                 id='fecha-hora'
                 showIcon
                 selected={fecha}
-                onChange={(date) => setFecha(date)}
+                onChange={date => {
+                  setFecha(date);
+                  setError(null);
+                  setMensaje(null);
+                }}
                 minDate={new Date()}
                 dateFormat='Pp'
                 locale='es'
@@ -223,7 +290,7 @@ function ReservarCita() {
                 timeCaption='Hora'
                 filterTime={filtrarHorasPasadas}
                 // 6 es sábado y 0 es domingo
-                filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}
+                filterDate={date => date.getDay() !== 6 && date.getDay() !== 0}
                 className='w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white'
               />
 
@@ -231,16 +298,18 @@ function ReservarCita() {
 
           </div>
 
-          <input type='submit' value='Confirmar cita' className='w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600' />
+          <input type='submit' 
+          value={loading ? 'Reservando cita...' : 'Confirmar cita'}
+          disabled={loading}
+          className={`w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${loading ? 'bg-cyan-400 cursor-not-allowed' : ''}`} />
 
         </form>
 
-        </div>
+      </div>
 
-      )}
+    )}
 
-    </section>
-  );
-}
+  </section>
+);
 
 export default ReservarCita;
