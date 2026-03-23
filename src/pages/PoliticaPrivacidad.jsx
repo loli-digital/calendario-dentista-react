@@ -29,8 +29,10 @@ function PoliticaPrivacidad() {
                     <li>Servicio solicitado</li>
                     <li>Profesional seleccionado</li>
                     <li>Fecha y hora de la cita</li>
-                    <li>Mensaje opcional</li>
                 </ul>
+                <p className='mb-4 italic text-cyan-800'>
+                    Nota: No es necesario introducir un número de teléfono real para utilizar la aplicación. Puedes usar un número ficticio como <span className='font-semibold'>123456789</span> para probar la funcionalidad.
+                </p>
 
                 <h2 className='text-2xl font-semibold mt-8 mb-4 text-cyan-900'>3. Finalidad del tratamiento</h2>
                 <p className='mb-4'>
@@ -45,8 +47,7 @@ function PoliticaPrivacidad() {
 
                 <h2 className='text-2xl font-semibold mt-8 mb-4 text-cyan-900'>5. Almacenamiento de los datos</h2>
                 <p className='mb-4'>
-                    Los datos pueden almacenarse en servicios externos de base de datos (como Firebase) o en el almacenamiento local del navegador,
-                    dependiendo de la configuración de la aplicación.
+                    Los datos de las citas se almacenan únicamente en servicios externos de base de datos (Firebase). El único dato guardado en el almacenamiento local del navegador es la preferencia de aceptación del banner de cookies, que no contiene información personal.
                 </p>
 
                 <h2 className='text-2xl font-semibold mt-8 mb-4 text-cyan-900'>6. Conservación de los datos</h2>
@@ -71,7 +72,7 @@ function PoliticaPrivacidad() {
                 
                 <h2 className='text-2xl font-semibold mt-8 mb-4 text-cyan-900'>10. Contacto</h2>
                 <p>
-                    Para cualquier duda relacionada con esta política de privacidad, puedes contactar a través del perfil profesional de la desarrolladora.
+                    Para cualquier duda relacionada con esta política de privacidad, puedes contactar a través del perfil profesional de la desarrolladora, que se encuentra al pie de la página web.
                 </p>
             </div>
 
