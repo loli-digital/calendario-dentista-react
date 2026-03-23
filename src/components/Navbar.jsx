@@ -51,23 +51,53 @@ function Navbar() {
       >
         <ul className='h-full md:h-auto mt-10 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl md:text-lg'>
 
-          <li className='nav-link'
+          <li
+            className='nav-link'
+            role='button'
+            tabIndex={0}
             onClick={() => {
-              document.getElementById("servicios").scrollIntoView({ behavior: "smooth" });
+              document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' });
               closeMenu();
-            }} >Servicios</li>
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' });
+                closeMenu();
+              }
+            }}
+          >Servicios</li>
 
-          <li className='nav-link'
+          <li
+            className='nav-link'
+            role='button'
+            tabIndex={0}
             onClick={() => {
-              document.getElementById("profesionales").scrollIntoView({ behavior: "smooth" });
+              document.getElementById('profesionales').scrollIntoView({ behavior: 'smooth' });
               closeMenu();
-            }} >Profesionales</li>
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                document.getElementById('profesionales').scrollIntoView({ behavior: 'smooth' });
+                closeMenu();
+              }
+            }}
+          >Profesionales</li>
 
-          <li className='nav-link'
+          <li
+            className='nav-link'
+            role='button'
+            tabIndex={0}
             onClick={() => {
-              document.getElementById("contacto").scrollIntoView({ behavior: "smooth" });
+              document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
               closeMenu();
-            }} >Contacto</li>
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+                closeMenu();
+              }
+            }}
+          >Contacto</li>
 
           <li className='nav-link'>
             <Link to='/mis-citas' onClick={closeMenu} >Mis citas</Link>

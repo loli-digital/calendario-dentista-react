@@ -67,7 +67,7 @@ function Footer() {
         </div>
         { /* Política de privacidad & Copyright */}
         <div className='w-60'>
-          <Link to="/privacidad" className="hover:underline">
+          <Link to='/privacidad' className='hover:underline'>
             Política de privacidad
           </Link>
           <p className='mt-4 text-sm'>&copy; {year} || Realizado por Loli G.F.</p>
@@ -75,7 +75,17 @@ function Footer() {
       </div>
 
       { /* Flecha hacia arriba */}
-      <div onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className='w-10 h-10 absolute right-5 bottom-20 bg-cyan-700 flex justify-center items-center rounded-sm cursor-pointer transition-all duration-300 ease-in-out shadow-[0_0_10px] shadow-black hover:bg-cyan-100 fill-cyan-50 hover:fill-cyan-700'>
+      <div
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        role='button'
+        tabIndex={0}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
+        className='w-10 h-10 absolute right-5 bottom-20 bg-cyan-700 flex justify-center items-center rounded-sm cursor-pointer transition-all duration-300 ease-in-out shadow-[0_0_10px] shadow-black hover:bg-cyan-100 fill-cyan-50 hover:fill-cyan-700'
+      >
 
         <svg className='w-6 h-6' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'>
           { /* Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. */}
