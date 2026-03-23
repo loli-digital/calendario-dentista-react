@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CookiesBanner from './components/CookiesBanner';
 
 import { Routes, Route } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <>
+      <CookiesBanner />
       <Navbar />
       <main>
         <Routes>
