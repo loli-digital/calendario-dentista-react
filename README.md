@@ -21,21 +21,35 @@ Puedes verla aquí:
 ## Componentes
 
 - **Menú de navegación** con las secciones: Servicios, Profesionales, Contacto, Mis Citas y un botón para reservar cita.
+
 - **Hero section** con el encabezado *h1*, un botón para reservar cita y una imagen ( excepto en modo móvil ).
+
 - **Servicios** y **ServiciosCard**: se muestran los servicios que ofrecen a través de unas cards, con una imagen, icono, título y texto.
+
 - **CTA**: efecto parallax con una imagen, fondo por encima de ésta y un botón para reservar cita.
+
 - **Profesionales** y **ProfesionalesCard**: se muestran los dos profesionales a través de unas cards, con la imagen, nombre y apellidos, número colegiada/o, especialización, lugar de estudios y años de experiencia.
+
 - **Reviews**, **ReviewsCard** y **RatingStars**: se muestran en un slider 6 reseñas ficticias, con imagen, nombre y apellido/s, valoración y texto de la experiencia.
+
 - **Contacto**: información con el horario, dirección, teléfonos y el mapa de Google Maps mostrando la dirección.
-- **Footer**: con la información de la clínica como el logo, dirección, teléfonos, horario, política de privacidad y copyright. 
+
+- **Footer**: con la información de la clínica como el logo, dirección, teléfonos, horario, política de privacidad y copyright.
+
+- **Skeletons**: de las páginas MisCitas.jsx, ReservarCita.jsx y Home.jsx
+
+- **Cookie Banner**: aviso de almacenamiento en el navegador. Se encuentra en App.jsx antes del componente Navbar.jsx para que la persona pueda verlo nada más entrar a la web.
 
 ## Data
 
 Aquí se encuentran los datos de:
 
 - Profesionales: id, imagenAVIF, imagenWEBP, imagen, alt, nombre, número de colegiada/o, las tres especializaciones, lugar de estudios, experiencia y un array de los servicios que atiende.
+
 - Reviews: id, imagen, alt, nombre, texto y rating.
+
 - Servicios: id, imagenAVIF, imagenWEBP, imagen, alt, icono, título y descripción del servicio.
+
 - Servicios para seleccionar al reservar cita: id, nombre y el ID del profesional.
 
 ## Pages
@@ -47,6 +61,8 @@ En esta carpeta se encuentran las páginas de *Home*, *MisCitas* y *ReservarCita
 - Mis citas: se muestra una pantalla para escribir el número de teléfono que se ha registrado para pedir cita.
 
 - Reservar cita: se muestra un formulario en el que hay que introducir los datos para pedir cita.
+
+- Política de privacidad: información de la política de privacidad de la web.
 
 
 ## Tecnologías y Metodología
@@ -73,6 +89,10 @@ react-doctor
 ```
 
 Ejecutará un análisis de buenas prácticas, dependencias y configuración del proyecto React, mostrando advertencias y sugerencias para mejorar la calidad y el rendimiento.
+
+Mi puntuación en React Doctor:
+
+[![React Doctor](https://www.react.doctor/share/badge?p=calendario-dentista-react&s=99&w=3&f=2)](https://www.react.doctor/share?p=calendario-dentista-react&s=99&w=3&f=2)
 
 ### Desarrollo Asistido por IA
 
@@ -136,6 +156,10 @@ Para el calendario que aparece en el formulario, se ha usado **React DatePicker*
   - Sincronización en tiempo real.
   - Seguridad configurable mediante reglas de Firestone.
 - La configuración de Firebase se encuentra en el archivo *firebase.js*
+
+## Mejoras
+
+En **React doctor** me avisa que tengo muchos estados en los archivos *ReservarCita.jsx* y *MisCitas.jsx* y utilice *useReducer*, pero como no sé hacerlo, no voy a copiar y pegar la respuesta de la IA.
 
 ## Capturas de pantalla
 
