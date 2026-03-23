@@ -10,6 +10,7 @@ import { validarTelefono } from '../utils/validarTelefono';
 import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
+import { db } from '../firebase';
 
 // Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
@@ -129,7 +130,7 @@ function ReservarCita() {
 
       {/* Mensaje de error al registrar la cita */}
       {error && !loading && (
-        <p className='text-red-900 text-xl text-center font-bold'>{error}</p>
+        <p className='relative mb-2 text-red-900 text-xl text-center font-bold'>{error}</p>
       )}
 
       {/* Mensaje de confirmación de cita */}
