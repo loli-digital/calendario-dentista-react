@@ -13,6 +13,7 @@ import ReservarCitaSkeleton from './components/ReservarCitaSkeleton';
 const Home = lazy(() => import('./pages/Home'));
 const MisCitas = lazy(() => import('./pages/MisCitas'));
 const ReservarCita = lazy(() => import('./pages/ReservarCita'));
+const PoliticaPrivacidad = lazy(() => import('./pages/PoliticaPrivacidad'));
 
 
 function App() {
@@ -35,6 +36,11 @@ function App() {
           <Route path="/reserva" element={
             <Suspense fallback={<ReservarCitaSkeleton />}>
               <ReservarCita />
+            </Suspense>
+          } />
+          <Route path="/privacidad" element={
+            <Suspense fallback={<div className="text-center py-10">Cargando política de privacidad...</div>}>
+              <PoliticaPrivacidad />
             </Suspense>
           } />
         </Routes>

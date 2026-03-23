@@ -1,4 +1,6 @@
 import logo from '../assets/img/logo-clinica.png';
+import { Link } from 'react-router-dom';
+import PoliticaPrivacidad from '../pages/PoliticaPrivacidad';
 
 function Footer() {
 
@@ -65,7 +67,9 @@ function Footer() {
         </div>
         { /* Política de privacidad & Copyright */}
         <div className='w-60'>
-          <a href='#' target='_blank'>Política de privacidad</a>
+          <Link to="/privacidad" className="hover:underline">
+            Política de privacidad
+          </Link>
           <p className='mt-4 text-sm'>&copy; {year} || Realizado por Loli G.F.</p>
         </div>
       </div>
