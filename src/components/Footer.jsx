@@ -88,24 +88,16 @@ function Footer() {
       </div>
 
       { /* Flecha hacia arriba */}
-      <div
+      <button
+        type='button'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        role='button'
-        tabIndex={0}
-        onKeyDown={e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }}
+        aria-label='Volver arriba'
         className='w-10 h-10 absolute right-5 bottom-20 bg-cyan-700 flex justify-center items-center rounded-sm cursor-pointer transition-all duration-300 ease-in-out shadow-[0_0_10px] shadow-black hover:bg-cyan-100 fill-cyan-50 hover:fill-cyan-700'
       >
-
-        <svg className='w-6 h-6' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'>
-          { /* Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. */}
+        <svg className='w-6 h-6' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' aria-hidden='true' focusable='false'>
           <path d='M214.6 17.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 117.3 160 488c0 17.7 14.3 32 32 32s32-14.3 32-32l0-370.7 105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z' />
         </svg>
-
-      </div>
+      </button>
 
     </footer >
   );
