@@ -64,20 +64,17 @@ function MisCitas() {
 
       const citasFiltradas = await obtenerCitasPorTelefono(telefonoBusqueda);
 
-      //Si no existen citas guardadas o el teléfono registrado no tiene citas (empty state)
+      //Si no existen citas guardadas con el teléfono (empty state)
 
       if (citasFiltradas.length === 0) {
-        setMensaje(
-          citasGuardadas.length === 0
-            ? 'Todavía no hay citas registradas. Reserva tu primera cita a través del formulario.'
-            : 'No hemos encontrado citas asociadas a este número de teléfono. Comprueba que el número sea correcto.');
+        setMensaje('No hemos encontrado citas asociadas a este número de teléfono. Comprueba que el número sea correcto.');
         return;
       }
 
       setCitasPaciente(citasFiltradas);
 
     } catch (err) {
-
+      console.error(err)
       setError('Ocurrió un problema al obtener las citas');
 
     } finally {
@@ -104,7 +101,7 @@ function MisCitas() {
       }
 
     } catch (err) {
-
+      console.error(err)
       setError('Ocurrió un problema al eliminar la cita');
 
     }
@@ -138,6 +135,7 @@ function MisCitas() {
 
     } catch (err) {
 
+      console.error(err);
       setError('Ocurrió un problema al actualizar la cita');
 
     } finally {
