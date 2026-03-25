@@ -1,12 +1,18 @@
-export function filtrarHorasPasadas(time) {
-    
-    const ahora = new Date();
-    const fecha = new Date();
-    const fechaSeleccionada = fecha;
+export function filtrarHorasPasadas(time, fechaSeleccionada) {
 
-    if (fechaSeleccionada.toDateString() === ahora.toDateString()) {
-      return ahora.getTime() < time.getTime();
-    }
+  const ahora = new Date();
 
+  if (!fechaSeleccionada) {
+    // Si no hay fecha seleccionada, no filtramos por horas pasadas
     return true;
-  };
+  }
+
+  const esMismoDia = fechaSeleccionada.toDateString() === ahora.toDateString();
+
+  if (!esMismoDia) {
+    // Si no es el mismo día, no filtramos por horas pasadas
+    return true;
+  }
+
+  return time.getTime() > ahora.getTime();
+};

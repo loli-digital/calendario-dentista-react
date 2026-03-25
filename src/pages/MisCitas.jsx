@@ -322,7 +322,7 @@ function MisCitas() {
                   timeIntervals={30}
                   timeFormat='HH:mm'
                   timeCaption='Hora'
-                  filterTime={filtrarHorasPasadas}
+                  filterTime={(time) => filtrarHorasPasadas(time, fecha)}
                   // 6 es sábado y 0 es domingo
                   filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}
                   className='w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white'
