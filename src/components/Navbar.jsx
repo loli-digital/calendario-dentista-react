@@ -26,7 +26,9 @@ function Navbar() {
       {/* Botón menú móvil */}
       <button
         onClick={toggleMenu}
-        aria-label='Abrir menú de navegación'
+        aria-expanded={isMenuOpen}
+        aria-controls='menu-principal'
+        aria-label={isMenuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
         className='text-white text-3xl md:hidden focus:outline-none z-50'
       >
         {isMenuOpen ? (
@@ -45,59 +47,45 @@ function Navbar() {
       </button>
 
       {/* Menú navegación */}
-      <nav className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
+      <nav id='menu-principal'
+      className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
         top-0 left-0 bg-cyan-950 md:bg-transparent transition-all duration-500 ease-in-out 
         z-40 md:z-auto ${isMenuOpen ? 'block' : 'hidden'} md:block`}
       >
         <ul className='h-full md:h-auto mt-10 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl md:text-lg'>
 
-          <li
-            className='nav-link'
-            role='button'
-            tabIndex={0}
-            onClick={() => {
-              document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' });
-              closeMenu();
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
+          <li>
+            <button
+              className='nav-link'
+              onClick={() => {
                 document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' });
                 closeMenu();
-              }
-            }}
-          >Servicios</li>
+              }}>
+              Servicios
+            </button>
+          </li>
 
-          <li
-            className='nav-link'
-            role='button'
-            tabIndex={0}
-            onClick={() => {
-              document.getElementById('profesionales').scrollIntoView({ behavior: 'smooth' });
-              closeMenu();
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
+          <li>
+            <button
+              className='nav-link'
+              onClick={() => {
                 document.getElementById('profesionales').scrollIntoView({ behavior: 'smooth' });
                 closeMenu();
-              }
-            }}
-          >Profesionales</li>
+              }}>
+              Profesionales
+            </button>
+          </li>
 
-          <li
-            className='nav-link'
-            role='button'
-            tabIndex={0}
-            onClick={() => {
-              document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-              closeMenu();
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
+          <li>
+            <button
+              className='nav-link'
+              onClick={() => {
                 document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
                 closeMenu();
-              }
-            }}
-          >Contacto</li>
+              }}>
+              Contacto
+            </button>
+          </li>
 
           <li className='nav-link'>
             <Link to='/mis-citas' onClick={closeMenu} >Mis citas</Link>

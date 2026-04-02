@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function CookiesBanner() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Solo mostrar si no se ha aceptado antes
-    if (!localStorage.getItem('cookiesAceptadas')) {
-      setVisible(true);
-    }
-  }, []);
+  const [visible, setVisible] = useState( () => {
+    // Verificar localStorage para mostrar el banner solo si no se ha aceptado antes
+    return !localStorage.getItem('cookiesAceptadas');
+  });
 
   const handleAccept = () => {
     localStorage.setItem('cookiesAceptadas', 'true');

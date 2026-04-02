@@ -47,7 +47,6 @@ function ReservarCita() {
     // Validación del teléfono
     if (!validarTelefono(telefono)) {
       setMensaje('El teléfono introducido debe tener 9 dígitos');
-      setCitasPaciente([]);
       setLoading(false);
       setError(null);
       return;
@@ -274,7 +273,7 @@ function ReservarCita() {
                   id='fecha-hora'
                   showIcon
                   selected={fecha}
-                  onChange={date => {
+                  onChange={(date) => {
                     setFecha(date);
                     setError(null);
                     setMensaje(null);
@@ -288,7 +287,7 @@ function ReservarCita() {
                   timeIntervals={30}
                   timeFormat='HH:mm'
                   timeCaption='Hora'
-                  filterTime={filtrarHorasPasadas}
+                  filterTime={(time) => filtrarHorasPasadas(time, fecha)}
                   // 6 es sábado y 0 es domingo
                   filterDate={date => date.getDay() !== 6 && date.getDay() !== 0}
                   className='w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white'
