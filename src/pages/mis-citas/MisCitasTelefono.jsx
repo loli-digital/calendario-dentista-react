@@ -157,7 +157,7 @@ function MisCitasTelefono() {
         </svg>
       </div>
 
-      <h2 className='py-10 relative text-cyan-800 text-center text-4xl font-bold'>Mis citas</h2>
+      <h2 className='py-10 relative text-cyan-800 text-center text-4xl font-bold'>Acceso rápido</h2>
 
       <div className='max-w-3xl mx-auto relative flex flex-col justify-center items-center gap-10'>
 
