@@ -1,14 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { setLogLevel } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "clinica-dental-navarro-54354.firebaseapp.com",
-  projectId: "clinica-dental-navarro-54354",
-  storageBucket: "clinica-dental-navarro-54354.firebasestorage.app",
-  messagingSenderId: "459444134687",
-  appId: "1:459444134687:web:e8d817c2ea31228ccf462a"
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+// Configura el nivel de log para depuración de Firebase
+setLogLevel("debug");
