@@ -10,7 +10,7 @@ import { validarTelefono } from '../utils/validarTelefono';
 import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 
 // Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
@@ -65,6 +65,10 @@ function ReservarCita() {
 
     try {
 
+      if (!servicioSeleccionado || !profesionalSeleccionado) {
+        throw new Error("No se encontró la información del servicio o profesional");
+      }
+
       setLoading(true);
       setError(null);
       setMensaje(null);
@@ -108,8 +112,6 @@ function ReservarCita() {
       setLoading(false);
     }
   }
-
-
 
   return (
 
