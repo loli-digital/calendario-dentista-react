@@ -11,7 +11,7 @@ import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, Timestamp
 // Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
 
-function MisCitas() {
+function MisCitasTelefono() {
 
   const [telefonoBusqueda, setTelefonoBusqueda] = useState('');
   const [citasPaciente, setCitasPaciente] = useState([]);
@@ -363,4 +363,4 @@ function MisCitas() {
   );
 }
 
-export default MisCitas;
+export default MisCitasTelefono;
