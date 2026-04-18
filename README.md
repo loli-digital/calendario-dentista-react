@@ -57,11 +57,13 @@ Sistema de gestión de citas que permite a los usuarios:
 
 ![Página Mis Citas](mis-citas.png)
 
-![Ver cita reservada](mostrar-cita-reservada.png)
+![Acceso rápido](mis-citas-acceso-rapido.png)
 
-![Modificar cita](editar-cita.png)
+![Ver cita reservada](mis-citas-acceso-rapido-ver-cita.png)
 
-![Eliminar cita](eliminar-cita.png)
+![Modificar cita](mis-citas-acceso-rapido-modificar-cita.png)
+
+![Eliminar cita](mis-citas-acceso-rapido-eliminar-cita.png)
 
 ## Bibliografía
 
