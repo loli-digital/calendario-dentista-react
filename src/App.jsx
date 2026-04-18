@@ -13,6 +13,7 @@ import ReservarCitaSkeleton from './components/ReservarCitaSkeleton';
 
 const Home = lazy(() => import('./pages/Home'));
 const MisCitasHome = lazy(() => import('./pages/mis-citas/MisCitasHome'));
+const MisCitasTelefono = lazy(() => import('./pages/mis-citas/MisCitasTelefono'));
 const ReservarCita = lazy(() => import('./pages/ReservarCita'));
 const PoliticaPrivacidad = lazy(() => import('./pages/PoliticaPrivacidad'));
 
@@ -30,9 +31,14 @@ function App() {
               <Home />
             </Suspense>
           } />
-          <Route path="/mis-citas/MisCitasHome" element={
+          <Route path="/mis-citas" element={
             <Suspense fallback={<MisCitasSkeleton />}>
               <MisCitasHome />
+            </Suspense>
+          } />
+          <Route path="/mis-citas/telefono" element={
+            <Suspense fallback={<MisCitasSkeleton />}>
+              <MisCitasTelefono />
             </Suspense>
           } />
           <Route path="/reserva" element={
