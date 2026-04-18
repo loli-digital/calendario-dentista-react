@@ -146,7 +146,7 @@ function ReservarCita() {
           <p><strong>Profesional:</strong> {mensaje.profesional}</p>
           <p><strong>Día:</strong> {mensaje.fecha}</p>
           <p><strong>Hora:</strong> {mensaje.hora}</p>
-          <p>Para acceder a sus citas, haga click en <span className='font-bold underline underline-offset-2'><Link to='/mis-citas/MisCitasHome' >Mis citas</Link></span> e introduzca su número de teléfono para acceder de manera rápida o a través de su cuenta personal.</p>
+          <p>Para acceder a sus citas, haga click en <span className='font-bold underline underline-offset-2'><Link to='/mis-citas'>Mis citas</Link></span> e introduzca su número de teléfono para acceder de manera rápida o a través de su cuenta personal.</p>
 
         </div>
 
