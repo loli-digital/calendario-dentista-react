@@ -14,7 +14,7 @@ function CTA() {
 
         {/* Botón para reservar cita */}
         <Link
-          to='/reserva'
+          to='/reservar-cita'
           className='bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50'
         >
           Reserva cita ya
