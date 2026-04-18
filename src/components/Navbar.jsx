@@ -10,6 +10,8 @@ function Navbar() {
 
   const location = useLocation();
   const isMisCitas = location.pathname.startsWith('/mis-citas');
+  const isReservarCita = location.pathname.startsWith('/reservar-cita');
+  const isRestrictedView = isMisCitas || isReservarCita;
 
   return (
 
@@ -60,7 +62,7 @@ function Navbar() {
 
           {/* Si estoy en Home, mostrar este menú */}
 
-          {!isMisCitas && (
+          {!isRestrictedView && (
             <>
               <li>
                 <button
@@ -102,7 +104,7 @@ function Navbar() {
             </>
           )}
 
-          {isMisCitas && (
+          {isRestrictedView && (
             <>
               <li className='nav-link'>
                 <Link to='/mis-citas' onClick={closeMenu} >Mis citas</Link>
@@ -113,7 +115,7 @@ function Navbar() {
           {/* Botón móvil */}
           <li className='block md:hidden mt-10 md:mt-0'>
             <Link
-              to='/reserva'
+              to='/reservar-cita'
               onClick={closeMenu}
               className='bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50'
             >
@@ -126,7 +128,7 @@ function Navbar() {
       {/* Botón escritorio */}
       <div className='hidden md:block'>
         <Link
-          to='/reserva'
+          to='/reservar-cita'
           className='bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600'
         >
           Reserva cita ya
