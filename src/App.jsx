@@ -41,7 +41,7 @@ function App() {
               <MisCitasTelefono />
             </Suspense>
           } />
-          <Route path="/reserva" element={
+          <Route path="/reservar-cita" element={
             <Suspense fallback={<ReservarCitaSkeleton />}>
               <ReservarCita />
             </Suspense>
