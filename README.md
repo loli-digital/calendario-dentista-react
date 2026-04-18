@@ -49,15 +49,15 @@ Sistema de gestión de citas que permite a los usuarios:
 
 ### Reservar cita
 
-![Página Reservar Cita](reservar-cita.png)
+![Formulario para reservar cita](reservar-cita.png)
 
-![Página con la cita reservada](cita-reservada.png)
+![Mensaje de confirmación de la cita reservada](mensaje-confirmacion-reservar-cita.png)
 
 ### Mis Citas
 
-![Página Mis Citas](mis-citas.png)
+![Página para acceder a mis citas](mis-citas.png)
 
-![Acceso rápido](mis-citas-acceso-rapido.png)
+![Acceso rápido (mediante número de teléfono registrado en el formulario)](mis-citas-acceso-rapido.png)
 
 ![Ver cita reservada](mis-citas-acceso-rapido-ver-cita.png)
 
