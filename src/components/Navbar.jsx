@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import logo from '../assets/img/logo-clinica.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,7 +8,11 @@ function Navbar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const location = useLocation();
+  const isMisCitas = location.pathname.startsWith('/mis-citas');
+
   return (
+
     <header className='w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 md:px-8'>
 
       {/* Logo */}
@@ -48,48 +52,63 @@ function Navbar() {
 
       {/* Menú navegación */}
       <nav id='menu-principal'
-      className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
+        className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
         top-0 left-0 bg-cyan-950 md:bg-transparent transition-all duration-500 ease-in-out 
         z-40 md:z-auto ${isMenuOpen ? 'block' : 'hidden'} md:block`}
       >
         <ul className='h-full md:h-auto mt-10 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl md:text-lg'>
 
-          <li>
-            <button
-              className='nav-link'
-              onClick={() => {
-                document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' });
-                closeMenu();
-              }}>
-              Servicios
-            </button>
-          </li>
+          {/* Si estoy en Home, mostrar este menú */}
 
-          <li>
-            <button
-              className='nav-link'
-              onClick={() => {
-                document.getElementById('profesionales').scrollIntoView({ behavior: 'smooth' });
-                closeMenu();
-              }}>
-              Profesionales
-            </button>
-          </li>
+          {!isMisCitas && (
+            <>
+              <li>
+                <button
+                  className='nav-link'
+                  onClick={() => {
+                    document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' });
+                    closeMenu();
+                  }}>
+                  Servicios
+                </button>
+              </li>
 
-          <li>
-            <button
-              className='nav-link'
-              onClick={() => {
-                document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-                closeMenu();
-              }}>
-              Contacto
-            </button>
-          </li>
+              <li>
+                <button
+                  className='nav-link'
+                  onClick={() => {
+                    document.getElementById('profesionales').scrollIntoView({ behavior: 'smooth' });
+                    closeMenu();
+                  }}>
+                  Profesionales
+                </button>
+              </li>
 
-          <li className='nav-link'>
-            <Link to='/mis-citas' onClick={closeMenu} >Mis citas</Link>
-          </li>
+              <li>
+                <button
+                  className='nav-link'
+                  onClick={() => {
+                    document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+                    closeMenu();
+                  }}>
+                  Contacto
+                </button>
+              </li>
+
+              <li className='nav-link'>
+                <Link to='/mis-citas' onClick={closeMenu} >Mis citas</Link>
+              </li>
+
+            </>
+          )}
+
+          {isMisCitas && (
+            <>
+              <li className='nav-link'>
+                <Link to='/mis-citas' onClick={closeMenu} >Mis citas</Link>
+              </li>
+            </>
+          )}
 
           {/* Botón móvil */}
           <li className='block md:hidden mt-10 md:mt-0'>

@@ -3,9 +3,9 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import { validarTelefono } from '../utils/validarTelefono';
-import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas';
-import { db } from '../firebase';
+import { validarTelefono } from '../../utils/validarTelefono';
+import { filtrarHorasPasadas } from '../../utils/filtrarHorasPasadas';
+import { db } from '../../firebase';
 import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
 
 // Registra el locale 'es' para el calendario en España
@@ -157,7 +157,7 @@ function MisCitasTelefono() {
         </svg>
       </div>
 
-      <h2 className='py-10 relative text-cyan-800 text-center text-4xl font-bold'>Acceso rápido</h2>
+      <h1 className='py-10 relative text-cyan-800 text-center text-4xl font-bold'>Acceso rápido</h1>
 
       <div className='max-w-3xl mx-auto relative flex flex-col justify-center items-center gap-10'>
 
@@ -181,7 +181,7 @@ function MisCitasTelefono() {
             value={loading ? 'Buscando...' : 'Buscar cita'}
             disabled={loading}
             aria-label={loading ? 'Buscando...' : 'Buscar cita'}
-            className={`w-40 mx-auto p-3 lg:p-4  rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in 
+            className={`w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in 
             ${loading ? ' bg-cyan-400 cursor-not-allowed' : 'bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600'}`} />
 
         </form>
