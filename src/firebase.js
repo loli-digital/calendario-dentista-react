@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { setLogLevel } from "firebase/app";
 
@@ -16,3 +17,6 @@ export const db = getFirestore(app);
 
 // Configura el nivel de log para depuración de Firebase
 setLogLevel("debug");
+
+// Exportar auth
+export const auth = getAuth(app);
