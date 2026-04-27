@@ -182,6 +182,7 @@ function ReservarCita() {
                     setError(null);
                     setMensaje(null);
                   }}
+                  autoComplete='given-name'
                   className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
                 <label htmlFor='apellido' className='font-medium text-cyan-800'>Apellido/s</label>
@@ -201,6 +202,7 @@ function ReservarCita() {
                     setError(null);
                     setMensaje(null);
                   }}
+                  autoComplete='family-name'
                   className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
                 <label htmlFor='telefono' className='font-medium text-cyan-800'>Teléfono</label>
@@ -218,6 +220,7 @@ function ReservarCita() {
                   required
                   pattern='[0-9]{9}'
                   title='Escribe un teléfono de 9 dígitos'
+                  autoComplete='tel'
                   className='border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white' />
 
               </div>
