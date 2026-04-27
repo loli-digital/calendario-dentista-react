@@ -24,9 +24,11 @@ function ReservarCita() {
   const [servicio, setServicio] = useState('');
   const [profesional, setProfesional] = useState('');
   const [fecha, setFecha] = useState();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [mensaje, setMensaje] = useState(null);
+  const [titleSubmit, setTitleSubmit] = useState(false);
 
   // Filtro de profesionales según el servicio
   const profesionalesDisponibles = profesionales.filter(profesional =>
@@ -83,6 +85,8 @@ function ReservarCita() {
         hora: fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
 
+      setTitleSubmit(true);
+
       // Muestra el mensaje de confirmación de cita
       setMensaje({
         nombre,
@@ -104,7 +108,8 @@ function ReservarCita() {
 
     } catch (err) {
 
-      setError(err.message || 'Ocurrió un problema al reservar la cita');
+      setError('Ocurrió un problema al reservar la cita. Inténtelo de nuevo.');
+      console.log(err.message);
     }
 
     finally {
@@ -119,7 +124,7 @@ function ReservarCita() {
 
       {/* Forma para detrás de las cards */}
 
-      <div className='w-xl absolute top-40 lg:top-20 z-0 pointer-events-none drop-shadow-[0_0_4px] drop-shadow-cyan-800'>
+      <div className='w-xl absolute top-40 lg:top-00 z-0 pointer-events-none drop-shadow-[0_0_4px] drop-shadow-cyan-800'>
         <svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'>
           <path fill='#CEFAFE'
             d='M42.7,-71.6C55.9,-66.2,67.8,-56.1,73.8,-43.4C79.9,-30.6,80.2,-15.3,77.8,-1.4C75.4,12.6,70.3,25.1,65,39.1C59.7,53.1,54.1,68.6,43.2,78.6C32.3,88.6,16.2,93.2,0.4,92.5C-15.4,91.8,-30.8,85.9,-42.7,76.5C-54.7,67.1,-63.2,54.2,-71.7,40.9C-80.2,27.6,-88.7,13.8,-91.2,-1.4C-93.6,-16.6,-90,-33.2,-80.3,-44.6C-70.6,-55.9,-54.9,-61.9,-40.5,-66.6C-26.1,-71.2,-13.1,-74.5,0.8,-75.9C14.7,-77.3,29.4,-76.9,42.7,-71.6Z'
@@ -127,18 +132,19 @@ function ReservarCita() {
         </svg>
       </div>
 
-      <h2 className='relative py-10 text-cyan-800 text-center text-4xl font-bold'>Reservar cita</h2>
+      <h1 className='relative py-10 text-cyan-800 text-center text-4xl font-bold'>
+        {titleSubmit ? 'Cita reservada' : 'Reserva cita'}
+      </h1>
 
       {/* Mensaje de error al registrar la cita */}
       {error && !loading && (
-        <p className='relative mb-2 text-red-900 text-xl text-center font-bold'>{error}</p>
+        <p className='relative mt-5 text-red-900 text-xl text-center font-bold'>{error}</p>
       )}
 
       {/* Mensaje de confirmación de cita */}
       {mensaje && (
-
         <div className='w-full lg:w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-700 text-green-800 p-4 rounded shadow-md'>
-          <h3 className='font-bold text-lg mb-2'>Cita reservada correctamente</h3>
+          <h2 className='font-bold text-lg text-center mb-2'>Cita reservada correctamente</h2>
 
           <p><strong>Nombre y apellido/s:</strong> {mensaje.nombre} {mensaje.apellido}</p>
           <p><strong>Teléfono:</strong> {mensaje.telefono}</p>
@@ -149,7 +155,6 @@ function ReservarCita() {
           <p>Para acceder a sus citas, haga click en <span className='font-bold underline underline-offset-2'><Link to='/mis-citas'>Mis citas</Link></span> e introduzca su número de teléfono para acceder de manera rápida o a través de su cuenta personal.</p>
 
         </div>
-
       )}
 
       {/* Formulario */}
