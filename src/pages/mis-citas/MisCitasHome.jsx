@@ -50,8 +50,9 @@ function MisCitasHome() {
 
                     <Link to='/mis-citas/login'>
                         <button
-                            className='w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600'>
-                            Inicia sesión
+                            diabled
+                            className='w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-gray-500 text-white  hover:bg-gray-600 cursor-not-allowed'>
+                            Próximamente
                         </button>
                     </Link>
                 </div>
