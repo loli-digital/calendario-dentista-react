@@ -48,13 +48,13 @@ function MisCitasHome() {
                         Entra con tu cuenta o crea una nueva
                     </p>
 
-                    <Link to='/mis-citas/login'>
+                    {/*<Link to='/mis-citas/login'>*/}
                         <button
                             diabled
                             className='w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-gray-500 text-white  hover:bg-gray-600 cursor-not-allowed'>
                             Próximamente
                         </button>
-                    </Link>
+                     {/*</Link>*/}
                 </div>
 
             </div>
