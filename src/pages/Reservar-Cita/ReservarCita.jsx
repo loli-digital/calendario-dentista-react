@@ -3,14 +3,14 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../App.css';
-import profesionales from '../data/profesionalesData';
-import serviciosCita from '../data/serviciosData';
-import { validarTelefono } from '../utils/validarTelefono';
-import { filtrarHorasPasadas } from '../utils/filtrarHorasPasadas';
+import '../../App.css';
+import profesionales from '../../data/profesionalesData.jsx';
+import serviciosCita from '../../data/serviciosData';
+import { validarTelefono } from '../../utils/validarTelefono';
+import { filtrarHorasPasadas } from '../../utils/filtrarHorasPasadas';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import { db } from '../firebase.js';
+import { db } from '../../firebase.js';
 
 // Registra el locale 'es' para el calendario en España
 registerLocale('es', es);
