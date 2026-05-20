@@ -73,7 +73,7 @@ function Navbar() {
       {/* Menú navegación */}
       <nav
         id="menu-principal"
-        className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
+        className={`w-full h-137.5 md:w-auto md:h-auto text-white text-lg absolute md:relative 
         top-0 left-0 bg-cyan-950 md:bg-transparent transition-all duration-500 ease-in-out 
         z-40 md:z-auto ${isMenuOpen ? "block" : "hidden"} md:block`}
       >

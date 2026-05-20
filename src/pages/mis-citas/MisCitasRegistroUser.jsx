@@ -84,7 +84,7 @@ function MisCitasRegistroUser() {
                 e.preventDefault();
                 handleRegister();
             }}
-                className='w-[350px] lg:w-l mx-auto relative flex flex-col justify-center space-y-5'>
+                className='w-87.5 lg:w-l mx-auto relative flex flex-col justify-center space-y-5'>
 
                 <label htmlFor='nombre' className='font-medium text-cyan-800'>Nombre</label>
                 <input type='text'

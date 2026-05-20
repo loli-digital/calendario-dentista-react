@@ -35,7 +35,7 @@ function MisCitasLogin() {
 
             <h1 className='py-10 relative text-cyan-800 text-center text-4xl font-bold'>Inicia sesión</h1>
 
-            <form className='w-[350px] lg:w-l mx-auto relative flex flex-col justify-center space-y-5'>
+            <form className='w-87.5 lg:w-l mx-auto relative flex flex-col justify-center space-y-5'>
 
                 <label htmlFor='email' className='font-medium text-cyan-800'>Email</label>
                 <input type='email'

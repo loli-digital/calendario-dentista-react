@@ -164,7 +164,7 @@ function ReservarCita() {
 
           <p className='relative pb-10 text-cyan-800 text-center text-lg font-medium'>Para pedir cita, rellene todos los campos</p>
 
-          <form onSubmit={manejarSubmit} className='w-[350px] lg:w-xl mx-auto relative flex flex-col justify-center lg:space-y-10'>
+          <form onSubmit={manejarSubmit} className='w-87.5 lg:w-xl mx-auto relative flex flex-col justify-center lg:space-y-10'>
 
             <div className='w-full flex flex-col lg:flex-row justify-center gap-5 lg:gap-10'>
 
