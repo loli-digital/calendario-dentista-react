@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "moduleDetection": "force",
+
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  }
+}
