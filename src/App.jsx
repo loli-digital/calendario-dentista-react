@@ -1,7 +1,7 @@
 import "./App.css";
-import { Navbar } from "./layout/index";
-import { Footer } from "./layout/index";
-import { CookiesBanner } from "./components";
+import { Navbar } from "@/layout";
+import { Footer } from "@/layout";
+import { CookiesBanner } from "@/components";
 
 import { Routes, Route } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,8 +20,10 @@ const MisCitasLogin = lazy(() => import("./pages/mis-citas/MisCitasLogin"));
 const MisCitasRegistroUser = lazy(
   () => import("./pages/mis-citas/MisCitasRegistroUser"),
 );
-const ReservarCita = lazy(() => import("./pages/ReservarCita"));
-const PoliticaPrivacidad = lazy(() => import("./pages/PoliticaPrivacidad"));
+const ReservarCita = lazy(() => import("./pages/Reservar-Cita/ReservarCita"));
+const PoliticaPrivacidad = lazy(
+  () => import("./pages/Politica-Privacidad/PoliticaPrivacidad"),
+);
 
 function App() {
   return (
