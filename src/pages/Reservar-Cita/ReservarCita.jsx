@@ -6,11 +6,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import "@/App.css";
 import profesionales from "@/data";
 import serviciosCita from "@/data";
-import { validarTelefono } from "../utils/validarTelefono";
-import { filtrarHorasPasadas } from "../utils/filtrarHorasPasadas";
+import { validarTelefono } from "@/utils/validarTelefono";
+import { filtrarHorasPasadas } from "@/utils/filtrarHorasPasadas";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import { db } from "../firebase.js";
+import { db } from "@/firebase.js";
 
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
