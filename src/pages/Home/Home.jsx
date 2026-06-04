@@ -1,16 +1,12 @@
-
-import HeroSection from "../components/HeroSection";
-import Servicios from "../components/Servicios";
-import CTA from "../components/CTA";
-import Profesionales from "../components/Profesionales";
-import Reviews from '../components/Reviews';
-import Contacto from "../components/Contacto";
-
+import HeroSection from "./sections/HeroSection";
+import Servicios from "./sections/Servicios";
+import CTA from "./sections/CTA";
+import Profesionales from "./sections/Profesionales";
+import Reviews from "./sections/Reviews";
+import Contacto from "./sections/Contacto";
 
 function Home() {
-
   return (
-
     <>
       <HeroSection />
 
@@ -29,7 +25,6 @@ function Home() {
       <section id="contacto">
         <Contacto />
       </section>
-
     </>
   );
 }

@@ -1,17 +1,15 @@
-import profesionales from '../data/profesionalesData';
-import ProfesionalesCard from './ProfesionalesCard';
+import { profesionales } from "@/data";
+import { ProfesionalesCard } from "@/components";
 
 function Profesionales() {
-
   return (
+    <section className="w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center bg-cyan-50">
+      <h2 className="py-10 text-cyan-800 text-center text-4xl font-bold">
+        PROFESIONALES
+      </h2>
 
-    <section className='w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center bg-cyan-50'>
-
-      <h2 className='py-10 text-cyan-800 text-center text-4xl font-bold'>PROFESIONALES</h2>
-
-      <div className='px-5 flex flex-wrap md:flex-nowrap justify-center items-center gap-10'>
-
-       {profesionales.map(profesional => (
+      <div className="px-5 flex flex-wrap md:flex-nowrap justify-center items-center gap-10">
+        {profesionales.map((profesional) => (
           <ProfesionalesCard
             key={profesional.id}
             imagenAVIF={profesional.imagenAVIF}
@@ -27,12 +25,9 @@ function Profesionales() {
             experiencia={profesional.experiencia}
           />
         ))}
-
       </div>
-
     </section>
   );
-
 }
 
 export default Profesionales;
