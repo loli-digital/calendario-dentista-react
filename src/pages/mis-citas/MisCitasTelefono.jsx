@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import es from "date-fns/locale/es";
+import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { validarTelefono } from "@/utils/validarTelefono";
