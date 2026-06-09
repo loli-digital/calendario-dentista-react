@@ -78,7 +78,7 @@ Sistema de gestión de citas que permite a los usuarios:
 `git clone https://github.com/loli-digital/calendario-dentista-react.git`
 
 2. Instalar dependencias
-`npm install`
+`pnpm install`
 
 3. Ejecutar
-`npm run dev`
+`pnpm run dev`
