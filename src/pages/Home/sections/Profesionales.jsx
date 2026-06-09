@@ -8,7 +8,7 @@ function Profesionales() {
         PROFESIONALES
       </h2>
 
-      <div className="px-5 flex flex-wrap md:flex-nowrap justify-center items-center gap-10">
+      <div className="px-5 flex flex-wrap lg:flex-nowrap justify-center items-center gap-10">
         {profesionales.map((profesional) => (
           <ProfesionalesCard
             key={profesional.id}

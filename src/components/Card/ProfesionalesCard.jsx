@@ -12,7 +12,7 @@ function ProfesionalCard({
   experiencia,
 }) {
   return (
-    <article className="w-full h-auto flex flex-col justify-center items-center gap-10">
+    <article className="w-auto h-auto flex flex-col justify-center items-center gap-10">
       <picture>
         <source srcSet={imagenAVIF} type="image/avif" />
         <source srcSet={imagenWEBP} type="image/webp" />
