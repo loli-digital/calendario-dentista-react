@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faPhone } from "@fortawesome/free-solid-svg-icons";
 
-function Contacto() {
+export function Contacto() {
   const color = "#053345";
 
   return (
@@ -57,5 +56,3 @@ function Contacto() {
     </section>
   );
 }
-
-export default Contacto;

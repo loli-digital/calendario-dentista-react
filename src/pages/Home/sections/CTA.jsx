@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CTA() {
+export function CTA() {
   return (
     <section className="w-full h-96 relative bg-[url(assets/img/armario-medico-totalmente-equipado.jpg)] bg-top bg-fixed bg-cover">
       {/* Container con sombra encima de la imagen */}
@@ -22,5 +22,3 @@ function CTA() {
     </section>
   );
 }
-
-export default CTA;

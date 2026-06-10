@@ -1,7 +1,7 @@
 import { profesionales } from "@/data";
 import { ProfesionalesCard } from "@/components";
 
-function Profesionales() {
+export function Profesionales() {
   return (
     <section className="w-full h-auto py-10 sm:px-10 flex flex-col justify-center items-center bg-cyan-50">
       <h2 className="py-10 text-cyan-800 text-center text-4xl font-bold">
@@ -12,22 +12,20 @@ function Profesionales() {
         {profesionales.map((profesional) => (
           <ProfesionalesCard
             key={profesional.id}
-            imagenAVIF={profesional.imagenAVIF}
-            imagenWEBP={profesional.imagenWEBP}
-            imagen={profesional.imagen}
+            imgAVIF={profesional.imgAVIF}
+            imgWEBP={profesional.imgWEBP}
+            img={profesional.img}
             alt={profesional.alt}
-            nombre={profesional.nombre}
-            numColegiado={profesional.numColegiado}
-            especializacion1={profesional.especializacion1}
-            especializacion2={profesional.especializacion2}
-            especializacion3={profesional.especializacion3}
-            estudios={profesional.estudios}
-            experiencia={profesional.experiencia}
+            name={profesional.name}
+            numCollegiate={profesional.numCollegiate}
+            specialization1={profesional.specialization1}
+            specialization2={profesional.specialization2}
+            specialization3={profesional.specialization3}
+            studies={profesional.studies}
+            experience={profesional.experience}
           />
         ))}
       </div>
     </section>
   );
 }
-
-export default Profesionales;

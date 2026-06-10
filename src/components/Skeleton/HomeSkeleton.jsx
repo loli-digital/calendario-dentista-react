@@ -1,4 +1,4 @@
-function HomeSkeleton() {
+export function HomeSkeleton() {
   // Arrays de objetos con id único para evitar el warning de key
   const servicios = [
     { id: "servicio-1" },
@@ -56,5 +56,3 @@ function HomeSkeleton() {
     </div>
   );
 }
-
-export default HomeSkeleton;

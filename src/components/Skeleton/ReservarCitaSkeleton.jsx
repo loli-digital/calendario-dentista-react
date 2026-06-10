@@ -1,4 +1,4 @@
-function ReservarCitaSkeleton() {
+export function ReservarCitaSkeleton() {
   // Arrays de objetos con id único para evitar el warning de key
   const input = [
     { id: "input-1" },
@@ -27,5 +27,3 @@ function ReservarCitaSkeleton() {
     </div>
   );
 }
-
-export default ReservarCitaSkeleton;

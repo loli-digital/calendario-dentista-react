@@ -1,4 +1,4 @@
-export { default as profesionales } from "./profesionalesData";
-export { default as reviews } from "./reviewsData";
-export { default as serviciosCard } from "./serviciosCardData";
-export { default as servicios } from "./serviciosData";
+export { profesionales } from "./profesionalesData";
+export { reviews } from "./reviewsData";
+export { serviciosCard } from "./serviciosCardData";
+export { serviciosCita } from "./serviciosData";

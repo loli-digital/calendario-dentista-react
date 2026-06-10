@@ -1,8 +1,8 @@
 import { ServiciosCard } from "@/components";
 import { serviciosCard } from "@/data";
 
-function Servicios() {
-  console.log(serviciosCard);
+export function Servicios() {
+  
   return (
     <section className="w-full min-h-screen px-5 py-16 relative flex flex-col justify-center items-center gap-10 overflow-hidden bg-cyan-50">
       {/* Forma para detrás de las cards */}
@@ -27,18 +27,16 @@ function Servicios() {
         {serviciosCard.map((servicio) => (
           <ServiciosCard
             key={servicio.id}
-            imagenAVIF={servicio.imagenAVIF}
-            imagenWEBP={servicio.imagenWEBP}
-            imagen={servicio.imagen}
+            imgAVIF={servicio.imgAVIF}
+            imgWEBP={servicio.imgWEBP}
+            img={servicio.img}
             alt={servicio.alt}
-            icono={servicio.icono}
-            titulo={servicio.titulo}
-            descripcion={servicio.descripcion}
+            icon={servicio.icon}
+            title={servicio.title}
+            description={servicio.description}
           />
         ))}
       </div>
     </section>
   );
 }
-
-export default Servicios;

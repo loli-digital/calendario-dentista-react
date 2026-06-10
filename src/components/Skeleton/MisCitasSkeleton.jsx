@@ -1,4 +1,4 @@
-function MisCitasSkeleton() {
+export function MisCitasSkeleton() {
   // Array de objetos con id único para evitar el warning de key
   const elementos = [{ id: "elemento-1" }, { id: "elemento-2" }];
 
@@ -24,5 +24,3 @@ function MisCitasSkeleton() {
     </div>
   );
 }
-
-export default MisCitasSkeleton;

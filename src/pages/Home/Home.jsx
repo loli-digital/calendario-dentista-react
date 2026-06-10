@@ -1,9 +1,9 @@
-import HeroSection from "./sections/HeroSection";
-import Servicios from "./sections/Servicios";
-import CTA from "./sections/CTA";
-import Profesionales from "./sections/Profesionales";
-import Reviews from "./sections/Reviews";
-import Contacto from "./sections/Contacto";
+import { HeroSection } from "./sections/HeroSection";
+import { Servicios } from "./sections/Servicios";
+import { CTA } from "./sections/CTA";
+import { Profesionales } from "./sections/Profesionales";
+import { Reviews } from "./sections/Reviews";
+import { Contacto } from "./sections/Contacto";
 
 function Home() {
   return (

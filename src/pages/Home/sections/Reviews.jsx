@@ -8,7 +8,7 @@ import "@/App.css";
 import { reviews } from "@/data";
 import { ReviewsCard } from "@/components";
 
-function Reviews() {
+export function Reviews() {
   return (
     <section className="w-full h-auto py-10 lg:py-10 lg:px-10 bg-cyan-50">
       <h2 className="py-10 text-cyan-800 text-center text-4xl font-bold">
@@ -42,5 +42,3 @@ function Reviews() {
     </section>
   );
 }
-
-export default Reviews;

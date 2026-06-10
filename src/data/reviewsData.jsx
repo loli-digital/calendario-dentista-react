@@ -1,4 +1,4 @@
-const reviews = [
+export const reviews = [
   {
     id: 1,
     imagen: new URL(
@@ -72,6 +72,3 @@ const reviews = [
     rating: 5,
   },
 ];
-
-
-export default reviews;

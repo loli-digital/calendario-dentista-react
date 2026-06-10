@@ -1,13 +1,14 @@
 import logo from "@/assets/img/logo-clinica.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faSquareLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
+import {
+  faBriefcase,
+  faArrowUp,
+  faClock,
+  faPhone,
+  faHouse,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Footer() {
   const year = new Date().getFullYear();

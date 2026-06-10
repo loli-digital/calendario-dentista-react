@@ -3,7 +3,7 @@ import mujerSonriendo from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-bo
 import mujerSonriendoAVIF from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.avif";
 import mujerSonriendoWEBP from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.webp";
 
-function HeroSection() {
+export function HeroSection() {
   return (
     <div className="w-full h-96 lg:h-[90dvh] relative flex flex-nowrap justify-center md:justify-between items-center bg-cyan-100 overflow-hidden">
       {/* Imagen de la mujer */}
@@ -47,5 +47,3 @@ function HeroSection() {
     </div>
   );
 }
-
-export default HeroSection;

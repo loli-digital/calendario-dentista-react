@@ -1,4 +1,4 @@
-const serviciosCita = [
+export const serviciosCita = [
   {
     id: 1,
     nombre: "Limpieza",
@@ -30,5 +30,3 @@ const serviciosCita = [
     profesionalId: [1],
   },
 ];
-
-export default serviciosCita;
