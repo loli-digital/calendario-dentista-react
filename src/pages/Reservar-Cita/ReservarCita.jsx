@@ -4,8 +4,7 @@ import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/App.css";
-import { profesionales } from "@/data";
-import { servicios } from "@/data";
+import { profesionales, serviciosCita } from "@/data";
 import { validarTelefono } from "@/utils/validarTelefono";
 import { filtrarHorasPasadas } from "@/utils/filtrarHorasPasadas";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
@@ -31,7 +30,8 @@ function ReservarCita() {
 
   // Filtro de profesionales según el servicio
   const profesionalesDisponibles = profesionales.filter((profesional) =>
-    profesional.servicios.includes(Number(servicio)),
+    Array.isArray(profesional.services) &&
+    profesional.services.includes(Number(servicio)),
   );
 
   // Para guardar los datos en base de datos Firebase
@@ -60,7 +60,7 @@ function ReservarCita() {
       return;
     }
 
-    const servicioSeleccionado = servicios.find(
+    const servicioSeleccionado = serviciosCita.find(
       (s) => s.id === Number(servicio),
     );
 
@@ -284,7 +284,7 @@ function ReservarCita() {
                 >
                   <option value="">Selecciona un servicio</option>
 
-                  {servicios.map((servicio) => (
+                  {serviciosCita.map((servicio) => (
                     <option key={servicio.id} value={servicio.id}>
                       {servicio.nombre}
                     </option>
