@@ -3,210 +3,209 @@
 /*Navbar*/
 
 .nav-link {
-    display: inline-block;
-    position: relative;
-    text-decoration: none;
-    cursor: pointer;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-link:after {
-    content: "";
-    display: block;
-    margin: auto;
-    height: 3px;
-    width: 0px;
-    transition: all .3s;
+  content: "";
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0px;
+  transition: all 0.3s;
 }
 
 .nav-link:hover:after {
-    width: 100%;
-    background: #ffffff;
+  width: 100%;
+  background: #ffffff;
 }
 
 /* Animaciones Hero Section*/
 
 @media (width >=768px) {
+  /*Animación slide in top*/
 
-    /*Animación slide in top*/
+  .slide-in-top {
+    -webkit-animation: slide-in-top 1s;
+    animation: slide-in-top 1s;
+  }
 
-    .slide-in-top {
-        -webkit-animation: slide-in-top 1s;
-        animation: slide-in-top 1s;
+  @keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-1000px);
+      transform: translateY(-1000px);
+      opacity: 0;
     }
 
-    @keyframes slide-in-top {
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
-        0% {
-            -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-            opacity: 0;
-        }
+  /*Animación slide in bottom*/
 
-        100% {
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
-            opacity: 1;
-        }
+  .slide-in-bottom {
+    -webkit-animation: slide-in-bottom 1.5s;
+    animation: slide-in-bottom 1.5s;
+  }
+
+  @keyframes slide-in-bottom {
+    0% {
+      -webkit-transform: translateY(1000px);
+      transform: translateY(1000px);
+      opacity: 0;
     }
 
-    /*Animación slide in bottom*/
-
-    .slide-in-bottom {
-        -webkit-animation: slide-in-bottom 1.5s;
-        animation: slide-in-bottom 1.5s;
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
     }
-
-    @keyframes slide-in-bottom {
-
-        0% {
-            -webkit-transform: translateY(1000px);
-            transform: translateY(1000px);
-            opacity: 0;
-        }
-
-        100% {
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
+  }
 }
 
 /*Estilos Swiper - librería*/
 
 :root {
-    --swiper-navigation-color: #0092b8;
-    --swiper-pagination-bullet-size: 10px;
-    --swiper-pagination-color: #0e7490;
-    --swiper-pagination-bullet-inactive-color: #0e7490;
-    --swiper-pagination-bullet-inactive-opacity: 0.4;
+  --swiper-navigation-color: #0092b8;
+  --swiper-pagination-bullet-size: 10px;
+  --swiper-pagination-color: #0e7490;
+  --swiper-pagination-bullet-inactive-color: #0e7490;
+  --swiper-pagination-bullet-inactive-opacity: 0.4;
 }
 
 section .swiper {
-    width: 100%;
-    height: 480px;
+  width: 100%;
+  height: 480px;
 }
 
 .swiper .swiper-slide {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .swiper.swiper .swiper-pagination {
-    bottom: -5px;
+  bottom: -5px;
 }
 
 .swiper-pagination-bullet {
-    background-color: var(--swiper-pagination-bullet-inactive-color);
-    opacity: var(--swiper-pagination-bullet-inactive-opacity);
+  background-color: var(--swiper-pagination-bullet-inactive-color);
+  opacity: var(--swiper-pagination-bullet-inactive-opacity);
 }
 
 .swiper-pagination-bullet-active {
-    background-color: var(--swiper-pagination-color);
-    opacity: 1;
+  background-color: var(--swiper-pagination-color);
+  opacity: 1;
 }
 
 /* Ocultar flechas en móvil */
 section .swiper-button-prev,
 section .swiper-button-next {
-    display: none;
+  display: none;
 }
 
 /* Mostrar flechas desde 768px */
 @media (min-width: 768px) {
-
-    section .swiper-button-prev,
-    section .swiper-button-next {
-        display: flex;
-    }
+  section .swiper-button-prev,
+  section .swiper-button-next {
+    display: flex;
+  }
 }
 
 /*Estilos input formulario*/
 
 input:focus {
-    border: 2px solid oklch(30.152% 0.0565 230.191);
-    background-color: oklch(98.412% 0.01893 201.193);
+  border: 2px solid oklch(30.152% 0.0565 230.191);
+  background-color: oklch(98.412% 0.01893 201.193);
 }
 
-input[type=submit]:focus {
-    border: none;
-    background-color: oklch(52% 0.105 223.128);
+input[type="submit"]:focus {
+  border: none;
+  background-color: oklch(52% 0.105 223.128);
 }
 
 select,
 ::picker(select) {
-    appearance: base-select;
-    border: none;
-    border: 2px solid oklch(52% 0.105 223.128);
+  appearance: base-select;
+  border: none;
+  border: 2px solid oklch(52% 0.105 223.128);
 }
 
 ::picker(select) {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 select::picker-icon {
-    padding-right: 10px;
-    color: oklch(52% 0.105 223.128);
+  padding-right: 10px;
+  color: oklch(52% 0.105 223.128);
 }
 
 option::checkmark {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 option:last-child {
-    border-bottom: 1px solid oklch(52% 0.105 223.128);
+  border-bottom: 1px solid oklch(52% 0.105 223.128);
 }
 
 option:hover {
-    background-color: oklch(60.9% 0.126 221.723);
-    color: #fff;
+  background-color: oklch(60.9% 0.126 221.723);
+  color: #fff;
 }
 
 option:focus {
-    background-color: oklch(52% 0.105 223.128);
-    color: #fff;
+  background-color: oklch(52% 0.105 223.128);
+  color: #fff;
 }
 
 /*Estilos react datepicker*/
 
 .react-datepicker__header {
-    background-color: oklch(52% 0.105 223.128) !important;
+  background-color: oklch(52% 0.105 223.128) !important;
 }
 
 .react-datepicker__current-month,
 .react-datepicker__navigation,
 .react-datepicker-time__header {
-    color: #fff !important;
+  color: #fff !important;
 }
 
 .react-datepicker__time-list-item {
-    line-height: 20px;
+  line-height: 20px;
 }
 
 .react-datepicker__day:hover,
 .react-datepicker__time-list-item:hover {
-    background-color: oklch(60.9% 0.126 221.723) !important;
-    color: #fff;
+  background-color: oklch(60.9% 0.126 221.723) !important;
+  color: #fff;
 }
 
 .react-datepicker__day--selected,
 .react-datepicker__time-list-item--selected {
-    background-color: oklch(52% 0.105 223.128) !important;
-    color: #fff;
-    font-weight: bold;
+  background-color: oklch(52% 0.105 223.128) !important;
+  color: #fff;
+  font-weight: bold;
 }
 
 .react-datepicker__calendar-icon {
-    fill: oklch(52% 0.105 223.128) !important;
+  fill: oklch(52% 0.105 223.128) !important;
 }
 
-.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled {
-    display: none;
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--disabled {
+  display: none;
 }

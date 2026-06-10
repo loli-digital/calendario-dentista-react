@@ -17,7 +17,7 @@ function Reviews() {
 
       <Swiper
         modules={[Navigation, Pagination]}
-        spaceBetween={20}
+        spaceBetween={0}
         loop={true}
         navigation={true}
         pagination={{ clickable: true }}
