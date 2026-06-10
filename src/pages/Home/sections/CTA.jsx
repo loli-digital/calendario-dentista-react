@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Button } from "@/components";
 
 export function CTA() {
   return (
@@ -12,12 +12,7 @@ export function CTA() {
         </h2>
 
         {/* Botón para reservar cita */}
-        <Link
-          to="/reservar-cita"
-          className="bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50"
-        >
-          Reserva cita ya
-        </Link>
+        <Button />
       </div>
     </section>
   );

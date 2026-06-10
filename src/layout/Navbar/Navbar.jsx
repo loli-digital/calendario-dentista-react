@@ -1,6 +1,7 @@
 import { useState } from "react";
 import logo from "@/assets/img/logo-clinica.png";
 import { Link, useLocation } from "react-router-dom";
+import { Button } from "@/components";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -157,12 +158,7 @@ function Navbar() {
 
       {/* Botón escritorio */}
       <div className="hidden md:block">
-        <Link
-          to="/reservar-cita"
-          className="bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600"
-        >
-          Reserva cita ya
-        </Link>
+        <Button />
       </div>
     </header>
   );

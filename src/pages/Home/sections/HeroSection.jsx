@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import mujerSonriendo from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.png";
 import mujerSonriendoAVIF from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.avif";
 import mujerSonriendoWEBP from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.webp";
+import { Button } from "@/components";
 
 export function HeroSection() {
   return (
@@ -37,12 +37,7 @@ export function HeroSection() {
         <p className="text-xl text-center">
           Agenda online fácil y rápida, con profesionales de confianza
         </p>
-        <Link
-          to="/reserva"
-          className="bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50"
-        >
-          Reserva tu cita
-        </Link>
+        <Button />
       </div>
     </div>
   );
