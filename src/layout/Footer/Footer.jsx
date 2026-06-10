@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <footer className="w-full h-full lg:h-50 relative bg-cyan-950 text-white text-lg text-center">
       {/* Contenido footer */}
-      <div className="w-full h-full lg:h-50 py-10 lg:py-0 lg:px-5 flex flex-col lg:flex-row justify-around items-center gap-10 lg:gap-0">
+      <div className="w-full h-full lg:h-50 py-10 lg:py-0 lg:px-5 flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap justify-around items-center gap-10 lg:gap-0">
         {/* Logo */}
         <div className="w-30 xl:w-40">
           <img
@@ -29,8 +29,8 @@ export function Footer() {
         </div>
 
         {/* Dirección */}
-        <div className="w-60">
-          <div className="mb-4 flex justify-center items-center gap-2">
+        <div className="w-50">
+          <div className="mb-4 flex justify-center items-center gap-1">
             <FontAwesomeIcon icon={faHouse} color={color} />
             <h3 className="text-xl">Dirección</h3>
           </div>
@@ -39,8 +39,8 @@ export function Footer() {
         </div>
 
         {/* Teléfono */}
-        <div className="w-60">
-          <div className="mb-4 flex justify-center items-center gap-2">
+        <div className="w-50">
+          <div className="mb-4 flex justify-center items-center gap-1">
             <FontAwesomeIcon icon={faPhone} color={color} />
             <h3 className="text-xl">Teléfono</h3>
           </div>
@@ -49,8 +49,8 @@ export function Footer() {
         </div>
 
         {/* Horario */}
-        <div className="w-60">
-          <div className="mb-4 flex justify-center items-center gap-2">
+        <div className="w-50">
+          <div className="mb-4 flex justify-center items-center gap-1">
             <FontAwesomeIcon icon={faClock} color={color} />
             <h3 className="text-xl">Horario</h3>
           </div>
@@ -59,7 +59,7 @@ export function Footer() {
         </div>
 
         {/* Política de privacidad & Copyright & Redes sociales */}
-        <div className="w-60 flex flex-col items-center gap-2">
+        <div className="w-50 flex flex-col items-center gap-2">
           <Link to="/privacidad" className="hover:underline">
             Política de privacidad
           </Link>
