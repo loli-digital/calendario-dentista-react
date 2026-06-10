@@ -10,7 +10,7 @@ import { ReviewsCard } from "@/components";
 
 export function Reviews() {
   return (
-    <section className="w-full h-auto py-10 lg:py-10 lg:px-10 bg-cyan-50">
+    <section className="w-full h-auto pb-10 lg:px-10 bg-cyan-50">
       <h2 className="py-10 text-cyan-800 text-center text-4xl font-bold">
         RESEÑAS
       </h2>
