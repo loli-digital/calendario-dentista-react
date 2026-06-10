@@ -1,9 +1,11 @@
 import { useState } from "react";
 import logo from "@/assets/img/logo-clinica.png";
 import { Link, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 
-function Navbar() {
+export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -15,7 +17,7 @@ function Navbar() {
   const isRestrictedView = isMisCitas || isReservarCita;
 
   return (
-    <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 md:px-8">
+    <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
       {/* Logo */}
       <div className="z-50">
         <Link to="/">
@@ -40,34 +42,10 @@ function Navbar() {
       >
         {isMenuOpen ? (
           // Icono cerrar
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <FontAwesomeIcon icon={faXmark} />
         ) : (
           // Icono hamburguesa
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+          <FontAwesomeIcon icon={faBars} />
         )}
       </button>
 
@@ -79,6 +57,7 @@ function Navbar() {
         z-40 md:z-auto ${isMenuOpen ? "block" : "hidden"} md:block`}
       >
         <ul className="h-full md:h-auto mt-10 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl md:text-lg">
+         
           {/* Si estoy en Home, mostrar este menú */}
 
           {!isRestrictedView && (
@@ -145,13 +124,7 @@ function Navbar() {
 
           {/* Botón móvil */}
           <li className="block md:hidden mt-10 md:mt-0">
-            <Link
-              to="/reservar-cita"
-              onClick={closeMenu}
-              className="bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50"
-            >
-              Reserva cita ya
-            </Link>
+            <Button onClick={closeMenu} /> 
           </li>
         </ul>
       </nav>
@@ -163,5 +136,3 @@ function Navbar() {
     </header>
   );
 }
-
-export default Navbar;
