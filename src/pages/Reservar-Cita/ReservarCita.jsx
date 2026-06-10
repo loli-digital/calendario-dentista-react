@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
@@ -35,6 +35,15 @@ function ReservarCita() {
       Array.isArray(profesional.services) &&
       profesional.services.includes(Number(servicio)),
   );
+
+  useEffect(() => {
+    console.log(
+      "ReservarCita debug -> servicio:",
+      servicio,
+      "profesionalesDisponibles:",
+      profesionalesDisponibles,
+    );
+  }, [servicio, profesionalesDisponibles]);
 
   // Para guardar los datos en base de datos Firebase
   const manejarSubmit = async (e) => {
@@ -86,7 +95,7 @@ function ReservarCita() {
         apellido,
         telefono,
         servicio: servicioSeleccionado.nombre,
-        profesional: profesionalSeleccionado.nombre,
+        profesional: profesionalSeleccionado.name,
         fecha: Timestamp.fromDate(fecha),
         hora: fecha.toLocaleTimeString([], {
           hour: "2-digit",
@@ -101,8 +110,8 @@ function ReservarCita() {
         nombre,
         apellido,
         telefono,
-        servicio: servicioSeleccionado.nombre,
-        profesional: profesionalSeleccionado.nombre,
+        servicio: servicioSeleccionado.name,
+        profesional: profesionalSeleccionado.name,
         fecha: fecha.toLocaleDateString("es-ES"),
         hora: fecha.toLocaleTimeString([], {
           hour: "2-digit",
@@ -303,13 +312,30 @@ function ReservarCita() {
                     setMensaje(null);
                   }}
                 >
-                  <option value="">Selecciona un profesional</option>
-
-                  {profesionalesDisponibles.map((profesional) => (
-                    <option key={profesional.id} value={profesional.id}>
-                      {profesional.nombre}
-                    </option>
-                  ))}
+                  {servicio === "" ? (
+                    <>
+                      <option value="">Selecciona un profesional</option>
+                      <option value="" disabled>
+                        Selecciona un servicio primero
+                      </option>
+                    </>
+                  ) : profesionalesDisponibles.length === 0 ? (
+                    <>
+                      <option value="">Selecciona un profesional</option>
+                      <option value="" disabled>
+                        No hay profesionales disponibles
+                      </option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="">Selecciona un profesional</option>
+                      {profesionalesDisponibles.map((profesional) => (
+                        <option key={profesional.id} value={profesional.id}>
+                          {profesional.name || profesional.nombre || "Sin nombre"}
+                        </option>
+                      ))}
+                    </>
+                  )}
                 </select>
 
                 {/* Calendario */}
