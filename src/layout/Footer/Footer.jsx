@@ -10,7 +10,7 @@ import {
   faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Footer() {
+export function Footer() {
   const year = new Date().getFullYear();
   const color = "#007595";
 
@@ -118,5 +118,3 @@ function Footer() {
     </footer>
   );
 }
-
-export default Footer;

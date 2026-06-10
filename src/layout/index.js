@@ -1,2 +1,3 @@
-export { default as Navbar } from "./Navbar/Navbar";
-export { default as Footer } from "./Footer/Footer";
+export { Navbar } from "./Navbar/Navbar";
+export { Footer } from "./Footer/Footer";
+export { CookiesBanner } from "./Cookies-Banner/CookiesBanner";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function CookiesBanner() {
+export function CookiesBanner() {
   const [visible, setVisible] = useState(() => {
     // Verificar localStorage para mostrar el banner solo si no se ha aceptado antes
     return !localStorage.getItem("cookiesAceptadas");
@@ -37,5 +37,3 @@ function CookiesBanner() {
     </div>
   );
 }
-
-export default CookiesBanner;
