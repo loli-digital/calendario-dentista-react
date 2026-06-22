@@ -1,6 +1,6 @@
 function PoliticaPrivacidad() {
   return (
-    <section className=" w-full bg-cyan-50">
+    <section className="w-full bg-cyan-50">
       <div className="max-w-4xl mx-auto px-5 py-10 text-black">
         <h1 className="text-3xl font-bold mb-6 text-cyan-900">
           Política de Privacidad
