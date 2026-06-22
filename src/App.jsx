@@ -25,6 +25,8 @@ const PoliticaPrivacidad = lazy(
   () => import("./pages/Politica-Privacidad/PoliticaPrivacidad"),
 );
 
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+
 function App() {
   return (
     <>
@@ -91,6 +93,19 @@ function App() {
                 }
               >
                 <PoliticaPrivacidad />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense
+                fallback={
+                  <div className="text-center">Cargando dashboard...</div>
+                }
+              >
+                <Dashboard />
               </Suspense>
             }
           />
