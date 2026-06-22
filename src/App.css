@@ -209,3 +209,16 @@ option:focus {
   li.react-datepicker__time-list-item--disabled {
   display: none;
 }
+
+/* Dashboard section styles */
+
+.dashboard-section {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: #F8FAFC;
+  color: #000;
+}
