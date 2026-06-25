@@ -1,8 +1,15 @@
 import { useState } from "react";
 import logo from "@/assets/img/logo-clinica.png";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faXmark,
+  faUser,
+  faCalendarDays,
+  faFileInvoiceDollar,
+  faGear,
+} from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 
 export function Navbar() {
@@ -14,20 +21,21 @@ export function Navbar() {
   const location = useLocation();
   const isMisCitas = location.pathname.startsWith("/mis-citas");
   const isReservarCita = location.pathname.startsWith("/reservar-cita");
+  const isUserLogin = location.pathname.startsWith("/dashboard");
   const isRestrictedView = isMisCitas || isReservarCita;
 
   return (
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
       {/* Logo */}
       <div className="z-50">
-        <Link to="/">
+        <NavLink to="/">
           <img
             src={logo}
             fetchPriority="high"
             alt="Logo Clínica Dental Navarro"
             className="w-20 xl:w-30 h-auto cursor-pointer object-contain"
           />
-        </Link>
+        </NavLink>
       </div>
 
       {/* Botón menú móvil */}
@@ -38,7 +46,7 @@ export function Navbar() {
         aria-label={
           isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
         }
-        className="text-white text-3xl md:hidden focus:outline-none z-50"
+        className="text-white text-3xl lg:hidden focus:outline-none z-50"
       >
         {isMenuOpen ? (
           // Icono cerrar
@@ -52,15 +60,13 @@ export function Navbar() {
       {/* Menú navegación */}
       <nav
         id="menu-principal"
-        className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
-        top-0 left-0 bg-cyan-950 md:bg-transparent transition-all duration-500 ease-in-out 
-        z-40 md:z-auto ${isMenuOpen ? "block" : "hidden"} md:block`}
+        className={`w-full h-[550px] lg:w-auto lg:h-auto text-white text-lg absolute lg:relative 
+        top-0 left-0 bg-cyan-950 lg:bg-transparent transition-all duration-500 ease-in-out 
+        z-40 lg:z-auto ${isMenuOpen ? "block" : "hidden"} lg:block`}
       >
-        <ul className="h-full md:h-auto mt-10 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl md:text-lg">
-         
+        <ul className="h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl lg:text-lg">
           {/* Si estoy en Home, mostrar este menú */}
-
-          {!isRestrictedView && (
+          {!isRestrictedView && !isUserLogin && (
             <>
               <li>
                 <button
@@ -105,34 +111,75 @@ export function Navbar() {
               </li>
 
               <li className="nav-link">
-                <Link to="/mis-citas" onClick={closeMenu}>
+                <NavLink to="/mis-citas" onClick={closeMenu}>
                   Mis citas
-                </Link>
+                </NavLink>
               </li>
             </>
           )}
 
+          {/* Menú para Mis citas y Reservar Cita */}
           {isRestrictedView && (
             <>
               <li className="nav-link">
-                <Link to="/mis-citas" onClick={closeMenu}>
+                <NavLink to="/mis-citas" onClick={closeMenu}>
                   Mis citas
-                </Link>
+                </NavLink>
               </li>
             </>
           )}
 
-          {/* Botón móvil */}
-          <li className="block md:hidden mt-10 md:mt-0">
-            <Button onClick={closeMenu} /> 
-          </li>
+          {/* Menú para cuando se ha hecho login */}
+          {isUserLogin && (
+            <>
+              <li className="nav-link" onClick={closeMenu}>
+                <NavLink to="/dashboard-mis-datos" className="lg:hidden">
+                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  Mis datos
+                </NavLink>
+              </li>
+              <li className="nav-link" onClick={closeMenu}>
+                <NavLink to="/dashboard-mis-citas" className="lg:hidden">
+                  <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
+                  Mis citas
+                </NavLink>
+              </li>
+              <li className="nav-link" onClick={closeMenu}>
+                <NavLink to="/dashboard-mis-facturas" className="lg:hidden">
+                  <FontAwesomeIcon
+                    icon={faFileInvoiceDollar}
+                    className="mr-2"
+                  />
+                  Mis facturas
+                </NavLink>
+              </li>
+              <li className="nav-link" onClick={closeMenu}>
+                <NavLink to="/dashboard-ajustes" className="lg:hidden">
+                  <FontAwesomeIcon icon={faGear} className="mr-2" />
+                  Ajustes
+                </NavLink>
+              </li>
+              <li className="nav-link" onClick={closeMenu}>
+                <NavLink>Cerrar sesión</NavLink>
+              </li>
+            </>
+          )}
+
+          {/* Botón para reservar cita que se encuentra dentro del menú móvil */}
+          {!isUserLogin && (
+            <li className="block lg:hidden mt-10 lg:mt-0">
+              <Button onClick={closeMenu} />
+            </li>
+          )}
         </ul>
       </nav>
 
-      {/* Botón escritorio */}
-      <div className="hidden md:block">
-        <Button />
-      </div>
+      {/* Botón para reservar cita excepto en Dashboard */}
+      {!isUserLogin && (
+        <div className="hidden lg:block">
+          <Button />
+        </div>
+      )}
     </header>
   );
 }
