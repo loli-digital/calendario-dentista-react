@@ -1,1 +1,0 @@
-{/* En esta página, el user puede pedir cita */}

@@ -1,1 +1,0 @@
-{/* Aquí se muestran las facturas de anteriores consultas */}
