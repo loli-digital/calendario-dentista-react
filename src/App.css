@@ -23,6 +23,53 @@
   background: #ffffff;
 }
 
+/* Title styles */
+.title__section {
+  padding: 2.5rem 0;
+  position: relative;
+  color: oklch(45% 0.085 224.283);
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+}
+
+/* Dashboard section styles */
+.aside {
+  width: 11rem;
+  height: auto;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: oklch(52% 0.105 223.128);
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 5px #000;
+}
+
+.aside__navlink {
+  width: 100%;
+  padding: 1.5rem;
+  border-bottom: 1px solid #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.aside__navlink:last-child {
+  border-bottom: none;
+}
+
+.dashboard-section {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: #f8fafc;
+  color: #000;
+}
+
 /* Animaciones Hero Section*/
 
 @media (width >=768px) {
@@ -208,17 +255,4 @@ option:focus {
   ul.react-datepicker__time-list
   li.react-datepicker__time-list-item--disabled {
   display: none;
-}
-
-/* Dashboard section styles */
-
-.dashboard-section {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background-color: #F8FAFC;
-  color: #000;
 }
