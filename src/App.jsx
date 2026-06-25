@@ -1,7 +1,8 @@
 import "./App.css";
 import { Navbar } from "@/layout";
 import { Footer } from "@/layout";
-import { CookiesBanner } from "@/components";
+import { CookiesBanner } from "@/layout";
+import { DashboardLayout } from "@/layout";
 
 import { Routes, Route } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
@@ -24,8 +25,6 @@ const ReservarCita = lazy(() => import("./pages/Reservar-Cita/ReservarCita"));
 const PoliticaPrivacidad = lazy(
   () => import("./pages/Politica-Privacidad/PoliticaPrivacidad"),
 );
-
-const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 
 function App() {
   return (
@@ -105,7 +104,7 @@ function App() {
                   <div className="text-center">Cargando dashboard...</div>
                 }
               >
-                <Dashboard />
+                <DashboardLayout />
               </Suspense>
             }
           />
