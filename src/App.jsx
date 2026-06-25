@@ -1,7 +1,6 @@
 import "./App.css";
 import { Navbar } from "@/layout";
 import { Footer } from "@/layout";
-import { CookiesBanner } from "@/layout";
 import { DashboardLayout } from "@/layout";
 
 import { Routes, Route } from "react-router-dom";
@@ -11,6 +10,7 @@ import { lazy, Suspense } from "react";
 import { HomeSkeleton } from "@/components";
 import { MisCitasSkeleton } from "@/components";
 import { ReservarCitaSkeleton } from "@/components";
+import { CookiesBanner } from "@/components";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const MisCitasHome = lazy(() => import("./pages/mis-citas/MisCitasHome"));
