@@ -8,7 +8,7 @@ function MisCitasHome() {
       {/* Forma para detrás de las cards */}
       <DecorativeShape />
 
-      <h1 className="py-10 relative text-cyan-800 text-center text-4xl font-bold">
+      <h1 className="title__section">
         Mis Citas
       </h1>
 
