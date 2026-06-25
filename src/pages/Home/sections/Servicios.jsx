@@ -1,6 +1,6 @@
 import { ServiciosCard } from "@/components";
 import { serviciosCard } from "@/data";
-import {DecorativeShape} from "@/components";
+import { DecorativeShape } from "@/components";
 
 export function Servicios() {
   
