@@ -1,0 +1,1 @@
+{/* En esta página, el user puede eliminar su cuenta */}
