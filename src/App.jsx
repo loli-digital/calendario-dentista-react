@@ -25,6 +25,12 @@ const ReservarCita = lazy(() => import("./pages/Reservar-Cita/ReservarCita"));
 const PoliticaPrivacidad = lazy(
   () => import("./pages/Politica-Privacidad/PoliticaPrivacidad"),
 );
+const DashboardMisDatos = lazy(() => import("./pages/Dashboard/MisDatos.jsx"));
+const DashboardMisCitas = lazy(() => import("./pages/Dashboard/MisCitas.jsx"));
+const DashboardMisFacturas = lazy(
+  () => import("./pages/Dashboard/MisFacturas.jsx"),
+);
+const DashboardAjustes = lazy(() => import("./pages/Dashboard/Ajustes.jsx"));
 
 function App() {
   return (
@@ -107,7 +113,69 @@ function App() {
                 <DashboardLayout />
               </Suspense>
             }
-          />
+          >
+            {/* Ruta por defecto para dashboard */}
+            <Route
+              index
+              element={
+                <Suspense
+                  fallback={
+                    <div className="text-center">Cargando mis datos...</div>
+                  }
+                >
+                  <DashboardMisDatos />
+                </Suspense>
+              }
+            />
+            <Route
+              path="mis-datos"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="text-center">Cargando mis datos...</div>
+                  }
+                >
+                  <DashboardMisDatos />
+                </Suspense>
+              }
+            />
+            <Route
+              path="mis-citas"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="text-center">Cargando mis citas...</div>
+                  }
+                >
+                  <DashboardMisCitas />
+                </Suspense>
+              }
+            />
+            <Route
+              path="mis-facturas"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="text-center">Cargando mis facturas...</div>
+                  }
+                >
+                  <DashboardMisFacturas />
+                </Suspense>
+              }
+            />
+            <Route
+              path="ajustes"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="text-center">Cargando dashboard...</div>
+                  }
+                >
+                  <DashboardAjustes />
+                </Suspense>
+              }
+            />
+          </Route>
         </Routes>
       </main>
       <Footer />
