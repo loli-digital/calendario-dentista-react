@@ -33,6 +33,22 @@
   font-weight: bold;
 }
 
+/* Container style */
+
+.container__section {
+  width: 100%;
+  min-height: 100dvh;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  background-color: #ecfeff;
+}
+
 /* Dashboard section styles */
 .aside {
   width: 11rem;
@@ -57,17 +73,6 @@
 
 .aside__navlink:last-child {
   border-bottom: none;
-}
-
-.dashboard-section {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background-color: #f8fafc;
-  color: #000;
 }
 
 /* Animaciones Hero Section*/
