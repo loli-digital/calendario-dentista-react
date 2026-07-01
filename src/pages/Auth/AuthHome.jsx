@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
 
-function MisCitasHome() {
+function AuthHome() {
   return (
     <section className="w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center gap-10 overflow-hidden bg-cyan-50">
       
@@ -50,4 +50,4 @@ function MisCitasHome() {
   );
 }
 
-export default MisCitasHome;
+export default AuthHome;
