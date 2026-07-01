@@ -4,7 +4,7 @@ import { auth } from "@/firebase";
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
 
-function MisCitasLogin() {
+function AuthLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -81,4 +81,4 @@ function MisCitasLogin() {
   );
 }
 
-export default MisCitasLogin;
+export default AuthLogin;
