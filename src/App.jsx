@@ -1,30 +1,35 @@
 import "./App.css";
-import { Navbar } from "@/layout";
-import { Footer } from "@/layout";
-import { DashboardLayout } from "@/layout";
+import { Navbar, Footer, DashboardLayout } from "@/layout";
 
 import { Routes, Route } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { lazy, Suspense } from "react";
-import { HomeSkeleton } from "@/components";
-import { MisCitasSkeleton } from "@/components";
-import { ReservarCitaSkeleton } from "@/components";
-import { CookiesBanner } from "@/components";
+import {
+  HomeSkeleton,
+  ReservarCitaSkeleton,
+  AuthSkeleton,
+  CookiesBanner,
+} from "@/components";
 
+// Home
 const Home = lazy(() => import("./pages/Home/Home"));
-const MisCitasHome = lazy(() => import("./pages/mis-citas/MisCitasHome"));
-const MisCitasTelefono = lazy(
-  () => import("./pages/mis-citas/MisCitasTelefono"),
-);
-const MisCitasLogin = lazy(() => import("./pages/mis-citas/MisCitasLogin"));
-const MisCitasRegistroUser = lazy(
-  () => import("./pages/mis-citas/MisCitasRegistroUser"),
-);
+
+// Auth
+const AuthHome = lazy(() => import("./pages/Auth/AuthHome"));
+const AuthLogin = lazy(() => import("./pages/Auth/AuthLogin.jsx"));
+const AuthTelefono = lazy(() => import("./pages/Auth/AuthTelefono"));
+const AuthRegistroUser = lazy(() => import("./pages/Auth/AuthRegistroUser"));
+
+// Reservar cita
 const ReservarCita = lazy(() => import("./pages/Reservar-Cita/ReservarCita"));
+
+// Política de privacidad
 const PoliticaPrivacidad = lazy(
   () => import("./pages/Politica-Privacidad/PoliticaPrivacidad"),
 );
+
+// Dashboard
 const DashboardMisDatos = lazy(() => import("./pages/Dashboard/MisDatos.jsx"));
 const DashboardMisCitas = lazy(() => import("./pages/Dashboard/MisCitas.jsx"));
 const DashboardMisFacturas = lazy(
@@ -39,6 +44,7 @@ function App() {
       <Navbar />
       <main>
         <Routes>
+          {/* Home */}
           <Route
             path="/"
             element={
@@ -47,38 +53,50 @@ function App() {
               </Suspense>
             }
           />
+
+          {/* Auth */}
           <Route
-            path="/mis-citas"
+            path="/auth"
             element={
-              <Suspense fallback={<MisCitasSkeleton />}>
-                <MisCitasHome />
-              </Suspense>
+                <AuthHome />
             }
-          />
-          <Route
-            path="/mis-citas/telefono"
-            element={
-              <Suspense fallback={<MisCitasSkeleton />}>
-                <MisCitasTelefono />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/mis-citas/login"
-            element={
-              <Suspense fallback={<MisCitasSkeleton />}>
-                <MisCitasLogin />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/mis-citas/nueva-cuenta"
-            element={
-              <Suspense fallback={<MisCitasSkeleton />}>
-                <MisCitasRegistroUser />
-              </Suspense>
-            }
-          />
+          >
+            {/* Ruta por defecto para Auth */}
+            <Route
+              index
+              element={
+                <Suspense fallback={<AuthSkeleton />}>
+                  <AuthHome />
+                </Suspense>
+              }
+            />
+            <Route
+              path="login"
+              element={
+                <Suspense fallback={<AuthSkeleton />}>
+                  <AuthLogin />
+                </Suspense>
+              }
+            />
+            <Route
+              path="telefono"
+              element={
+                <Suspense fallback={<AuthSkeleton />}>
+                  <AuthTelefono />
+                </Suspense>
+              }
+            />
+            <Route
+              path="nueva-cuenta"
+              element={
+                <Suspense fallback={<AuthSkeleton />}>
+                  <AuthRegistroUser />
+                </Suspense>
+              }
+            />
+          </Route>
+
+          {/* Reservar cita */}
           <Route
             path="/reservar-cita"
             element={
@@ -87,6 +105,8 @@ function App() {
               </Suspense>
             }
           />
+
+          {/* Privacidad */}
           <Route
             path="/privacidad"
             element={
@@ -102,6 +122,7 @@ function App() {
             }
           />
 
+          {/* Dashboard */}
           <Route
             path="/dashboard"
             element={
@@ -114,7 +135,7 @@ function App() {
               </Suspense>
             }
           >
-            {/* Ruta por defecto para dashboard */}
+            {/* Ruta por defecto para Dashboard */}
             <Route
               index
               element={
