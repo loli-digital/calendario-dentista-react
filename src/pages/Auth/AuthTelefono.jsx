@@ -21,7 +21,7 @@ import { DecorativeShape } from "@/components";
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
 
-function MisCitasTelefono() {
+function AuthTelefono() {
   const [telefonoBusqueda, setTelefonoBusqueda] = useState("");
   const [citasPaciente, setCitasPaciente] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -431,4 +431,4 @@ function MisCitasTelefono() {
   );
 }
 
-export default MisCitasTelefono;
+export default AuthTelefono;
