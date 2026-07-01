@@ -12,7 +12,7 @@ export function SidebarDashboard() {
     <div className="w-44 h-96">
       <nav className="aside">
         <NavLink
-          to="/dashboard-mis-datos"
+          to="/dashboard/mis-datos"
           className={({ isActive }) =>
             `aside__navlink ${isActive ? "bg-cyan-700 rounded-t-sm" : "hover:bg-cyan-800 hover:rounded-t-sm"}`
           }
@@ -21,7 +21,7 @@ export function SidebarDashboard() {
           Mis datos
         </NavLink>
         <NavLink
-          to="/dashboard-mis-citas"
+          to="/dashboard/mis-citas"
           className={({ isActive }) =>
             `aside__navlink ${isActive ? "bg-cyan-700" : "hover:bg-cyan-800"}`
           }
@@ -30,7 +30,7 @@ export function SidebarDashboard() {
           Mis citas
         </NavLink>
         <NavLink
-          to="/dashboard-mis-facturas"
+          to="/dashboard/mis-facturas"
           className={({ isActive }) =>
             `aside__navlink ${isActive ? "bg-cyan-700" : "hover:bg-cyan-800"}`
           }
@@ -39,7 +39,7 @@ export function SidebarDashboard() {
           Mis facturas
         </NavLink>
         <NavLink
-          to="/dashboard-ajustes"
+          to="/dashboard/ajustes"
           className={({ isActive }) =>
             `aside__navlink ${isActive ? "bg-cyan-700" : "hover:bg-cyan-800 hover:rounded-b-sm"}`
           }
