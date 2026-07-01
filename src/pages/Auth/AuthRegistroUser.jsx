@@ -6,7 +6,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
 
-function MisCitasRegistroUser() {
+function AuthRegistroUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
@@ -209,4 +209,4 @@ function MisCitasRegistroUser() {
   );
 }
 
-export default MisCitasRegistroUser;
+export default AuthRegistroUser;
