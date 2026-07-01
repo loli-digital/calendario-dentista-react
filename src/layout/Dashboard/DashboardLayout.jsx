@@ -25,7 +25,7 @@ export function DashboardLayout() {
 
       <h1 className="title__section">{getTitle()}</h1>
 
-      <section className="w-full lg:w-5xl h-auto relative flex flex-nowrap justify-center lg:justify-start items-start">
+      <section className="w-full lg:w-5xl h-auto pb-10 relative flex flex-nowrap justify-center lg:justify-start items-start">
         {/* Sidebar */}
         <aside className="hidden lg:block">
           <SidebarDashboard />
