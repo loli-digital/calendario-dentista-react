@@ -3,7 +3,7 @@ export { ReviewsCard } from "./Card/ReviewsCard";
 export { ServiciosCard } from "./Card/ServiciosCard";
 export { RatingStars } from "./RatingStars/RatingStars";
 export { HomeSkeleton } from "./Skeleton/HomeSkeleton";
-export { MisCitasSkeleton } from "./Skeleton/MisCitasSkeleton";
+export { AuthSkeleton } from "./Skeleton/AuthSkeleton";
 export { ReservarCitaSkeleton } from "./Skeleton/ReservarCitaSkeleton";
 export { Button } from "./Button/Button";
 export { DecorativeShape } from "./DecorativeShape/DecorativeShape";
