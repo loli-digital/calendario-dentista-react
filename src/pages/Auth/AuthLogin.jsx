@@ -27,7 +27,7 @@ function AuthLogin() {
         Inicia sesión
       </h1>
 
-      <form className="w-[350px] lg:w-l mx-auto relative flex flex-col justify-center space-y-5">
+      <form className="w-[350px] lg:w-l mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-5">
         <label htmlFor="email" className="font-medium text-cyan-800">
           Email
         </label>
@@ -68,7 +68,7 @@ function AuthLogin() {
           Crea una cuenta si eres un/a paciente nuevo/a{" "}
         </p>
 
-        <Link to="/mis-citas/nueva-cuenta" className="mx-auto p-3">
+        <Link to="/auth/nueva-cuenta" className="mx-auto p-3">
           <button
             onClick={handleRegister}
             className="w-40 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
