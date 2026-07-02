@@ -32,7 +32,7 @@ export function DashboardLayout() {
         </aside>
 
         {/* Layout del dashboard */}
-        <div className="w-auto lg:w-2xl h-full bg-cyan-50 rounded-sm shadow-[0_0_5px_black]">
+        <div className="w-auto lg:w-2xl h-full lg:h-[450px] bg-cyan-50 rounded-sm shadow-[0_0_5px_black]">
           <Outlet />
         </div>
       </section>
