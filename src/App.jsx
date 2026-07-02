@@ -1,7 +1,7 @@
 import "./App.css";
 import { Navbar, Footer, DashboardLayout } from "@/layout";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { lazy, Suspense } from "react";
@@ -16,8 +16,10 @@ import {
 const Home = lazy(() => import("./pages/Home/Home"));
 
 // Auth
+const RedirectIfAuth = lazy(() => import("./router/RedirectIfAuth"));
+const RequireAuth = lazy(() => import("./router/RequireAuth"));
 const AuthHome = lazy(() => import("./pages/Auth/AuthHome"));
-const AuthLogin = lazy(() => import("./pages/Auth/AuthLogin.jsx"));
+const AuthLogin = lazy(() => import("./pages/Auth/AuthLogin"));
 const AuthTelefono = lazy(() => import("./pages/Auth/AuthTelefono"));
 const AuthRegistroUser = lazy(() => import("./pages/Auth/AuthRegistroUser"));
 
@@ -30,12 +32,12 @@ const PoliticaPrivacidad = lazy(
 );
 
 // Dashboard
-const DashboardMisDatos = lazy(() => import("./pages/Dashboard/MisDatos.jsx"));
-const DashboardMisCitas = lazy(() => import("./pages/Dashboard/MisCitas.jsx"));
+const DashboardMisDatos = lazy(() => import("./pages/Dashboard/MisDatos"));
+const DashboardMisCitas = lazy(() => import("./pages/Dashboard/MisCitas"));
 const DashboardMisFacturas = lazy(
-  () => import("./pages/Dashboard/MisFacturas.jsx"),
+  () => import("./pages/Dashboard/MisFacturas"),
 );
-const DashboardAjustes = lazy(() => import("./pages/Dashboard/Ajustes.jsx"));
+const DashboardAjustes = lazy(() => import("./pages/Dashboard/Ajustes"));
 
 function App() {
   return (
@@ -54,46 +56,44 @@ function App() {
             }
           />
 
-          {/* Auth */}
-          <Route
-            path="/auth"
-            element={
-                <AuthHome />
-            }
-          >
-            {/* Ruta por defecto para Auth */}
-            <Route
-              index
-              element={
-                <Suspense fallback={<AuthSkeleton />}>
-                  <AuthHome />
-                </Suspense>
-              }
-            />
-            <Route
-              path="login"
-              element={
-                <Suspense fallback={<AuthSkeleton />}>
-                  <AuthLogin />
-                </Suspense>
-              }
-            />
-            <Route
-              path="telefono"
-              element={
-                <Suspense fallback={<AuthSkeleton />}>
-                  <AuthTelefono />
-                </Suspense>
-              }
-            />
-            <Route
-              path="nueva-cuenta"
-              element={
-                <Suspense fallback={<AuthSkeleton />}>
-                  <AuthRegistroUser />
-                </Suspense>
-              }
-            />
+          {/* Auth, sólo se accede si el user NO está logueado */}
+          <Route element={<RedirectIfAuth />}>
+          {/* Outlet se usa para ver las rutas hijas. Por ejemplo, al hacer click en Acceder a la cuenta personal, redirigiría a AuthLogin */}
+            <Route path="/auth" element={<Outlet />}>
+              {/* Ruta por defecto para Auth */}
+              <Route
+                index
+                element={
+                  <Suspense fallback={<AuthSkeleton />}>
+                    <AuthHome />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="login"
+                element={
+                  <Suspense fallback={<AuthSkeleton />}>
+                    <AuthLogin />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="telefono"
+                element={
+                  <Suspense fallback={<AuthSkeleton />}>
+                    <AuthTelefono />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="nueva-cuenta"
+                element={
+                  <Suspense fallback={<AuthSkeleton />}>
+                    <AuthRegistroUser />
+                  </Suspense>
+                }
+              />
+            </Route>
           </Route>
 
           {/* Reservar cita */}
@@ -122,80 +122,84 @@ function App() {
             }
           />
 
-          {/* Dashboard */}
-          <Route
-            path="/dashboard"
-            element={
-              <Suspense
-                fallback={
-                  <div className="text-center">Cargando dashboard...</div>
-                }
-              >
-                <DashboardLayout />
-              </Suspense>
-            }
-          >
-            {/* Ruta por defecto para Dashboard */}
+          {/* Dashboard, sólo se accede si el user está logueado */}
+          <Route element={<RequireAuth />}>
             <Route
-              index
-              element={
-                <Suspense
-                  fallback={
-                    <div className="text-center">Cargando mis datos...</div>
-                  }
-                >
-                  <DashboardMisDatos />
-                </Suspense>
-              }
-            />
-            <Route
-              path="mis-datos"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="text-center">Cargando mis datos...</div>
-                  }
-                >
-                  <DashboardMisDatos />
-                </Suspense>
-              }
-            />
-            <Route
-              path="mis-citas"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="text-center">Cargando mis citas...</div>
-                  }
-                >
-                  <DashboardMisCitas />
-                </Suspense>
-              }
-            />
-            <Route
-              path="mis-facturas"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="text-center">Cargando mis facturas...</div>
-                  }
-                >
-                  <DashboardMisFacturas />
-                </Suspense>
-              }
-            />
-            <Route
-              path="ajustes"
+              path="/dashboard"
               element={
                 <Suspense
                   fallback={
                     <div className="text-center">Cargando dashboard...</div>
                   }
                 >
-                  <DashboardAjustes />
+                  <DashboardLayout />
                 </Suspense>
               }
-            />
+            >
+              {/* Ruta por defecto para Dashboard */}
+              <Route
+                index
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="text-center">Cargando mis datos...</div>
+                    }
+                  >
+                    <DashboardMisDatos />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="mis-datos"
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="text-center">Cargando mis datos...</div>
+                    }
+                  >
+                    <DashboardMisDatos />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="mis-citas"
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="text-center">Cargando mis citas...</div>
+                    }
+                  >
+                    <DashboardMisCitas />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="mis-facturas"
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="text-center">
+                        Cargando mis facturas...
+                      </div>
+                    }
+                  >
+                    <DashboardMisFacturas />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="ajustes"
+                element={
+                  <Suspense
+                    fallback={
+                      <div className="text-center">Cargando dashboard...</div>
+                    }
+                  >
+                    <DashboardAjustes />
+                  </Suspense>
+                }
+              />
+            </Route>
           </Route>
         </Routes>
       </main>
