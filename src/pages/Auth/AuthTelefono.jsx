@@ -152,7 +152,7 @@ function AuthTelefono() {
         Acceso rápido
       </h1>
 
-      <div className="max-w-3xl mx-auto relative flex flex-col justify-center items-center gap-10">
+      <div className="max-w-3xl mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center items-center gap-10">
         {/* Formulario búsqueda de cita */}
         <form
           onSubmit={buscarCitas}

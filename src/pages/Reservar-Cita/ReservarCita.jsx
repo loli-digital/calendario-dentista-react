@@ -197,7 +197,7 @@ function ReservarCita() {
 
           <form
             onSubmit={manejarSubmit}
-            className="w-[350px] lg:w-xl mx-auto relative flex flex-col justify-center lg:space-y-10"
+            className="w-[350px] lg:w-xl mx-auto relative p-6 rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center lg:space-y-10"
           >
             <div className="w-full flex flex-col lg:flex-row justify-center gap-5 lg:gap-10">
               <div className="w-full flex flex-col gap-5">
