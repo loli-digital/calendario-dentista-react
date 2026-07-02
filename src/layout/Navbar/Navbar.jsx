@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 import logo from "@/assets/img/logo-clinica.png";
 import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,10 +22,11 @@ export function Navbar() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const location = useLocation();
-  const isMisCitas = location.pathname.startsWith("/mis-citas");
+  const isAcceder = location.pathname.startsWith("/auth");
   const isReservarCita = location.pathname.startsWith("/reservar-cita");
-  const isUserLogin = location.pathname.startsWith("/dashboard");
-  const isRestrictedView = isMisCitas || isReservarCita;
+  const isRestrictedView = isAcceder || isReservarCita;
+  
+  const { user } = useContext(AuthContext);
 
   return (
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
@@ -66,7 +70,7 @@ export function Navbar() {
       >
         <ul className="h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl lg:text-lg">
           {/* Si estoy en Home, mostrar este menú */}
-          {!isRestrictedView && !isUserLogin && (
+          {!isRestrictedView && !user && (
             <>
               <li>
                 <button
@@ -111,41 +115,41 @@ export function Navbar() {
               </li>
 
               <li className="nav-link">
-                <NavLink to="/mis-citas" onClick={closeMenu}>
-                  Mis citas
+                <NavLink to="/auth" onClick={closeMenu}>
+                  Acceder
                 </NavLink>
               </li>
             </>
           )}
 
-          {/* Menú para Mis citas y Reservar Cita */}
+          {/* Menú para Acceder y Reservar Cita */}
           {isRestrictedView && (
             <>
               <li className="nav-link">
-                <NavLink to="/mis-citas" onClick={closeMenu}>
-                  Mis citas
+                <NavLink to="/auth" onClick={closeMenu}>
+                  Acceder
                 </NavLink>
               </li>
             </>
           )}
 
           {/* Menú para cuando se ha hecho login */}
-          {isUserLogin && (
+          {user && (
             <>
               <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard-mis-datos" className="lg:hidden">
+                <NavLink to="/dashboard/mis-datos" className="lg:hidden">
                   <FontAwesomeIcon icon={faUser} className="mr-2" />
                   Mis datos
                 </NavLink>
               </li>
               <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard-mis-citas" className="lg:hidden">
+                <NavLink to="/dashboard/mis-citas" className="lg:hidden">
                   <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
                   Mis citas
                 </NavLink>
               </li>
               <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard-mis-facturas" className="lg:hidden">
+                <NavLink to="/dashboard/mis-facturas" className="lg:hidden">
                   <FontAwesomeIcon
                     icon={faFileInvoiceDollar}
                     className="mr-2"
@@ -154,19 +158,19 @@ export function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard-ajustes" className="lg:hidden">
+                <NavLink to="/dashboard/ajustes" className="lg:hidden">
                   <FontAwesomeIcon icon={faGear} className="mr-2" />
                   Ajustes
                 </NavLink>
               </li>
-              <li className="nav-link" onClick={closeMenu}>
-                <NavLink>Cerrar sesión</NavLink>
+              <li className="nav-link" onClick={() => signOut(auth)}>
+                Cerrar sesión
               </li>
             </>
           )}
 
           {/* Botón para reservar cita que se encuentra dentro del menú móvil */}
-          {!isUserLogin && (
+          {!user && (
             <li className="block lg:hidden mt-10 lg:mt-0">
               <Button onClick={closeMenu} />
             </li>
@@ -175,7 +179,7 @@ export function Navbar() {
       </nav>
 
       {/* Botón para reservar cita excepto en Dashboard */}
-      {!isUserLogin && (
+      {!user && (
         <div className="hidden lg:block">
           <Button />
         </div>
