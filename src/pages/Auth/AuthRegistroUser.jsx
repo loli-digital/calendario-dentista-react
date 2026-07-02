@@ -103,7 +103,7 @@ function AuthRegistroUser() {
           type="password"
           name="password"
           id="password"
-          placeholder="Mínimo de 8 caracteres"
+          placeholder="Escribe tu contraseña"
           value={password}
           required
           minLength={8}
