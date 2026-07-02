@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
@@ -8,9 +8,9 @@ function AuthLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       console.log("Inicio de sesión correcto");
     } catch (error) {
       console.log(error.message);
@@ -19,7 +19,6 @@ function AuthLogin() {
 
   return (
     <section className="w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center overflow-hidden bg-cyan-50">
-      
       {/* Forma para detrás de las cards */}
       <DecorativeShape />
 
@@ -35,8 +34,12 @@ function AuthLogin() {
           type="email"
           name="email"
           id="email"
-          placeholder="hola@gmail.com"
+          placeholder="Escribe tu correo electrónico"
           value={email}
+          required
+          title="Por favor, escribe un correo válido como: nombre@ejemplo.com"
+          minLength={3}
+          maxLength={64}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
           className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
@@ -51,17 +54,24 @@ function AuthLogin() {
           id="password"
           placeholder="Escribe tu contraseña"
           value={password}
+          required
+          minLength={8}
+          maxLength={64}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
           className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
         />
 
-        <button
-          onClick={handleRegister}
-          className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
-        >
-          Iniciar sesión
-        </button>
+        <Link to="/dashboard" className="mx-auto p-3">
+          <button
+            onClick={handleLogin}
+            className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
+          >
+            Iniciar sesión
+          </button>
+        </Link>
 
         {/* Crear nueva cuenta */}
         <p className="mt-5 text-cyan-800 text-center text-m font-bold">
@@ -70,7 +80,7 @@ function AuthLogin() {
 
         <Link to="/auth/nueva-cuenta" className="mx-auto p-3">
           <button
-            onClick={handleRegister}
+            onClick={handleLogin}
             className="w-40 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
           >
             Crear cuenta
