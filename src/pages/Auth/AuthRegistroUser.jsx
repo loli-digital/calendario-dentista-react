@@ -9,14 +9,13 @@ import { DecorativeShape } from "@/components";
 function AuthRegistroUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [telefono, setTelefono] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userCreado, setUserCreado] = useState(null);
+
+  const normalizeEmail = email.toLowerCase().trim();
 
   const handleRegister = async () => {
     try {
@@ -24,40 +23,38 @@ function AuthRegistroUser() {
       setError(null);
       setMensaje(null);
 
+      // Si las contraseñas no coinciden, mostrar un mensaje de error
+      if (password !== confirmPassword) {
+        setError("Las contraseñas no coinciden");
+        setLoading(false);
+        return;
+      }
+
+      // Registro en Firebase
       const userCredential = await createUserWithEmailAndPassword(
         auth,
-        email,
-        password,
+        normalizeEmail,
+        password
       );
 
       const user = userCredential.user;
 
+      // Guarda datos en Firestone
       await setDoc(doc(db, "users", user.uid), {
-        nombre,
-        apellido,
-        telefono,
-        email,
+        normalizeEmail,
+        createdAt: new Date(),
+        profileCompleted: false,
       });
 
       setMensaje("Cuenta creada correctamente");
-
-      setUserCreado({
-        nombre,
-        apellido,
-        telefono,
-        email,
-      });
-
       setEmail("");
       setPassword("");
-      setNombre("");
-      setApellido("");
-      setTelefono("");
+      setConfirmPassword("");
+
     } catch (error) {
-      setError(
-        "Ocurrió un problema en el registro de usuario/a. Inténtalo de nuevo",
-      );
+      setError("Ocurrió un problema en el registro. Inténtalo de nuevo");
       console.log(error.message);
+
     } finally {
       setLoading(false);
     }
@@ -79,63 +76,8 @@ function AuthRegistroUser() {
           e.preventDefault();
           handleRegister();
         }}
-        className="w-[350px] lg:w-l mx-auto relative flex flex-col justify-center space-y-5"
+        className="w-[350px] lg:w-l mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-3"
       >
-        <label htmlFor="nombre" className="font-medium text-cyan-800">
-          Nombre
-        </label>
-        <input
-          type="text"
-          name="nombre"
-          id="nombre"
-          placeholder="María"
-          minLength={3}
-          maxLength={40}
-          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s-]+"
-          title="Escribe un mínimo de 3 letras hasta un máximo de 40"
-          required
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          autoComplete="given-name"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
-        />
-
-        <label htmlFor="apellido" className="font-medium text-cyan-800">
-          Apellido
-        </label>
-        <input
-          type="text"
-          name="apellido"
-          id="apellido"
-          placeholder="Gutiérrez"
-          value={apellido}
-          required
-          minLength={3}
-          maxLength={40}
-          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s-]+"
-          title="Escribe un mínimo de 3 letras hasta un máximo de 40"
-          onChange={(e) => setApellido(e.target.value)}
-          autoComplete="family-name"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
-        />
-
-        <label htmlFor="telefono" className="font-medium text-cyan-800">
-          Teléfono
-        </label>
-        <input
-          type="text"
-          name="telefono"
-          id="telefono"
-          placeholder="123456789"
-          value={telefono}
-          required
-          pattern="[0-9]{9}"
-          title="Escribe un teléfono de 9 dígitos"
-          onChange={(e) => setTelefono(e.target.value)}
-          autoComplete="tel"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
-        />
-
         <label htmlFor="email" className="font-medium text-cyan-800">
           Email
         </label>
@@ -143,7 +85,7 @@ function AuthRegistroUser() {
           type="email"
           name="email"
           id="email"
-          placeholder="nombre@ejemplo.com"
+          placeholder="Escribe tu correo electrónico"
           value={email}
           required
           title="Por favor, escribe un correo válido como: nombre@ejemplo.com"
@@ -173,6 +115,25 @@ function AuthRegistroUser() {
           className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
         />
 
+        <label htmlFor="confirm-password" className="font-medium text-cyan-800">
+          Confirmar contraseña
+        </label>
+        <input
+          type="password"
+          name="confirm-password"
+          id="confirm-password"
+          placeholder="Mínimo de 8 caracteres"
+          value={confirmPassword}
+          required
+          minLength={8}
+          maxLength={64}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          autoComplete="confirm-password"
+          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+        />
+
         <input
           type="submit"
           value={loading ? "Creando cuenta..." : "Crear cuenta"}
@@ -193,13 +154,9 @@ function AuthRegistroUser() {
       {mensaje && (
         <div className="w-full lg:w-xl p-4 my-6 bg-green-100 relative flex flex-col gap-2 border border-green-700 text-green-800 rounded shadow-md">
           <p className="font-bold text-lg mb-2 text-center">{mensaje}</p>
-          <p>Nombre: {userCreado.nombre}</p>
-          <p>Apellido/s: {userCreado.apellido}</p>
-          <p>Teléfono: {userCreado.telefono}</p>
-          <p>Email: {userCreado.email}</p>
           <p>
             <span className="font-bold underline underline-offset-2">
-              <Link to="/mis-citas/login">Inicia sesión</Link>
+              <Link to="/auth/login">Inicia sesión</Link>
             </span>{" "}
             para pedir cita o modificar tus datos
           </p>
