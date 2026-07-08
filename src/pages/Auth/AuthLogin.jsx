@@ -8,6 +8,10 @@ function AuthLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleForgotPassword = () => {
+    alert("Si tu email está registrado, recibirás un email para restablecer la contraseña");
+  }
+
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -64,12 +68,23 @@ function AuthLogin() {
           className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
         />
 
+        {/* Botón para iniciar sesión */}
         <Link to="/dashboard" className="mx-auto p-3">
           <button
             onClick={handleLogin}
             className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
           >
             Iniciar sesión
+          </button>
+        </Link>
+
+        {/* Enlace para recuperar la contraseña */}
+        <Link className="text-center mb-0">
+          <button
+            onClick={handleForgotPassword}
+            className="text-cyan-900 cursor-pointer hover:underline"
+          >
+            ¿Olvidaste la contraseña?
           </button>
         </Link>
 
