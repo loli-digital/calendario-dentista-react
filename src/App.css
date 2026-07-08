@@ -173,8 +173,34 @@ section .swiper-button-next {
 }
 
 /*Estilos input formulario*/
+.form__container--data-show{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  gap: 1rem;
+}
 
-input:focus {
+.form__label,
+.form__p--mis-datos{
+  font-weight: 500;
+  color: oklch(45% 0.085 224.283);
+}
+
+.form__input {
+  padding: 0.25rem;
+  border: 2px solid oklch(52% 0.105 223.128);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.form__input--disabled {
+  background-color: oklch(98.4% 0.019 200.873);
+  cursor: not-allowed;
+}
+
+input:focus,
+textarea:focus {
   border: 2px solid oklch(30.152% 0.0565 230.191);
   background-color: oklch(98.412% 0.01893 201.193);
 }
