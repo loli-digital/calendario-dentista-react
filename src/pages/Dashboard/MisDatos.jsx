@@ -321,8 +321,7 @@ function MisDatos() {
               <input
                 type="email"
                 {...register("email")}
-                readOnly
-                className="form__input form__input--disabled"
+                className="form__input"
               />
 
               {/*Teléfono*/}
