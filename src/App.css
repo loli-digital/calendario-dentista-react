@@ -194,11 +194,6 @@ section .swiper-button-next {
   background-color: #fff;
 }
 
-.form__input--disabled {
-  background-color: oklch(98.4% 0.019 200.873);
-  cursor: not-allowed;
-}
-
 input:focus,
 textarea:focus {
   border: 2px solid oklch(30.152% 0.0565 230.191);
