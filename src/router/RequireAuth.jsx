@@ -8,7 +8,11 @@ function RequireAuth(){
 
     // Mostrar si está cargando
     if(loading){
-        return (<div className="text-center">Cargando...</div>);
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-700">
+                Cargando tu sesión...
+            </div>
+        );
     }
 
     // Si NO hay usuario logueado, redirige a la página para iniciar sesión en Auth

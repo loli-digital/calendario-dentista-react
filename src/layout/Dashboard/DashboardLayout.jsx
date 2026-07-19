@@ -25,14 +25,14 @@ export function DashboardLayout() {
 
       <h1 className="title__section">{getTitle()}</h1>
 
-      <section className="w-full lg:w-5xl h-auto pb-10 relative flex flex-nowrap justify-center lg:justify-start items-start">
+      <section className="w-full lg:w-7xl h-auto pb-10 relative flex flex-nowrap justify-center lg:justify-start items-start">
         {/* Sidebar */}
         <aside className="hidden lg:block">
           <SidebarDashboard />
         </aside>
 
         {/* Layout del dashboard */}
-        <div className="w-auto lg:w-2xl h-full lg:h-[630px] bg-cyan-50 rounded-sm shadow-[0_0_5px_black]">
+        <div className="w-full lg:w-4xl h-full lg:h-[630px] bg-cyan-50 rounded-sm shadow-[0_0_5px_black]">
           <Outlet />
         </div>
       </section>

@@ -8,7 +8,11 @@ function RedirectIfAuth(){
 
     // Mostrar si está cargando
     if(loading){
-        return (<div className="text-center">Cargando...</div>);
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-700">
+                Cargando tu sesión...
+            </div>
+        );
     }
 
     // Si el user se ha logueado, redirigir al dashboard
