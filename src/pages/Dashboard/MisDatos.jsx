@@ -4,6 +4,10 @@ import { useForm, useWatch } from "react-hook-form";
 import { useState, useEffect } from "react";
 
 function MisDatos() {
+  // Lógica para cuando carga la página
+  const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -29,7 +33,7 @@ function MisDatos() {
   });
 
   // Estado para saber si el user tiene datos o no
-  const [hasData, setHasData] = useState(false);
+  const [hasData, setHasData] = useState(null);
   // Estado para los datos del user
   const [userData, setUserData] = useState(null);
 
@@ -64,78 +68,108 @@ function MisDatos() {
 
   // Para que se muestre la fecha en día, mes y año
   const fechaFormateada = (isoDate) => {
-    if(!isoDate) return "";
+    if (!isoDate) return "";
     const [year, month, day] = isoDate.split("-");
     return `${day}/${month}/${year}`;
-  }
+  };
 
   // Lógica para guardar los datos al hacer click en "Guardar"
   const onSubmit = async (data) => {
-    // Obtener el user de Firebase Auth
-    const user = auth.currentUser;
-    // Guardar los datos en la base de datos
-    await setDoc(doc(db, "users", user.uid), data);
-    setUserData(data);
-    setHasData(true);
+    setIsSaving(true);
+
+    try {
+      // Obtener el user de Firebase Auth
+      const user = auth.currentUser;
+      // Guardar los datos en la base de datos
+      await setDoc(doc(db, "users", user.uid), data);
+      setUserData(data);
+      setHasData(true);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   /* Lógica para que el email siempre aparezca al crear una cuenta, 
  independientemente de si ha rellenado los datos o no */
   useEffect(() => {
+    let isMounted = true;
+
     const loadUserData = async () => {
-      // Obtener el user de Firebase Auth
-      const user = auth.currentUser;
+      try {
+        // Obtener el user de Firebase Auth
+        const user = auth.currentUser;
 
-      // Si no hay user registrado, no se hace nada
-      if (!user) return;
+        // Si no hay user registrado, no se hace nada
+        if (!user) {
+          if (isMounted) {
+            setHasData(false);
+          }
+          return;
+        }
 
-      // Cargar los datos de Firestone
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
+        // Cargar los datos de Firestone
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
 
-      /* Si es la primera vez que entra el user después del registro,
-      que se vea la pantalla del formulario para que rellene sus datos*/
-      if (!docSnap.exists()) {
-        const newData = {
-          nombre: "",
-          apellido: "",
-          fechaNacimiento: "",
-          direccion: "",
-          ciudad: "",
-          codigoPostal: "",
-          tipoIdentificacion: "",
-          numIdentificacion: "",
-          // para que se vea el email siempre, ya que se ha registrado con él
-          email: user.email,
-          telefono: "",
-          alergias: "",
-          companiaSeguro: "",
-          numCompaniaSeguro: "",
-        };
+        /* Si es la primera vez que entra el user después del registro,
+        que se vea la pantalla del formulario para que rellene sus datos*/
+        if (!docSnap.exists()) {
+          const newData = {
+            nombre: "",
+            apellido: "",
+            fechaNacimiento: "",
+            direccion: "",
+            ciudad: "",
+            codigoPostal: "",
+            tipoIdentificacion: "",
+            numIdentificacion: "",
+            // para que se vea el email siempre, ya que se ha registrado con él
+            email: user.email,
+            telefono: "",
+            alergias: "",
+            companiaSeguro: "",
+            numCompaniaSeguro: "",
+          };
 
-        reset(newData);
-        setUserData(newData);
-        setHasData(false);
-      } else {
-        // Sí ha rellenado los datos
-        const existingData = {
-          email: user.email,
-          ...docSnap.data(),
-        };
+          if (isMounted) {
+            reset(newData);
+            setUserData(newData);
+            setHasData(false);
+          }
+        } else {
+          // Sí ha rellenado los datos
+          const existingData = {
+            email: user.email,
+            ...docSnap.data(),
+          };
 
-        reset(existingData);
-        setUserData(existingData);
-        setHasData(true);
+          if (isMounted) {
+            reset(existingData);
+            setUserData(existingData);
+            setHasData(true);
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     loadUserData();
-  }, []);
 
-  // Manejo de estados
-  const [loading, SetLoading] = useState();
-  //const [error, SetError] = useState();
-  //const [message, SetMessage] = useState();
+    return () => {
+      isMounted = false;
+    };
+  }, [reset]);
+
+  if (loading) {
+    return (
+      <section className="w-full h-full p-10 flex justify-center items-center">
+        <p className="text-center">Cargando datos...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="w-full h-full p-10">
@@ -389,29 +423,59 @@ function MisDatos() {
 
           <input
             type="submit"
-            value={loading ? "Guardando..." : "Guardar"}
-            disabled={loading}
-            className={`w-40 mx-auto mt-4 bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${loading ? "bg-cyan-400 cursor-not-allowed" : ""}`}
+            value={isSaving ? "Guardando..." : "Guardar"}
+            disabled={isSaving}
+            className={`w-40 mx-auto mt-4 bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
           />
         </form>
       ) : (
         <div className="form__container--data-show">
-          <p><span className="form__p--mis-datos">Nombre:</span> {userData.nombre}</p>
-          <p><span className="form__p--mis-datos">Apellido/s:</span> {userData.apellido}</p>
-          <p><span className="form__p--mis-datos">Fecha de nacimiento:</span> {fechaFormateada(userData.fechaNacimiento)}</p>
-          <p><span className="form__p--mis-datos">Dirección:</span> {userData.direccion}</p>
-          <p><span className="form__p--mis-datos">Ciudad:</span> {userData.ciudad}</p>
-          <p><span className="form__p--mis-datos">Código postal:</span> {userData.codigoPostal}</p>
           <p>
-            <span className="form__p--mis-datos">Tipo de identificación:</span> {userData.tipoIdentificacion.toUpperCase()}{" "}
+            <span className="form__p--mis-datos">Nombre:</span>{" "}
+            {userData.nombre}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Apellido/s:</span>{" "}
+            {userData.apellido}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Fecha de nacimiento:</span>{" "}
+            {fechaFormateada(userData.fechaNacimiento)}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Dirección:</span>{" "}
+            {userData.direccion}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Ciudad:</span>{" "}
+            {userData.ciudad}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Código postal:</span>{" "}
+            {userData.codigoPostal}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Tipo de identificación:</span>{" "}
+            {userData.tipoIdentificacion.toUpperCase()}{" "}
             {userData.numIdentificacion}
           </p>
-          <p><span className="form__p--mis-datos">Correo electrónico:</span> {userData.email}</p>
-          <p><span className="form__p--mis-datos">Teléfono:</span> {userData.telefono}</p>
-          <p><span className="form__p--mis-datos">Alergias:</span> {userData.alergias}</p>
           <p>
-            <span className="form__p--mis-datos">Compañía de seguro dental:</span> {userData.companiaSeguro.toUpperCase()}{" "}
-            {userData.numCompaniaSeguro}
+            <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
+            {userData.email}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Teléfono:</span>{" "}
+            {userData.telefono}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">Alergias:</span>{" "}
+            {userData.alergias}
+          </p>
+          <p>
+            <span className="form__p--mis-datos">
+              Compañía de seguro dental:
+            </span>{" "}
+            {userData.companiaSeguro.toUpperCase()} {userData.numCompaniaSeguro}
           </p>
 
           <button
