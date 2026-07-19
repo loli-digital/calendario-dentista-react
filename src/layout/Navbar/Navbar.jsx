@@ -8,10 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faXmark,
-  faUser,
-  faCalendarDays,
-  faFileInvoiceDollar,
-  faGear,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 
@@ -32,7 +29,7 @@ export function Navbar() {
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
       {/* Logo */}
       <div className="z-50">
-        <NavLink to="/">
+        <NavLink to={user ? "/dashboard/mis-datos" : "/"}>
           <img
             src={logo}
             fetchPriority="high"
@@ -69,7 +66,7 @@ export function Navbar() {
         z-40 lg:z-auto ${isMenuOpen ? "block" : "hidden"} lg:block`}
       >
         <ul className="h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl lg:text-lg">
-          {/* Si estoy en Home, mostrar este menú */}
+          {/* Si estoy en Home y NO se ha iniciado sesión, mostrar este menú */}
           {!isRestrictedView && !user && (
             <>
               <li>
@@ -137,30 +134,9 @@ export function Navbar() {
           {user && (
             <>
               <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard/mis-datos" className="lg:hidden">
+                <NavLink to="/dashboard/mis-datos" className="flex items-center gap-2">
                   <FontAwesomeIcon icon={faUser} className="mr-2" />
-                  Mis datos
-                </NavLink>
-              </li>
-              <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard/mis-citas" className="lg:hidden">
-                  <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                  Mis citas
-                </NavLink>
-              </li>
-              <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard/mis-facturas" className="lg:hidden">
-                  <FontAwesomeIcon
-                    icon={faFileInvoiceDollar}
-                    className="mr-2"
-                  />
-                  Mis facturas
-                </NavLink>
-              </li>
-              <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard/ajustes" className="lg:hidden">
-                  <FontAwesomeIcon icon={faGear} className="mr-2" />
-                  Ajustes
+                  Mi panel
                 </NavLink>
               </li>
               <li className="nav-link" onClick={() => signOut(auth)}>
@@ -178,7 +154,7 @@ export function Navbar() {
         </ul>
       </nav>
 
-      {/* Botón para reservar cita excepto en Dashboard */}
+      {/* Botón para reservar cita en Desktop, excepto cuando se ha inciado sesión */}
       {!user && (
         <div className="hidden lg:block">
           <Button />
