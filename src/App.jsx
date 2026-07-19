@@ -1,10 +1,11 @@
 import "./App.css";
+import "react-datepicker/dist/react-datepicker.css";
 import { Navbar, Footer, DashboardLayout } from "@/layout";
 
 import { Routes, Route, Outlet } from "react-router-dom";
-import "react-datepicker/dist/react-datepicker.css";
+import { AuthContext } from "@/context/AuthContext";
+import { lazy, Suspense, useContext } from "react";
 
-import { lazy, Suspense } from "react";
 import {
   HomeSkeleton,
   ReservarCitaSkeleton,
@@ -40,6 +41,16 @@ const DashboardMisFacturas = lazy(
 const DashboardAjustes = lazy(() => import("./pages/Dashboard/Ajustes"));
 
 function App() {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-700">
+        Cargando tu sesión...
+      </div>
+    );
+  }
+
   return (
     <>
       <CookiesBanner />
@@ -58,7 +69,9 @@ function App() {
 
           {/* Auth, sólo se accede si el user NO está logueado */}
           <Route element={<RedirectIfAuth />}>
-          {/* Outlet se usa para ver las rutas hijas. Por ejemplo, al hacer click en Acceder a la cuenta personal, redirigiría a AuthLogin */}
+          {/* Outlet se usa para ver las rutas hijas. 
+          Por ejemplo, al hacer click en Acceder a la cuenta personal, 
+          redirigiría a AuthLogin */}
             <Route path="/auth" element={<Outlet />}>
               {/* Ruta por defecto para Auth */}
               <Route
@@ -122,7 +135,7 @@ function App() {
             }
           />
 
-          {/* Dashboard, sólo se accede si el user está logueado */}
+          {/* Dashboard, sólo se accede si user está logueado */}
           <Route element={<RequireAuth />}>
             <Route
               path="/dashboard"
