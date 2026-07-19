@@ -1,49 +1,19 @@
-import { db } from "@/firebase.js";
-import { collection, getDocs } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
+import { facturas } from "@/data";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 function MisFacturas() {
-  const auth = getAuth();
-
-  const [user, setUser] = useState(null);
-  const [facturas, setFacturas] = useState([]);
+  const [facturasList, setFacturasList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log("MisFacturas montado");
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-
-      if (!currentUser) {
-        setLoading(false);
-        return;
-      }
-
-      setUser(currentUser);
-
-      const ref = collection(db, "facturas", currentUser.uid, "lista");
-      const snap = await getDocs(ref);
-
-      const data = snap.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setFacturas(data);
+    // Simulación de carga
+    setTimeout(() => {
+      setFacturasList(facturas);
       setLoading(false);
-    });
-
-    return () => unsubscribe();
+    }, 300);
   }, []);
-
-  if (!user) {
-    return (
-      <div className="w-full h-full flex justify-center items-center">
-        <p className="text-center">Inicia sesión para ver tus facturas</p>
-      </div>
-    );
-  }
 
   if (loading) {
     return (
@@ -62,28 +32,116 @@ function MisFacturas() {
   }
 
   return (
-    <section className="w-full h-full p-10 flex flex-col justify-center items-center">
-      <ul>
-        {facturas.map((factura) => (
-          <li key={factura.id}>
+    <section className="w-full p-10 flex flex-col justify-center items-center">
+      <div className="w-full overflow-auto hidden md:block text-center">
+        {/* Tabla para Desktop */}
+        <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
+          <thead>
+            <tr className="p-3 flex justify-around justify-items-center items-center gap-3 text-cyan-800 border-2 border-cyan-700 rounded-sm shadow-[0_0_5px] shadow-cyan-700">
+              <th className="w-30">Nº</th>
+              <th className="w-30">Fecha</th>
+              <th className="w-30">Tratamiento</th>
+              <th className="w-30">Diente</th>
+              <th className="w-30">Importe</th>
+              <th className="w-30">Total</th>
+              <th className="w-30">Estado</th>
+              <th className="w-30">Descargar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {facturasList.map((factura, index) => (
+              <tr
+                key={index}
+                className={`${index % 2 === 0 ? 'bg-white' : 'bg-cyan-50'} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
+              >
+                <td className="w-30">
+                  {factura.invoiceNumber}
+                </td>
+                <td className="w-30">{factura.date}</td>
+                <td className="w-30">
+                  {factura.description}
+                </td>
+                <td className="w-30">
+                  {factura.tooth || "—"}
+                </td>
+                <td className="w-30">{factura.price}</td>
+                <td className="w-30">{factura.total}</td>
+                <td className={`w-30 p-1 rounded-sm border-2 font-semibold ${factura.paid ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}>
+                  {factura.paid ? "Pagada" : "Pendiente"}
+                </td>
+                <a
+                  href={factura.file}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-30"
+                >
+                  <FontAwesomeIcon
+                    icon={faFileArrowDown}
+                    className="text-cyan-800"
+                  />
+                </a>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Tabla para móvil */}
+      <div className="w-full flex flex-col gap-10 md:hidden">
+        {facturasList.map((factura, index) => (
+          <div
+            key={index}
+            className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
+          >
             <p>
-              <strong>Fecha: </strong>
-              {factura.fecha}
+              <span className="font-bold text-cyan-700">Nº:</span>{" "}
+              {factura.invoiceNumber}
             </p>
             <p>
-              <strong>Importe: </strong>
-              {factura.importe}
+              <span className="font-bold text-cyan-700">Fecha:</span>{" "}
+              {factura.date}
             </p>
             <p>
-              <strong>Pagada: </strong>
-              {factura.pagada}
+              <span className="font-bold text-cyan-700">Tratamiento:</span>{" "}
+              {factura.description}
             </p>
-            <a href={factura.archivo} target="_blank" rel="noopener noreferrer">
-              Descargar factura
-            </a>
-          </li>
+            <p>
+              <span className="font-bold text-cyan-700">Diente:</span>{" "}
+              {factura.tooth || "—"}
+            </p>
+            <p>
+              <span className="font-bold text-cyan-700">Importe:</span>{" "}
+              {factura.price}
+            </p>
+            <p>
+              <span className="font-bold text-cyan-700">Total:</span>{" "}
+              {factura.total}
+            </p>
+            <p>
+              <span className="font-bold text-cyan-700">Estado: </span>
+              <span
+                className={`p-1 rounded-sm border-2 font-semibold ${factura.paid ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+              >
+                {factura.paid ? "Pagada" : "Pendiente"}
+              </span>
+            </p>
+            <p>
+              <span className="font-bold text-cyan-700">Descargar: </span>
+              <a
+                href={factura.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-24"
+              >
+                <FontAwesomeIcon
+                  icon={faFileArrowDown}
+                  className="text-cyan-800"
+                />
+              </a>
+            </p>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
