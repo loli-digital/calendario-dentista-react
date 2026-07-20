@@ -32,39 +32,85 @@ function MisFacturas() {
   }
 
   return (
-    <section className="w-full p-10 flex flex-col justify-center items-center">
+    <section className="w-full p-10 flex flex-col justify-center items-center gap-5">
+      {/* Formulario para filtrar facturas */}
+      <form
+        action=""
+        className="w-full flex flex-col md:justify-center md:items-center md:gap-4"
+      >
+        <div className="flex flex-col md:flex-row md:justify-center md:items-center space-y-1 md:space-y-0 md:space-x-1">
+          <label htmlFor="date-start" className="form__label">
+            Fecha desde
+          </label>
+          <input
+            type="date"
+            name="date-start"
+            id="date-start"
+            className="form__input--invoice w-32 md:mr-3"
+          />
+
+          <label htmlFor="date-end" className="form__label">
+            Fecha hasta
+          </label>
+          <input
+            type="date"
+            name="date-end"
+            id="date-end"
+            className="form__input--invoice w-32 md:mr-3"
+          />
+
+          <label htmlFor="number-invoice" className="form__label">
+            Número de factura
+          </label>
+          <input
+            type="search"
+            name="number-invoice"
+            id="number-invoice"
+            className="form__input--invoice w-20"
+          />
+        </div>
+
+        <div className="flex flex-col md:flex-row md:justify-center md:items-center space-y-1 md:space-y-0 md:space-x-1">
+          <label htmlFor="tratamiento" className="form__label">
+            Tratamiento
+          </label>
+          <select
+            name="tratamiento"
+            id="tratamiento"
+            className="form__input w-37 md:mr-4"
+          >
+            <option value="" selected>
+              Seleccionar
+            </option>
+            <option value="limpieza">Limpieza</option>
+            <option value="revision">Revisión</option>
+            <option value="ortodoncia">Ortodoncia</option>
+            <option value="obturacion">Obturación</option>
+            <option value="estetica-dental">Estética dental</option>
+            <option value="odontopediatria">Odontopediatría</option>
+            <option value="protesis">Prótesis</option>
+          </select>
+
+          <label htmlFor="invoice-state" className="form__label">
+            Estado
+          </label>
+          <select
+            name="invoice-state"
+            id="invoice-state"
+            className="form__input w-29 md:mr-4"
+          >
+            <option value="" selected>
+              Seleccionar
+            </option>
+            <option value="all">Todas</option>
+            <option value="paid">Pagadas</option>
+            <option value="pendant">Pendientes</option>
+          </select>
+
+          <input type="submit" value="Buscar" />
+        </div>
+      </form>
       <div className="w-full overflow-auto hidden md:block text-center">
-        {/* Filtrado para Desktop 
-        Fecha desde: [   ]   Fecha hasta: [   ]
-        Estado: [Todas / Pagadas / Pendientes]
-        Tratamiento: [Todos / Limpieza / Obturación / ...]       
-        */}
-
-        <form>
-          <label htmlFor="">Fecha desde: </label>
-          <input type="date" name="" id="" />
-
-          <label htmlFor="">Fecha hasta: </label>
-          <input type="date" name="" id="" />
-
-          <label htmlFor="">Estado:</label>
-          <select name="" id="">
-            <option value="">Selecciona el estado</option>
-            <option value="">Todas</option>
-            <option value="">Pagadas</option>
-            <option value="">Pendientes</option>
-          </select>
-
-          <label htmlFor="">Tratamiento</label>
-          <select name="" id="">
-            <option value="">Selecciona el tratamiento</option>
-            <option value="">Todos</option>
-            <option value="">Limpieza</option>
-            <option value="">Obturación</option>
-          </select>
-
-        </form>
-
         {/* Tabla para Desktop */}
         <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
           <thead>
@@ -80,10 +126,10 @@ function MisFacturas() {
             </tr>
           </thead>
           <tbody>
-            {facturasList.map((factura) => (
+            {facturasList.map((factura, index) => (
               <tr
-                key={factura.id}
-                className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
+                key={index}
+                className={`${index % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
               >
                 <td className="w-30">{factura.invoiceNumber}</td>
                 <td className="w-30">{factura.date}</td>
@@ -115,9 +161,9 @@ function MisFacturas() {
 
       {/* Tabla para móvil */}
       <div className="w-full flex flex-col gap-10 md:hidden">
-        {facturasList.map((factura) => (
+        {facturasList.map((factura, index) => (
           <div
-            key={factura.id}
+            key={index}
             className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
           >
             <p>
