@@ -1,6 +1,6 @@
 export const facturas = [
   {
-    index: "0",
+    id: 1,
     invoiceNumber: "1100",
     date: "23-03-2026",
     description: "Limpieza",
@@ -11,7 +11,7 @@ export const facturas = [
     file: "/invoices/23-03-2026.pdf",
   },
   {
-    index: "1",
+    id: 2,
     invoiceNumber: "1154",
     date: "07-05-2026",
     description: "Obturación",
@@ -22,7 +22,7 @@ export const facturas = [
     file: "/invoices/07-05-2026.pdf",
   },
   {
-    index: "2",
+    id: 3,
     invoiceNumber: "1183",
     date: "18-06-2026",
     description: "Obturación",

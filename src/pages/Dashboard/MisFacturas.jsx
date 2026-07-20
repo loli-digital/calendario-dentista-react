@@ -34,6 +34,37 @@ function MisFacturas() {
   return (
     <section className="w-full p-10 flex flex-col justify-center items-center">
       <div className="w-full overflow-auto hidden md:block text-center">
+        {/* Filtrado para Desktop 
+        Fecha desde: [   ]   Fecha hasta: [   ]
+        Estado: [Todas / Pagadas / Pendientes]
+        Tratamiento: [Todos / Limpieza / Obturación / ...]       
+        */}
+
+        <form>
+          <label htmlFor="">Fecha desde: </label>
+          <input type="date" name="" id="" />
+
+          <label htmlFor="">Fecha hasta: </label>
+          <input type="date" name="" id="" />
+
+          <label htmlFor="">Estado:</label>
+          <select name="" id="">
+            <option value="">Selecciona el estado</option>
+            <option value="">Todas</option>
+            <option value="">Pagadas</option>
+            <option value="">Pendientes</option>
+          </select>
+
+          <label htmlFor="">Tratamiento</label>
+          <select name="" id="">
+            <option value="">Selecciona el tratamiento</option>
+            <option value="">Todos</option>
+            <option value="">Limpieza</option>
+            <option value="">Obturación</option>
+          </select>
+
+        </form>
+
         {/* Tabla para Desktop */}
         <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
           <thead>
@@ -49,24 +80,20 @@ function MisFacturas() {
             </tr>
           </thead>
           <tbody>
-            {facturasList.map((factura, index) => (
+            {facturasList.map((factura) => (
               <tr
-                key={index}
-                className={`${index % 2 === 0 ? 'bg-white' : 'bg-cyan-50'} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
+                key={factura.id}
+                className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
               >
-                <td className="w-30">
-                  {factura.invoiceNumber}
-                </td>
+                <td className="w-30">{factura.invoiceNumber}</td>
                 <td className="w-30">{factura.date}</td>
-                <td className="w-30">
-                  {factura.description}
-                </td>
-                <td className="w-30">
-                  {factura.tooth || "—"}
-                </td>
+                <td className="w-30">{factura.description}</td>
+                <td className="w-30">{factura.tooth || "—"}</td>
                 <td className="w-30">{factura.price}</td>
                 <td className="w-30">{factura.total}</td>
-                <td className={`w-30 p-1 rounded-sm border-2 font-semibold ${factura.paid ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}>
+                <td
+                  className={`w-30 p-1 rounded-sm border-2 font-semibold ${factura.paid ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                >
                   {factura.paid ? "Pagada" : "Pendiente"}
                 </td>
                 <a
@@ -88,9 +115,9 @@ function MisFacturas() {
 
       {/* Tabla para móvil */}
       <div className="w-full flex flex-col gap-10 md:hidden">
-        {facturasList.map((factura, index) => (
+        {facturasList.map((factura) => (
           <div
-            key={index}
+            key={factura.id}
             className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
           >
             <p>
