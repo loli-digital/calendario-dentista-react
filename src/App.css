@@ -172,7 +172,7 @@ section .swiper-button-next {
   }
 }
 
-/*Estilos input formulario*/
+/*Estilos formularios en general*/
 .form__container--data-show{
   display: flex;
   flex-direction: column;
@@ -187,11 +187,19 @@ section .swiper-button-next {
   color: oklch(45% 0.085 224.283);
 }
 
-.form__input {
-  padding: 0.25rem;
+.form__input,
+.form__input--invoice{
   border: 2px solid oklch(52% 0.105 223.128);
   border-radius: 4px;
   background-color: #fff;
+}
+
+.form__input {
+  padding: 0.25rem;
+}
+
+.form__input--invoice {
+  padding: 0.10rem;
 }
 
 input:focus,
