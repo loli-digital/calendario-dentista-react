@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import { DecorativeShape } from "@/components";
+import { DecorativeShape, Button } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
 
 function AuthHome() {
   return (
@@ -17,11 +18,9 @@ function AuthHome() {
           </h2>
           <p className="text-sm text-cyan-950">Accede con tu teléfono móvil</p>
 
-          <Link to="/auth/telefono">
-            <button className="w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600">
-              Buscar
-            </button>
-          </Link>
+          <Button to="/auth/telefono" className="w-40" icon={faPhone}>
+            Buscar
+          </Button>
         </div>
 
         {/* Acceder a mis citas CON login */}
@@ -33,11 +32,9 @@ function AuthHome() {
             Entra con tu cuenta o crea una nueva
           </p>
 
-          <Link to="/auth/login">
-            <button className="w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600">
-              Acceder
-            </button>
-          </Link>
+          <Button to="/auth/login" className="w-40" icon={faUser}>
+            Acceder
+          </Button>
         </div>
       </div>
     </section>
