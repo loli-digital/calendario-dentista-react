@@ -14,7 +14,7 @@ export const Button = ({
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 p-3 rounded-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400";
+    "inline-flex items-center justify-center gap-2 p-3 rounded-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400 cursor-pointer";
   const enabledStyles =
     "bg-cyan-700 text-white shadow-[0_0_5px_black] hover:bg-cyan-800 hover:shadow-[0_0_5px_#fff]";
   const disabledStyles = "bg-slate-400 text-slate-700 cursor-not-allowed";
