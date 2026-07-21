@@ -1,4 +1,6 @@
 import { Button } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 export function CTA() {
   return (
@@ -12,7 +14,9 @@ export function CTA() {
         </h2>
 
         {/* Botón para reservar cita */}
-        <Button />
+        <Button to="/reservar-cita" icon={faCalendarDays}>
+          Reserva tu cita
+        </Button>
       </div>
     </section>
   );

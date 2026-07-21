@@ -2,6 +2,8 @@ import mujerSonriendo from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-bo
 import mujerSonriendoAVIF from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.avif";
 import mujerSonriendoWEBP from "@/assets/img/chica-feliz-senalando-con-el-dedo-la-boca-mostrando-dientes-blancos-perfectos-y-una-hermosa-sonrisa.webp";
 import { Button } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 export function HeroSection() {
   return (
@@ -37,7 +39,10 @@ export function HeroSection() {
         <p className="text-xl text-center">
           Agenda online fácil y rápida, con profesionales de confianza
         </p>
-        <Button />
+        {/* Botón para reservar cita */}
+        <Button to="/reservar-cita" icon={faCalendarDays}>
+          Reserva tu cita ya
+        </Button>
       </div>
     </div>
   );
