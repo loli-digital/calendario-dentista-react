@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faXmark,
-  faUser
+  faUser,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 
@@ -22,7 +23,7 @@ export function Navbar() {
   const isAcceder = location.pathname.startsWith("/auth");
   const isReservarCita = location.pathname.startsWith("/reservar-cita");
   const isRestrictedView = isAcceder || isReservarCita;
-  
+
   const { user } = useContext(AuthContext);
 
   return (
@@ -134,7 +135,10 @@ export function Navbar() {
           {user && (
             <>
               <li className="nav-link" onClick={closeMenu}>
-                <NavLink to="/dashboard/mis-datos" className="flex items-center gap-2">
+                <NavLink
+                  to="/dashboard/mis-datos"
+                  className="flex items-center gap-2"
+                >
                   <FontAwesomeIcon icon={faUser} className="mr-2" />
                   Mi panel
                 </NavLink>
@@ -148,7 +152,13 @@ export function Navbar() {
           {/* Botón para reservar cita que se encuentra dentro del menú móvil */}
           {!user && (
             <li className="block lg:hidden mt-10 lg:mt-0">
-              <Button onClick={closeMenu} />
+              <Button
+                to="/reservar-cita"
+                onClick={closeMenu}
+                icon={faCalendarDays}
+              >
+                Reservar cita
+              </Button>
             </li>
           )}
         </ul>
@@ -157,7 +167,9 @@ export function Navbar() {
       {/* Botón para reservar cita en Desktop, excepto cuando se ha inciado sesión */}
       {!user && (
         <div className="hidden lg:block">
-          <Button />
+          <Button to="/reservar-cita" icon={faCalendarDays}>
+            Reservar cita
+          </Button>
         </div>
       )}
     </header>
