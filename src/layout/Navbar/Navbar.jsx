@@ -143,9 +143,9 @@ export function Navbar() {
                   Mi panel
                 </NavLink>
               </li>
-              <li className="nav-link" onClick={() => signOut(auth)}>
+              <Button onClick={() => signOut(auth)}>
                 Cerrar sesión
-              </li>
+              </Button>
             </>
           )}
 
