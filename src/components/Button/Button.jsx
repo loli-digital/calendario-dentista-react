@@ -10,7 +10,7 @@ export const Button = ({
   disabled = false,
   ariaLabel,
   icon,
-  iconPosition = "right",
+  iconPosition = "left",
   ...props
 }) => {
   const baseStyles =
