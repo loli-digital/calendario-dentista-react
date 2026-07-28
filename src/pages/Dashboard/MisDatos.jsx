@@ -173,7 +173,7 @@ function MisDatos() {
   }
 
   return (
-    <section className="w-full h-full p-10">
+    <section className="w-full h-full p-10 flex justify-center">
       {!hasData ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -430,54 +430,59 @@ function MisDatos() {
           />
         </form>
       ) : (
-        <div className="form__container--data-show">
-          <p>
-            <span className="form__p--mis-datos">Nombre:</span>{" "}
-            {userData.nombre}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Apellido/s:</span>{" "}
-            {userData.apellido}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Fecha de nacimiento:</span>{" "}
-            {fechaFormateada(userData.fechaNacimiento)}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Dirección:</span>{" "}
-            {userData.direccion}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Ciudad:</span>{" "}
-            {userData.ciudad}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Código postal:</span>{" "}
-            {userData.codigoPostal}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Tipo de identificación:</span>{" "}
-            {userData.tipoIdentificacion.toUpperCase()}{" "}
-            {userData.numIdentificacion}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
-            {userData.email}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Teléfono:</span>{" "}
-            {userData.telefono}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">Alergias:</span>{" "}
-            {userData.alergias}
-          </p>
-          <p>
-            <span className="form__p--mis-datos">
-              Compañía de seguro dental:
-            </span>{" "}
-            {userData.companiaSeguro.toUpperCase()} {userData.numCompaniaSeguro}
-          </p>
+        <div className="flex flex-col justify-center items-center gap-10">
+          <div className="form__container--data-show">
+            <p>
+              <span className="form__p--mis-datos">Nombre:</span>{" "}
+              {userData.nombre}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Apellido/s:</span>{" "}
+              {userData.apellido}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Fecha de nacimiento:</span>{" "}
+              {fechaFormateada(userData.fechaNacimiento)}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Dirección:</span>{" "}
+              {userData.direccion}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Ciudad:</span>{" "}
+              {userData.ciudad}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Código postal:</span>{" "}
+              {userData.codigoPostal}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">
+                Tipo de identificación:
+              </span>{" "}
+              {userData.tipoIdentificacion.toUpperCase()}{" "}
+              {userData.numIdentificacion}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
+              {userData.email}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Teléfono:</span>{" "}
+              {userData.telefono}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">Alergias:</span>{" "}
+              {userData.alergias}
+            </p>
+            <p>
+              <span className="form__p--mis-datos">
+                Compañía de seguro dental:
+              </span>{" "}
+              {userData.companiaSeguro.toUpperCase()}{" "}
+              {userData.numCompaniaSeguro}
+            </p>
+          </div>
 
           {/* Botón para editar datos */}
           <Button onClick={() => setHasData(false)} className="w-40 mx-auto">
