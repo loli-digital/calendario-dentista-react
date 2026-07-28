@@ -1,5 +1,4 @@
 import { Button } from "@/components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 export function CTA() {
