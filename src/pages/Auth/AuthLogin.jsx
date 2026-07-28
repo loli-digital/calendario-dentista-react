@@ -76,7 +76,7 @@ function AuthLogin() {
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
             aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
           >
             <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
