@@ -1,5 +1,4 @@
 import { DecorativeShape, Button } from "@/components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
 
 function AuthHome() {
