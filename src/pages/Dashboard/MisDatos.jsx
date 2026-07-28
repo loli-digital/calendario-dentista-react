@@ -2,6 +2,7 @@ import { auth, db } from "@/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useForm, useWatch } from "react-hook-form";
 import { useState, useEffect } from "react";
+import { Button } from "@/components";
 
 function MisDatos() {
   // Lógica para cuando carga la página
@@ -478,12 +479,10 @@ function MisDatos() {
             {userData.companiaSeguro.toUpperCase()} {userData.numCompaniaSeguro}
           </p>
 
-          <button
-            onClick={() => setHasData(false)}
-            className="w-40 mx-auto mt-4 bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600"
-          >
+          {/* Botón para editar datos */}
+          <Button onClick={() => setHasData(false)} className="w-40 mx-auto">
             Editar datos
-          </button>
+          </Button>
         </div>
       )}
     </section>

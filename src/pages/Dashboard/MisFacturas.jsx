@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { facturas } from "@/data";
+import { Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileArrowDown,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 
 function MisFacturas() {
   const [facturasList, setFacturasList] = useState([]);
@@ -107,7 +111,9 @@ function MisFacturas() {
             <option value="pendant">Pendientes</option>
           </select>
 
-          <input type="submit" value="Buscar" />
+          <Button icon={faMagnifyingGlass} className="w-40">
+            Buscar
+          </Button>
         </div>
       </form>
       <div className="w-full overflow-auto hidden md:block text-center">

@@ -2,15 +2,20 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { Link } from "react-router-dom";
-import { DecorativeShape } from "@/components";
+import { DecorativeShape, Button } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function AuthLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleForgotPassword = () => {
-    alert("Si tu email está registrado, recibirás un email para restablecer la contraseña");
-  }
+    alert(
+      "Si tu email está registrado, recibirás un email para restablecer la contraseña",
+    );
+  };
 
   const handleLogin = async () => {
     try {
@@ -52,31 +57,36 @@ function AuthLogin() {
         <label htmlFor="password" className="font-medium text-cyan-800">
           Contraseña
         </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Escribe tu contraseña"
-          value={password}
-          required
-          minLength={8}
-          maxLength={64}
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="current-password"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            id="password"
+            placeholder="Escribe tu contraseña"
+            value={password}
+            required
+            minLength={8}
+            maxLength={64}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
+            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+          >
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </button>
+        </div>
 
         {/* Botón para iniciar sesión */}
-        <Link to="/dashboard" className="mx-auto p-3">
-          <button
-            onClick={handleLogin}
-            className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
-          >
-            Iniciar sesión
-          </button>
-        </Link>
+        <Button to="/dashboard" onClick={handleLogin} className="w-40 mx-auto">
+          Iniciar sesión
+        </Button>
 
         {/* Enlace para recuperar la contraseña */}
         <Link className="text-center mb-0">
@@ -93,14 +103,14 @@ function AuthLogin() {
           Crea una cuenta si eres un/a paciente nuevo/a{" "}
         </p>
 
-        <Link to="/auth/nueva-cuenta" className="mx-auto p-3">
-          <button
-            onClick={handleLogin}
-            className="w-40 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
-          >
-            Crear cuenta
-          </button>
-        </Link>
+        {/* Botón para crear cuenta */}
+        <Button
+          to="/auth/nueva-cuenta"
+          onClick={handleLogin}
+          className="w-40 mx-auto"
+        >
+          Crear cuenta
+        </Button>
       </form>
     </section>
   );
