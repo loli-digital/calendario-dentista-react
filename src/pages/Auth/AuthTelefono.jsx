@@ -16,7 +16,7 @@ import {
   updateDoc,
   Timestamp,
 } from "firebase/firestore";
-import { DecorativeShape } from "@/components";
+import { DecorativeShape, Button } from "@/components";
 
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
@@ -144,10 +144,9 @@ function AuthTelefono() {
 
   return (
     <section className="w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center gap-10 overflow-hidden bg-cyan-50">
-      
       {/* Forma para detrás de las cards */}
       <DecorativeShape />
-      
+
       <h1 className="py-10 relative text-cyan-800 text-center text-4xl font-bold">
         Acceso rápido
       </h1>
@@ -237,18 +236,19 @@ function AuthTelefono() {
                 </p>
 
                 <div className="flex flex-row gap-5">
-                  <button
+                  <Button
                     onClick={() => {
                       setEliminarCitaModal(cita);
                       setMensaje(null);
                       setError(null);
                     }}
                     aria-label="Eliminar cita"
-                    className="mt-3 bg-red-700 text-white p-2 rounded shadow shadow-red-950 hover:bg-red-600 transition-colors duration-200 ease-in cursor-pointer"
+                    className="mt-3 bg-red-700 text-white p-2 rounded shadow shadow-red-950 hover:bg-red-600 focus:ring-red-900 transition-colors duration-200 ease-in cursor-pointer"
                   >
                     Eliminar cita
-                  </button>
-                  <button
+                  </Button>
+
+                  <Button
                     onClick={() => {
                       setCitaAEditar(cita);
                       setFecha(
@@ -260,10 +260,10 @@ function AuthTelefono() {
                       setError(null);
                     }}
                     aria-label="Modificar cita"
-                    className="mt-3 bg-green-700 text-white p-2 rounded shadow shadow-green-950 hover:bg-green-600 transition-colors duration-200 ease-in cursor-pointer"
+                    className="mt-3 bg-green-700 text-white p-2 rounded shadow shadow-green-950 hover:bg-green-600 focus:ring-green-700 transition-colors duration-200 ease-in cursor-pointer"
                   >
                     Modificar cita
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -308,9 +308,8 @@ function AuthTelefono() {
               </div>
 
               <div className="mt-5 flex justify-center items-center gap-4">
-                <button
-                  type="button"
-                  className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
+                <Button
+                  className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600 focus:ring-red-900 cursor-pointer"
                   onClick={async () => {
                     await eliminarCita(eliminarCitaModal.id);
                     setEliminarCitaModal(null);
@@ -319,25 +318,24 @@ function AuthTelefono() {
                   aria-label={loading ? "Eliminando..." : "Eliminar"}
                 >
                   {loading ? "Eliminando..." : "Eliminar"}
-                </button>
+                </Button>
 
-                <button
-                  type="button"
-                  className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
+                <Button
                   onClick={() => setEliminarCitaModal(null)}
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-500 focus:ring-gray-600 cursor-pointer"
                 >
                   Cancelar
-                </button>
+                </Button>
               </div>
 
               {/* Botón para cerrar el modal */}
-              <button
-                className="absolute top-2 right-2 text-cyan-700 text-2xl cursor-pointer"
+              <Button
                 onClick={() => setEliminarCitaModal(null)}
                 aria-label="Cerrar modal"
+                className="w-5 h-5 absolute top-2 right-2 bg-red-800 text-2xl cursor-pointer hover:bg-red-900 focus:ring-red-900"
               >
                 ×
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -396,33 +394,31 @@ function AuthTelefono() {
                 />
 
                 <div className="mt-5 flex justify-center items-center gap-4">
-                  <button
-                    type="button"
-                    className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 cursor-pointer"
+                  <Button
                     onClick={guardarCambios}
                     disabled={loading}
                     aria-label={loading ? "Guardando..." : "Guardar"}
+                    className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 focus:ring-green-700 cursor-pointer"
                   >
                     {loading ? "Guardando..." : "Guardar"}
-                  </button>
-                  <button
-                    type="button"
-                    className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
+                  </Button>
+                  <Button
                     onClick={() => setCitaAEditar(null)}
+                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-500 focus:ring-gray-600 cursor-pointer"
                   >
                     Cancelar
-                  </button>
+                  </Button>
                 </div>
               </form>
 
               {/* Botón para cerrar el modal */}
-              <button
-                className="absolute top-2 right-2 text-cyan-700 text-2xl cursor-pointer"
+              <Button
                 onClick={() => setCitaAEditar(null)}
                 aria-label="Cerrar modal"
+                className="w-5 h-5 absolute top-2 right-2 bg-red-800 text-2xl cursor-pointer hover:bg-red-900 focus:ring-red-900"
               >
                 ×
-              </button>
+              </Button>
             </div>
           </div>
         )}
