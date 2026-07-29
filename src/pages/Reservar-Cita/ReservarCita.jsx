@@ -5,8 +5,8 @@ import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/App.css";
 import { profesionales, serviciosCita } from "@/data";
-import { validarTelefono } from "@/utils/validarTelefono";
-import { filtrarHorasPasadas } from "@/utils/filtrarHorasPasadas";
+import { validatePhone } from "@/utils/validatePhone";
+import { filterPastHours } from "@/utils/filterPastHours";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from "@/firebase.js";
@@ -57,7 +57,7 @@ function ReservarCita() {
     }
 
     // Validación del teléfono
-    if (!validarTelefono(telefono)) {
+    if (!validatePhone(telefono)) {
       setMensaje("El teléfono introducido debe tener 9 dígitos");
       setLoading(false);
       setError(null);
@@ -369,7 +369,7 @@ function ReservarCita() {
                   timeIntervals={30}
                   timeFormat="HH:mm"
                   timeCaption="Hora"
-                  filterTime={(time) => filtrarHorasPasadas(time, fecha)}
+                  filterTime={(time) => filterPastHours(time, fecha)}
                   // 6 es sábado y 0 es domingo
                   filterDate={(date) =>
                     date.getDay() !== 6 && date.getDay() !== 0

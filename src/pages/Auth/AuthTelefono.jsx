@@ -3,8 +3,8 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
-import { validarTelefono } from "@/utils/validarTelefono";
-import { filtrarHorasPasadas } from "@/utils/filtrarHorasPasadas";
+import { validatePhone } from "@/utils/validatePhone";
+import { filterPastHours } from "@/utils/filterPastHours";
 import { db } from "@/firebase";
 import {
   collection,
@@ -54,7 +54,7 @@ function AuthTelefono() {
     e.preventDefault();
 
     // Validación del teléfono
-    if (!validarTelefono(telefonoBusqueda)) {
+    if (!validatePhone(telefonoBusqueda)) {
       setMensaje("El teléfono introducido debe tener 9 dígitos");
       setCitasPaciente([]);
       setLoading(false);
@@ -385,7 +385,7 @@ function AuthTelefono() {
                   timeIntervals={30}
                   timeFormat="HH:mm"
                   timeCaption="Hora"
-                  filterTime={(time) => filtrarHorasPasadas(time, fecha)}
+                  filterTime={(time) => filterPastHours(time, fecha)}
                   // 6 es sábado y 0 es domingo
                   filterDate={(date) =>
                     date.getDay() !== 6 && date.getDay() !== 0
