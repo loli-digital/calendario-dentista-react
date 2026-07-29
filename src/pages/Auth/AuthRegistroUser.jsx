@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase";
-import { db } from "@/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
 
@@ -15,9 +14,22 @@ function AuthRegistroUser() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const normalizeEmail = email.toLowerCase().trim();
+  const generarIDPaciente = () => {
+    const year = new Date().getFullYear().toString().slice(-2);
+    const caracteres = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let indiceAleatorio = "";
 
-  const handleRegister = async () => {
+    for (let i = 0; i < 4; i++) {
+      const indice = Math.floor(Math.random() * caracteres.length);
+      indiceAleatorio += caracteres.charAt(indice);
+    }
+
+    return `PAC-${year}-${indiceAleatorio}`;
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
     try {
       setLoading(true);
       setError(null);
@@ -30,6 +42,9 @@ function AuthRegistroUser() {
         return;
       }
 
+      // Registro del email en minúsculas y sin espacios
+      const normalizeEmail = email.toLowerCase().trim();
+
       // Registro en Firebase
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -39,10 +54,13 @@ function AuthRegistroUser() {
 
       const user = userCredential.user;
 
-      // Guarda datos en Firestone
+      const IDPaciente = generarIDPaciente();
+
+      // Guarda datos en Firestore
       await setDoc(doc(db, "users", user.uid), {
-        normalizeEmail,
-        createdAt: new Date(),
+        email: normalizeEmail,
+        id_paciente: IDPaciente,
+        createdAt: serverTimestamp(),
         profileCompleted: false,
       });
 
@@ -72,10 +90,7 @@ function AuthRegistroUser() {
       {/* Formulario */}
 
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleRegister();
-        }}
+        onSubmit={handleRegister}
         className="w-[350px] lg:w-l mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-3"
       >
         <label htmlFor="email" className="font-medium text-cyan-800">
