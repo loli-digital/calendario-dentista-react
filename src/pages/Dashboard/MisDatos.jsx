@@ -1,13 +1,16 @@
 import { auth, db } from "@/firebase";
+import { updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useForm, useWatch } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Button } from "@/components";
+import { AuthContext } from "@/context/AuthContext";
 
 function MisDatos() {
   // Lógica para cuando carga la página
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const { refreshUser } = useContext(AuthContext);
 
   const {
     register,
@@ -79,11 +82,34 @@ function MisDatos() {
     setIsSaving(true);
 
     try {
-      // Obtener el user de Firebase Auth
       const user = auth.currentUser;
-      // Guardar los datos en la base de datos
-      await setDoc(doc(db, "users", user.uid), data);
-      setUserData(data);
+
+      if (!user) {
+        throw new Error("No hay ningún usuario autenticado");
+      }
+
+      // Lógica para mostrar el nombre del user al iniciar sesión
+      const nombreCompleto = [data.nombre, data.apellido]
+        .filter(Boolean)
+        .map((valor) => valor.trim())
+        .join(" ")
+        .trim();
+
+      if (nombreCompleto) {
+        await updateProfile(user, {
+          displayName: nombreCompleto,
+        });
+
+        await refreshUser();
+      }
+
+      const dataToSave = {
+        ...data,
+        displayName: nombreCompleto,
+      };
+
+      await setDoc(doc(db, "users", user.uid), dataToSave);
+      setUserData(dataToSave);
       setHasData(true);
     } finally {
       setIsSaving(false);

@@ -1,9 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { auth } from "@/firebase";
 import { signOut } from "firebase/auth";
 import logo from "@/assets/img/logo-clinica.png";
 import { NavLink, useLocation } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -12,9 +14,11 @@ import {
   faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
+import { getUserDisplayName } from "@/utils";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
@@ -25,6 +29,33 @@ export function Navbar() {
   const isRestrictedView = isAcceder || isReservarCita;
 
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const cargarDatosUsuario = async () => {
+      if (!user?.uid) {
+        setUserData(null);
+        return;
+      }
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setUserData(docSnap.data());
+        } else {
+          setUserData(null);
+        }
+      } catch (error) {
+        console.error("Error al cargar datos del usuario en la navbar", error);
+        setUserData(null);
+      }
+    };
+
+    cargarDatosUsuario();
+  }, [user]);
+
+  const nombreParaMostrar = getUserDisplayName(user, userData);
 
   return (
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
@@ -134,6 +165,7 @@ export function Navbar() {
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
+              <li>Hola, {nombreParaMostrar || user.email}</li>
               <li className="nav-link" onClick={closeMenu}>
                 <NavLink
                   to="/dashboard/mis-datos"
