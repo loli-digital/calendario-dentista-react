@@ -1,40 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/App.css";
 import { profesionales, serviciosCita } from "@/data";
-import { validatePhone } from "@/utils/validatePhone";
-import { filterPastHours } from "@/utils/filterPastHours";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { filterPastHours } from "@/utils";
+import { useReservationForm } from "@/hooks/useReservationForm";
 import { Link } from "react-router-dom";
-import { db } from "@/firebase.js";
 import { DecorativeShape } from "@/components";
 
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
 
 function ReservarCita() {
-  // Estado para los inputs
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [servicio, setServicio] = useState("");
-  const [profesional, setProfesional] = useState("");
-  const [fecha, setFecha] = useState();
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [mensaje, setMensaje] = useState(null);
-  const [titleSubmit, setTitleSubmit] = useState(false);
-
-  // Filtro de profesionales según el servicio
-  const profesionalesDisponibles = profesionales.filter(
-    (profesional) =>
-      Array.isArray(profesional.services) &&
-      profesional.services.includes(Number(servicio)),
-  );
+  const {
+    nombre,
+    setNombre,
+    apellido,
+    setApellido,
+    telefono,
+    setTelefono,
+    servicio,
+    setServicio,
+    profesional,
+    setProfesional,
+    fecha,
+    setFecha,
+    loading,
+    error,
+    setError,
+    mensaje,
+    setMensaje,
+    titleSubmit,
+    profesionalesDisponibles,
+    manejarSubmit,
+  } = useReservationForm({ servicios: serviciosCita, profesionales });
 
   useEffect(() => {
     console.log(
@@ -44,95 +45,6 @@ function ReservarCita() {
       profesionalesDisponibles,
     );
   }, [servicio, profesionalesDisponibles]);
-
-  // Para guardar los datos en base de datos Firebase
-  const manejarSubmit = async (e) => {
-    e.preventDefault();
-
-    // Validaciones de todos los campos
-    if (!nombre || !apellido || !telefono || !servicio || !profesional) {
-      setMensaje("Por favor, rellena todos los campos");
-      setError(null);
-      return;
-    }
-
-    // Validación del teléfono
-    if (!validatePhone(telefono)) {
-      setMensaje("El teléfono introducido debe tener 9 dígitos");
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
-    // Mensaje error si intenta registrar una fecha inválida
-    if (!fecha || fecha.getDay() === 0 || fecha.getDay() === 6) {
-      setMensaje("Seleccione una fecha entre el lunes y el viernes");
-      setError(null);
-      return;
-    }
-
-    const servicioSeleccionado = serviciosCita.find(
-      (s) => s.id === Number(servicio),
-    );
-
-    const profesionalSeleccionado = profesionales.find(
-      (p) => p.id === profesional,
-    );
-
-    try {
-      if (!servicioSeleccionado || !profesionalSeleccionado) {
-        throw new Error(
-          "No se encontró la información del servicio o profesional",
-        );
-      }
-
-      setLoading(true);
-      setError(null);
-      setMensaje(null);
-
-      await addDoc(collection(db, "citas"), {
-        nombre,
-        apellido,
-        telefono,
-        servicio: servicioSeleccionado.nombre,
-        profesional: profesionalSeleccionado.name,
-        fecha: Timestamp.fromDate(fecha),
-        hora: fecha.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      });
-
-      setTitleSubmit(true);
-
-      // Muestra el mensaje de confirmación de cita
-      setMensaje({
-        nombre,
-        apellido,
-        telefono,
-        servicio: servicioSeleccionado.name,
-        profesional: profesionalSeleccionado.name,
-        fecha: fecha.toLocaleDateString("es-ES"),
-        hora: fecha.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      });
-
-      // Resetear formulario
-      setNombre("");
-      setApellido("");
-      setTelefono("");
-      setServicio("");
-      setProfesional("");
-      setFecha(null);
-    } catch (err) {
-      setError("Ocurrió un problema al reservar la cita. Inténtelo de nuevo.");
-      console.log(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <section className="w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center overflow-hidden bg-cyan-50">
