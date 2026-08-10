@@ -82,10 +82,10 @@ function MisCitas() {
 
       {/* Formulario */}
       {!mensaje && (
-        <div>
+        <div className="w-full lg:w-xl">
           <form
             onSubmit={manejarSubmit}
-            className="w-full mx-auto relative p-6 rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center lg:space-y-10"
+            className="w-full mx-auto relative p-6 rounded-md shadow-[0_0_5px_black] border border-slate-200 bg-white flex flex-col justify-center lg:space-y-10"
           >
             <div className="w-full flex flex-col gap-5">
               {/* Servicio */}

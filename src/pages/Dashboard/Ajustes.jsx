@@ -67,12 +67,12 @@ function Ajustes() {
     <section className="w-full h-full p-10 flex justify-center">
       <form
         onSubmit={handleSave}
-        className="w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-10"
+        className="w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
-        <div className="flex flex-col justify-center items-left gap-4">
+        <div className="form__container--data-show">
           <p>ID paciente: {userInfo?.uid || "ID no disponible"}</p>
           <p>
-            Fecha registro: 
+            Fecha registro:
             {userInfo?.fechaRegistro
               ? new Date(userInfo.fechaRegistro).toLocaleDateString("es-ES", {
                   day: "2-digit",
