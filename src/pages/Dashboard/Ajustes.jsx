@@ -69,7 +69,7 @@ function Ajustes() {
         onSubmit={handleSave}
         className="w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
-        <div className="form__container--data-show">
+        <div className="w-full p-3 lg:p-10 flex flex-col gap-3 bg-white shadow-[0_0_5px_black] rounded-sm">
           <p><span className="form__p--mis-datos">ID paciente:</span> {userInfo?.uid || "ID no disponible"}</p>
           <p>
             <span className="form__p--mis-datos">Fecha registro: </span>

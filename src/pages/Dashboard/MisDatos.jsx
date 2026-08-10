@@ -199,7 +199,7 @@ function MisDatos() {
   }
 
   return (
-    <section className="w-full h-full p-10 flex justify-center">
+    <section className="w-full h-full p-3 lg:p-10 flex justify-center">
       {!hasData ? (
         <form
           onSubmit={handleSubmit(onSubmit)}

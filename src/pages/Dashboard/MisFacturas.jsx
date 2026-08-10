@@ -99,12 +99,12 @@ function MisFacturas() {
   };
 
   return (
-    <section className="w-full p-10 flex flex-col justify-center items-center gap-5">
+    <section className="w-full p-3 lg:p-10 flex flex-col justify-center items-center gap-5">
       {/* Formulario para filtrar facturas */}
       <form
         action=""
         onSubmit={handleSearch}
-        className="w-full flex flex-col md:justify-center md:items-center md:gap-4"
+        className="w-full p-3 flex flex-col md:justify-center md:items-center md:gap-4"
       >
         <div className="flex flex-col md:flex-row md:justify-center md:items-center space-y-1 md:space-y-0 md:space-x-1">
           <label htmlFor="date-start" className="form__label">
