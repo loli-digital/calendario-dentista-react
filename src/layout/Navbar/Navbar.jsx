@@ -12,6 +12,8 @@ import {
   faXmark,
   faUser,
   faCalendarDays,
+  faFileInvoiceDollar,
+  faGear
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 import { getUserDisplayName } from "@/utils";
@@ -165,8 +167,8 @@ export function Navbar() {
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
-              <li>Hola, {nombreParaMostrar ?? user.email}</li>
-              <li className="nav-link" onClick={closeMenu}>
+              <li className="text-lg">Hola, {nombreParaMostrar ?? user.email}</li>
+              <li className="nav-link text-lg" onClick={closeMenu}>
                 <NavLink
                   to="/dashboard/mis-datos"
                   className="flex items-center gap-2"
@@ -175,9 +177,34 @@ export function Navbar() {
                   Mi panel
                 </NavLink>
               </li>
-              <Button onClick={() => signOut(auth)}>
-                Cerrar sesión
-              </Button>
+              <li className="block lg:hidden text-lg">
+                <NavLink to="/dashboard/mis-datos">
+                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  Mis datos
+                </NavLink>
+              </li>
+              <li className="block lg:hidden text-lg">
+                <NavLink to="/dashboard/mis-citas">
+                  <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
+                  Mis citas
+                </NavLink>
+              </li>
+              <li className="block lg:hidden text-lg">
+                <NavLink to="/dashboard/mis-facturas">
+                  <FontAwesomeIcon
+                    icon={faFileInvoiceDollar}
+                    className="mr-2"
+                  />
+                  Mis facturas
+                </NavLink>
+              </li>
+              <li className="block lg:hidden text-lg">
+                <NavLink to="/dashboard/ajustes">
+                  <FontAwesomeIcon icon={faGear} className="mr-2" />
+                  Ajustes
+                </NavLink>
+              </li>
+              <Button onClick={() => signOut(auth)} className="text-lg">Cerrar sesión</Button>
             </>
           )}
 
