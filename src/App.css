@@ -174,11 +174,15 @@ section .swiper-button-next {
 
 /*Estilos formularios en general*/
 .form__container--data-show{
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
   gap: 1rem;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 5px black;
 }
 
 .form__label,

@@ -456,7 +456,7 @@ function MisDatos() {
           />
         </form>
       ) : (
-        <div className="flex flex-col justify-center items-center gap-10">
+        <div className="flex flex-col justify-center items-center gap-7">
           <div className="form__container--data-show">
             <p>
               <span className="form__p--mis-datos">Nombre:</span>{" "}
