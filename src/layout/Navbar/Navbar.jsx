@@ -165,7 +165,7 @@ export function Navbar() {
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
-              <li>Hola, {nombreParaMostrar || user.email}</li>
+              <li>Hola, {nombreParaMostrar ?? user.email}</li>
               <li className="nav-link" onClick={closeMenu}>
                 <NavLink
                   to="/dashboard/mis-datos"
