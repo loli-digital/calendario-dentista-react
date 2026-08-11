@@ -64,12 +64,12 @@ function Ajustes() {
   }
 
   return (
-    <section className="w-full h-full p-10 flex justify-center">
+    <section className="w-full h-full p-3 lg:p-10 flex justify-center">
       <form
         onSubmit={handleSave}
-        className="w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
+        className="w-full lg:w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
-        <div className="w-full p-3 lg:p-10 flex flex-col gap-3 bg-white shadow-[0_0_5px_black] rounded-sm">
+        <div className="form__container--data-show">
           <p><span className="form__p--mis-datos">ID paciente:</span> {userInfo?.uid || "ID no disponible"}</p>
           <p>
             <span className="form__p--mis-datos">Fecha registro: </span>
@@ -115,7 +115,7 @@ function Ajustes() {
           type="submit"
           value={isSaving ? "Guardando..." : "Guardar"}
           disabled={isSaving}
-          className={`w-40 mx-auto mt-4 bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
+          className={`w-40 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
         />
         <Button className="w-50 mx-auto">Eliminar cuenta y datos</Button>
       </form>
