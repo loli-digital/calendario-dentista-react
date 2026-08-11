@@ -167,7 +167,7 @@ export function Navbar() {
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
-              <div className="w-60 flex flex-col gap-6">
+              <div className="w-60 lg:w-full flex flex-col lg:flex-row gap-6">
               <li className="text-lg">
                 Hola, {nombreParaMostrar ?? user.email}
               </li>
@@ -205,7 +205,7 @@ export function Navbar() {
                   </NavLink>
                 </li>
               </div>
-              <Button onClick={() => signOut(auth)} className="text-lg">
+              <Button onClick={() => signOut(auth)} className="lg:w-46 text-lg">
                 Cerrar sesión
               </Button>
             </>
