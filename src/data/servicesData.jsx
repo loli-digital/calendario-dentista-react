@@ -1,4 +1,4 @@
-export const serviciosCita = [
+export const services = [
   {
     id: 1,
     nombre: "Limpieza",

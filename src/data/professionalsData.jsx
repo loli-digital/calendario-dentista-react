@@ -1,6 +1,6 @@
-export const profesionales = [
+export const professionals = [
   {
-    id: "1",
+    id: 1,
     imgAVIF: new URL(
       "@/assets/img/dentista-sonriente-de-tiro-medio-en-el-trabajo.avif",
       import.meta.url,
@@ -24,7 +24,7 @@ export const profesionales = [
     services: [1, 2, 3, 5, 6],
   },
   {
-    id: "2",
+    id: 2,
     imgAVIF: new URL(
       "@/assets/img/medico-estomatologo-explicando-la-higiene-dental-adecuada-al-paciente-con-muestra-de-mandibula-humana.avif",
       import.meta.url,

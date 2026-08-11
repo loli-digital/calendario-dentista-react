@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHandHoldingMedical,
   faMagnifyingGlass,
@@ -8,7 +7,7 @@ import {
   faTooth,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const serviciosCard = [
+export const cardServices = [
   {
     id: 1,
     imgAVIF: new URL(
