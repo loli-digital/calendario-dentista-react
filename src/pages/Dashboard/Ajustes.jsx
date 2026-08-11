@@ -23,6 +23,7 @@ function Ajustes() {
 
       setUserInfo({
         uid: user.uid,
+        idPaciente: data.id_paciente,
         fechaRegistro: data.createdAt?.toDate
           ? data.createdAt.toDate()
           : user.metadata.creationTime,
@@ -70,7 +71,7 @@ function Ajustes() {
         className="w-full lg:w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
         <div className="form__container--data-show">
-          <p><span className="form__p--mis-datos">ID paciente:</span> {userInfo?.uid || "ID no disponible"}</p>
+          <p><span className="form__p--mis-datos">ID paciente:</span> {userInfo?.idPaciente ?? "ID no disponible"}</p>
           <p>
             <span className="form__p--mis-datos">Fecha registro: </span>
             {userInfo?.fechaRegistro

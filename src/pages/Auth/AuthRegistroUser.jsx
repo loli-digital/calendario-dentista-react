@@ -14,7 +14,7 @@ function AuthRegistroUser() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const generarIDPaciente = () => {
+  const generarIdPaciente = () => {
     const year = new Date().getFullYear().toString().slice(-2);
     const caracteres = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let indiceAleatorio = "";
@@ -54,12 +54,12 @@ function AuthRegistroUser() {
 
       const user = userCredential.user;
 
-      const IDPaciente = generarIDPaciente();
+      const idPaciente = generarIdPaciente();
 
       // Guarda datos en Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: normalizeEmail,
-        id_paciente: IDPaciente,
+        id_paciente: idPaciente,
         createdAt: serverTimestamp(),
         profileCompleted: false,
       });
