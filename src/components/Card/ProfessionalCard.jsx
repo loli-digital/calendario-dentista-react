@@ -1,4 +1,4 @@
-export function ProfesionalesCard({
+export function ProfessionalCard({
   imgAVIF,
   imgWEBP,
   img,

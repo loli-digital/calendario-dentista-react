@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function ServiciosCard({
+export function CardService({
   imgAVIF,
   imgWEBP,
   img,

@@ -4,7 +4,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
-import { profesionales, serviciosCita } from "@/data";
+import { professionals, services } from "@/data";
 import { filterPastHours } from "@/utils";
 
 // Registra el locale 'es' para el calendario en España
@@ -12,35 +12,35 @@ registerLocale("es", es);
 
 function MisCitas() {
   const {
-    nombre,
-    setNombre,
-    apellido,
-    setApellido,
-    telefono,
-    setTelefono,
-    servicio,
-    setServicio,
-    profesional,
-    setProfesional,
-    fecha,
-    setFecha,
+    name,
+    setName,
+    lastName,
+    setLastName,
+    phoneNumber,
+    setPhoneNumber,
+    service,
+    setService,
+    professional,
+    setProfessional,
+    selectedDate,
+    setSelectedDate,
     loading,
     error,
     setError,
-    mensaje,
-    setMensaje,
-    profesionalesDisponibles,
+    message,
+    setMessage,
+    availableProfessionals,
     manejarSubmit,
-  } = useReservationForm({ servicios: serviciosCita, profesionales });
+  } = useReservationForm({ services: services, professionals });
 
   useEffect(() => {
     console.log(
       "ReservarCita debug -> servicio:",
-      servicio,
+      service,
       "profesionalesDisponibles:",
-      profesionalesDisponibles,
+      availableProfessionals,
     );
-  }, [servicio, profesionalesDisponibles]);
+  }, [service, availableProfessionals]);
 
   return (
     <section className="w-full h-full p-3 lg:p-10 flex justify-center items-center">
@@ -52,36 +52,36 @@ function MisCitas() {
       )}
 
       {/* Mensaje de confirmación de cita */}
-      {mensaje && (
+      {message && (
         <div className="w-full lg:w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-700 text-green-800 p-4 rounded shadow-md">
           <h2 className="font-bold text-lg text-center mb-2">
             Cita reservada correctamente
           </h2>
 
           <p>
-            <strong>Nombre y apellido/s:</strong> {mensaje.nombre}{" "}
-            {mensaje.apellido}
+            <strong>Nombre y apellido/s:</strong> {message.name}{" "}
+            {message.lastName}
           </p>
           <p>
-            <strong>Teléfono:</strong> {mensaje.telefono}
+            <strong>Teléfono:</strong> {message.phoneNumber}
           </p>
           <p>
-            <strong>Servicio:</strong> {mensaje.servicio}
+            <strong>Servicio:</strong> {message.service}
           </p>
           <p>
-            <strong>Profesional:</strong> {mensaje.profesional}
+            <strong>Profesional:</strong> {message.professional}
           </p>
           <p>
-            <strong>Día:</strong> {mensaje.fecha}
+            <strong>Día:</strong> {message.selectedDate}
           </p>
           <p>
-            <strong>Hora:</strong> {mensaje.hora}
+            <strong>Hora:</strong> {message.hora}
           </p>
         </div>
       )}
 
       {/* Formulario */}
-      {!mensaje && (
+      {!message && (
         <div className="w-full lg:w-xl">
           <form
             onSubmit={manejarSubmit}
@@ -96,18 +96,18 @@ function MisCitas() {
                 id="servicio"
                 className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
                 required
-                value={servicio}
+                value={service}
                 onChange={(e) => {
-                  setServicio(e.target.value);
+                  setService(e.target.value);
                   setError(null);
-                  setMensaje(null);
+                  setMessage(null);
                 }}
               >
                 <option value="">Selecciona un servicio</option>
 
-                {serviciosCita.map((servicio) => (
-                  <option key={servicio.id} value={servicio.id}>
-                    {servicio.nombre}
+                {services.map((service) => (
+                  <option key={service.id} value={service.id}>
+                    {service.name}
                   </option>
                 ))}
               </select>
@@ -123,21 +123,21 @@ function MisCitas() {
                 id="profesional"
                 className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
                 required
-                value={profesional}
+                value={professional}
                 onChange={(e) => {
-                  setProfesional(e.target.value);
+                  setProfessional(e.target.value);
                   setError(null);
-                  setMensaje(null);
+                  setMessage(null);
                 }}
               >
-                {servicio === "" ? (
+                {service === "" ? (
                   <>
                     <option value="">Selecciona un profesional</option>
                     <option value="" disabled>
                       Selecciona un servicio primero
                     </option>
                   </>
-                ) : profesionalesDisponibles.length === 0 ? (
+                ) : availableProfessionals.length === 0 ? (
                   <>
                     <option value="">Selecciona un profesional</option>
                     <option value="" disabled>
@@ -147,9 +147,9 @@ function MisCitas() {
                 ) : (
                   <>
                     <option value="">Selecciona un profesional</option>
-                    {profesionalesDisponibles.map((profesional) => (
-                      <option key={profesional.id} value={profesional.id}>
-                        {profesional.name || profesional.nombre || "Sin nombre"}
+                    {availableProfessionals.map((professional) => (
+                      <option key={professional.id} value={professional.id}>
+                        {professional.name ?? "Sin nombre"}
                       </option>
                     ))}
                   </>
@@ -163,11 +163,11 @@ function MisCitas() {
               <DatePicker
                 id="fecha-hora"
                 showIcon
-                selected={fecha}
+                selected={selectedDate}
                 onChange={(date) => {
-                  setFecha(date);
+                  setSelectedDate(date);
                   setError(null);
-                  setMensaje(null);
+                  setMessage(null);
                 }}
                 minDate={new Date()}
                 dateFormat="Pp"
@@ -178,13 +178,13 @@ function MisCitas() {
                   9,
                 )}
                 maxTime={setHours(
-                  setMinutes(new Date().setHours(0, 0, 0, 0), 30),
+                  setMinutes(new Date().setHours(0, 0, 0, 0), 0),
                   19,
                 )}
-                timeIntervals={30}
+                timeIntervals={60}
                 timeFormat="HH:mm"
                 timeCaption="Hora"
-                filterTime={(time) => filterPastHours(time, fecha)}
+                filterTime={(time) => filterPastHours(time, selectedDate)}
                 // 6 es sábado y 0 es domingo
                 filterDate={(date) =>
                   date.getDay() !== 6 && date.getDay() !== 0

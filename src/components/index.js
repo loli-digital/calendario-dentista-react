@@ -1,10 +1,10 @@
-export { ProfesionalesCard } from "./Card/ProfesionalesCard";
+export { ProfessionalCard } from "./Card/ProfessionalCard";
 export { ReviewsCard } from "./Card/ReviewsCard";
-export { ServiciosCard } from "./Card/ServiciosCard";
+export { CardService } from "./Card/CardService";
 export { RatingStars } from "./RatingStars/RatingStars";
 export { HomeSkeleton } from "./Skeleton/HomeSkeleton";
 export { AuthSkeleton } from "./Skeleton/AuthSkeleton";
-export { ReservarCitaSkeleton } from "./Skeleton/ReservarCitaSkeleton";
+export { AppointmentSkeleton } from "./Skeleton/AppointmentSkeleton";
 export { Button } from "./Button/Button";
 export { DecorativeShape } from "./DecorativeShape/DecorativeShape";
 export { CookiesBanner } from "./Cookies-Banner/CookiesBanner";

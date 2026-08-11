@@ -17,7 +17,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
   const [titleSubmit, setTitleSubmit] = useState(false);
 
   const availableProfessionals = useMemo(() => {
-    return professionals.filter((p) => Array.isArray(p.services) && p.services.includes(Number(service)));
+    return professionals.filter((professional) => Array.isArray(professional.services) && professional.services.includes(Number(service)));
   }, [professionals, service]);
 
   const resetForm = () => {
@@ -54,12 +54,12 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
       return;
     }
 
-    const selectedService = services.find((s) => s.id === Number(service));
+    const selectedService = services.find((service) => service.id === Number(service));
 
-    const profesionalSeleccionado = professionals.find((p) => p.id === professional);
+    const selectedProfessional = professionals.find((professional) => professional.id === professional);
 
     try {
-      if (!selectedService || !profesionalSeleccionado) {
+      if (!selectedService || !selectedProfessional) {
         throw new Error("No se encontró la información del servicio o profesional");
       }
 
@@ -72,7 +72,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
         lastName,
         phoneNumber,
         service: selectedService.name,
-        professional: profesionalSeleccionado.name,
+        professional: selectedProfessional.name,
         date: Timestamp.fromDate(date),
         hora: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       });
@@ -84,7 +84,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
         lastName,
         phoneNumber,
         service: selectedService.name,
-        professional: profesionalSeleccionado.name,
+        professional: selectedProfessional.name,
         date: date.toLocaleDateString("es-ES"),
         hora: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       });
