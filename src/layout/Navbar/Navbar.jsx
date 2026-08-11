@@ -205,7 +205,7 @@ export function Navbar() {
                   </NavLink>
                 </li>
               </div>
-              <Button onClick={() => signOut(auth)} className="lg:w-46 text-lg">
+              <Button onClick={() => signOut(auth)} className="lg:w-60 text-lg">
                 Cerrar sesión
               </Button>
             </>
