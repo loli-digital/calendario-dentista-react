@@ -1,21 +1,21 @@
 export function getUserDisplayName(user, userData = {}) {
   if (user?.displayName) {
-    return user.displayName;
+    return user?.displayName;
   }
 
-  const nombre = userData?.displayName || userData?.nombre || "";
-  const apellido = userData?.apellido || "";
+  const name = userData?.displayName ?? userData?.name ?? "";
+  const lastName = userData?.lastName ?? "";
 
-  if (nombre && apellido) {
-    return `${nombre} ${apellido}`.trim();
+  if (name && lastName) {
+    return `${name} ${lastName}`.trim();
   }
 
-  if (nombre) {
-    return nombre;
+  if (name) {
+    return name;
   }
 
   if (user?.email) {
-    return user.email;
+    return user?.email;
   }
 
   return "";
