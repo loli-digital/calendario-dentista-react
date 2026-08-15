@@ -20,19 +20,19 @@ function MisDatos() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nombre: "",
-      apellido: "",
-      fechaNacimiento: "",
-      direccion: "",
-      ciudad: "",
-      codigoPostal: "",
-      tipoIdentificacion: "",
-      numIdentificacion: "",
-      telefono: "",
+      name: "",
+      lastName: "",
+      dateOfBirth: "",
+      address: "",
+      city: "",
+      zipCode: "",
+      identificationType: "",
+      identificationNumber: "",
+      phoneNumber: "",
       email: "",
-      alergias: "",
-      companiaSeguro: "",
-      numCompaniaSeguro: "",
+      allergies: "",
+      insuranceCompany: "",
+      insuranceCompanyNumber: "",
     },
   });
 
@@ -47,22 +47,22 @@ function MisDatos() {
   Lo mismo con la compañía de seguro, si ha elegido que SÍ tiene una compañía,
   entonces aparece el input para escribir los números y letras de ésta.
   */
-  const tipoIdentificacion = useWatch({ control, name: "tipoIdentificacion" });
-  const companiaSeguro = useWatch({ control, name: "companiaSeguro" });
+  const identificationType = useWatch({ control, name: "identificationType" });
+  const insuranceCompany = useWatch({ control, name: "insuranceCompany" });
 
-  const placeholderIdentificacion = {
+  const placeholderIdentification = {
     dni: "12345678A",
     nie: "X1234567Y",
-    pasaporte: "ABC123456",
+    passport: "ABC123456",
   };
 
-  const patronIdentificacion = {
+  const identificationPattern = {
     dni: /^[0-9]{8}[A-Z]$/,
     nie: /^[XYZ][0-9]{7}[A-Z]$/,
-    pasaporte: /^[A-Z]{3}[0-9]{6}$/,
+    passport: /^[A-Z]{3}[0-9]{6}$/,
   };
 
-  const numCompaniaSeguro = {
+  const insuranceCompanyNumber = {
     asisa: /^[0-9]{12,15}$/,
     sanitas: /^[0-9]{9,12}$/,
     adeslas: /^[0-9]{10,12}$/,
@@ -71,7 +71,7 @@ function MisDatos() {
   };
 
   // Para que se muestre la fecha en día, mes y año
-  const fechaFormateada = (isoDate) => {
+  const formattedDate = (isoDate) => {
     if (!isoDate) return "";
     const [year, month, day] = isoDate.split("-");
     return `${day}/${month}/${year}`;
@@ -89,15 +89,15 @@ function MisDatos() {
       }
 
       // Lógica para mostrar el nombre del user al iniciar sesión
-      const nombreCompleto = [data.nombre, data.apellido]
+      const completeName = [data.name, data.lastName]
         .filter(Boolean)
         .map((valor) => valor.trim())
         .join(" ")
         .trim();
 
-      if (nombreCompleto) {
+      if (completeName) {
         await updateProfile(user, {
-          displayName: nombreCompleto,
+          displayName: completeName,
         });
 
         await refreshUser();
@@ -105,7 +105,7 @@ function MisDatos() {
 
       const dataToSave = {
         ...data,
-        displayName: nombreCompleto,
+        displayName: completeName,
       };
 
       await setDoc(doc(db, "users", user.uid), dataToSave);
@@ -142,20 +142,20 @@ function MisDatos() {
         que se vea la pantalla del formulario para que rellene sus datos*/
         if (!docSnap.exists()) {
           const newData = {
-            nombre: "",
-            apellido: "",
-            fechaNacimiento: "",
-            direccion: "",
-            ciudad: "",
-            codigoPostal: "",
-            tipoIdentificacion: "",
-            numIdentificacion: "",
+            name: "",
+            lastName: "",
+            dateOfBirth: "",
+            address: "",
+            city: "",
+            zipCode: "",
+            identificationType: "",
+            identificationNumber: "",
             // para que se vea el email siempre, ya que se ha registrado con él
             email: user.email,
-            telefono: "",
-            alergias: "",
-            companiaSeguro: "",
-            numCompaniaSeguro: "",
+            phoneNumber: "",
+            allergies: "",
+            insuranceCompany: "",
+            insuranceCompanyNumber: "",
           };
 
           if (isMounted) {
@@ -208,55 +208,55 @@ function MisDatos() {
           <div className="w-full flex flex-col lg:flex-row gap-2 lg:gap-5">
             <div className="w-full flex flex-col gap-2">
               {/*Nombre*/}
-              <label htmlFor="nombre" className="form__label">
+              <label htmlFor="name" className="form__label">
                 Nombre:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu nombre"
-                {...register("nombre", { required: true, maxLength: 80 })}
+                {...register("name", { required: true, maxLength: 80 })}
                 className="form__input"
               />
 
               {/*Apellido/s*/}
-              <label htmlFor="apellido" className="form__label">
+              <label htmlFor="lastName" className="form__label">
                 Apellido/s:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu/s apellido/s"
-                {...register("apellido", { required: true, maxLength: 100 })}
+                {...register("lastName", { required: true, maxLength: 100 })}
                 className="form__input"
               />
 
               {/*Fecha de nacimiento*/}
-              <label htmlFor="fechaNacimiento" className="form__label">
+              <label htmlFor="dateOfBirth" className="form__label">
                 Fecha de nacimiento:
               </label>
               <input
                 type="date"
-                {...register("fechaNacimiento", { required: true })}
+                {...register("dateOfBirth", { required: true })}
                 className="form__input"
               />
 
               {/*Dirección*/}
-              <label htmlFor="direccion" className="form__label">
+              <label htmlFor="address" className="form__label">
                 Dirección:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu dirección"
-                {...register("direccion", { required: true, maxLength: 200 })}
+                {...register("address", { required: true, maxLength: 200 })}
                 className="form__input"
               />
 
               {/*Ciudad*/}
-              <label htmlFor="ciudad" className="form__label">
+              <label htmlFor="city" className="form__label">
                 Ciudad:
               </label>
               <select
-                name="ciudad"
-                {...register("ciudad", { required: true })}
+                name="city"
+                {...register("city", { required: true })}
                 className="form__input"
               >
                 <option value="">Selecciona tu ciudad</option>
@@ -323,24 +323,24 @@ function MisDatos() {
               </select>
 
               {/* Código postal */}
-              <label htmlFor="codigoPostal" className="form__label">
+              <label htmlFor="zipCode" className="form__label">
                 Código postal:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu código postal"
-                {...register("codigoPostal", { required: true })}
+                {...register("zipCode", { required: true })}
                 className="form__input"
               />
             </div>
 
             <div className="w-full flex flex-col gap-2">
               {/*Tipo de identificación*/}
-              <label htmlFor="tipoIdentificacion" className="form__label">
+              <label htmlFor="identificationType" className="form__label">
                 Tipo de identificación:
               </label>
               <select
-                {...register("tipoIdentificacion", { required: true })}
+                {...register("identificationType", { required: true })}
                 className="form__input"
               >
                 <option value="" selected>
@@ -348,30 +348,30 @@ function MisDatos() {
                 </option>
                 <option value="dni">DNI</option>
                 <option value="nie">NIE</option>
-                <option value="pasaporte">Pasaporte</option>
+                <option value="passport">Pasaporte</option>
               </select>
 
-              {errors.tipoIdentificacion && (
+              {errors.identificationType && (
                 <p className="text-center">
-                  {errors.tipoIdentificacion.message}
+                  {errors.identificationType.message}
                 </p>
               )}
 
-              {tipoIdentificacion && (
+              {identificationType && (
                 <input
                   type="text"
-                  placeholder={placeholderIdentificacion[tipoIdentificacion]}
-                  {...register("numIdentificacion", {
+                  placeholder={placeholderIdentification[identificationType]}
+                  {...register("identificationNumber", {
                     required: true,
-                    pattern: patronIdentificacion[tipoIdentificacion],
+                    pattern: identificationPattern[identificationType],
                   })}
                   className="form__input"
                 />
               )}
 
-              {errors.numIdentificacion && (
+              {errors.identificationNumber && (
                 <p className="text-center">
-                  {errors.numIdentificacion.message}
+                  {errors.identificationNumber.message}
                 </p>
               )}
 
@@ -386,13 +386,13 @@ function MisDatos() {
               />
 
               {/*Teléfono*/}
-              <label htmlFor="telefono" className="form__label">
+              <label htmlFor="phoneNumber" className="form__label">
                 Teléfono:
               </label>
               <input
                 type="tel"
                 placeholder="Escribe tu teléfono"
-                {...register("telefono", {
+                {...register("phoneNumber", {
                   required: true,
                   minLength: 6,
                   maxLength: 12,
@@ -401,24 +401,24 @@ function MisDatos() {
               />
 
               {/* Alergias */}
-              <label htmlFor="alergias" className="form__label">
+              <label htmlFor="allergies" className="form__label">
                 Alergias:
               </label>
               <textarea
-                name="alergias"
-                id="alergias"
+                name="allergies"
+                id="allergies"
                 rows="2"
                 placeholder="Escribe si tienes alguna alergia"
-                {...register("alergias")}
+                {...register("allergies")}
                 className="form__input"
               ></textarea>
 
               {/*Compañía de seguro dental*/}
-              <label htmlFor="companiaSeguro" className="form__label">
+              <label htmlFor="insuranceCompany" className="form__label">
                 Compañía de seguro dental:
               </label>
               <select
-                {...register("companiaSeguro", { required: true })}
+                {...register("insuranceCompany", { required: true })}
                 className="form__input"
               >
                 <option value="" selected>
@@ -432,15 +432,15 @@ function MisDatos() {
                 <option value="dkv">DKV</option>
               </select>
 
-              {errors.companiaSeguro && <p>{errors.companiaSeguro.message}</p>}
+              {errors.insuranceCompany && <p>{errors.insuranceCompany.message}</p>}
 
-              {companiaSeguro && companiaSeguro != "no" && (
+              {insuranceCompany && insuranceCompany != "no" && (
                 <input
                   type="text"
                   placeholder="123456789123"
-                  {...register("numCompaniaSeguro", {
+                  {...register("insuranceCompanyNumber", {
                     required: true,
-                    pattern: numCompaniaSeguro[companiaSeguro],
+                    pattern: insuranceCompanyNumber[insuranceCompany],
                   })}
                   className="form__input"
                 />
@@ -460,34 +460,34 @@ function MisDatos() {
           <div className="form__container--data-show">
             <p>
               <span className="form__p--mis-datos">Nombre:</span>{" "}
-              {userData.nombre}
+              {userData.name}
             </p>
             <p>
               <span className="form__p--mis-datos">Apellido/s:</span>{" "}
-              {userData.apellido}
+              {userData.lastName}
             </p>
             <p>
               <span className="form__p--mis-datos">Fecha de nacimiento:</span>{" "}
-              {fechaFormateada(userData.fechaNacimiento)}
+              {formattedDate(userData.dateOfBirth)}
             </p>
             <p>
               <span className="form__p--mis-datos">Dirección:</span>{" "}
-              {userData.direccion}
+              {userData.address}
             </p>
             <p>
               <span className="form__p--mis-datos">Ciudad:</span>{" "}
-              {userData.ciudad}
+              {userData.city}
             </p>
             <p>
               <span className="form__p--mis-datos">Código postal:</span>{" "}
-              {userData.codigoPostal}
+              {userData.zipCode}
             </p>
             <p>
               <span className="form__p--mis-datos">
                 Tipo de identificación:
               </span>{" "}
-              {userData.tipoIdentificacion.toUpperCase()}{" "}
-              {userData.numIdentificacion}
+              {userData.identificationType}{" "}
+              {userData.identificationNumber}
             </p>
             <p>
               <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
@@ -495,18 +495,18 @@ function MisDatos() {
             </p>
             <p>
               <span className="form__p--mis-datos">Teléfono:</span>{" "}
-              {userData.telefono}
+              {userData.phoneNumber}
             </p>
             <p>
               <span className="form__p--mis-datos">Alergias:</span>{" "}
-              {userData.alergias}
+              {userData.allergies}
             </p>
             <p>
               <span className="form__p--mis-datos">
                 Compañía de seguro dental:
               </span>{" "}
-              {userData.companiaSeguro.toUpperCase()}{" "}
-              {userData.numCompaniaSeguro}
+              {userData.insuranceCompany}{" "}
+              {userData.insuranceCompanyNumber}
             </p>
           </div>
 
