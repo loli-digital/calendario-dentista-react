@@ -99,7 +99,7 @@ export function Navbar() {
         top-0 left-0 bg-cyan-950 lg:bg-transparent transition-all duration-500 ease-in-out 
         z-40 lg:z-auto ${isMenuOpen ? "block" : "hidden"} lg:block`}
       >
-        <ul className="w-full h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl lg:text-lg">
+        <ul className="w-full h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 text-2xl lg:text-lg">
           {/* Si estoy en Home y NO se ha iniciado sesión, mostrar este menú */}
           {!isRestrictedView && !user && (
             <>
