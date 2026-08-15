@@ -214,9 +214,23 @@ function MisDatos() {
               <input
                 type="text"
                 placeholder="Escribe tu nombre"
-                {...register("name", { required: true, maxLength: 80 })}
+                {...register("name", {
+                  required: "El nombre es obligatorio",
+                  minLength: {
+                    value: 3,
+                    message: "El nombre debe tener al menos 3 caracteres",
+                  },
+                  maxLength: {
+                    value: 80,
+                    message: "El nombre no puede superar los 80 caracteres",
+                  },
+                })}
                 className="form__input"
               />
+
+              {errors.name && (
+                <span className="text-red-800">{errors.name.message}</span>
+              )}
 
               {/*Apellido/s*/}
               <label htmlFor="lastName" className="form__label">
@@ -225,9 +239,23 @@ function MisDatos() {
               <input
                 type="text"
                 placeholder="Escribe tu/s apellido/s"
-                {...register("lastName", { required: true, maxLength: 100 })}
+                {...register("lastName", {
+                  required: "El apellido es obligatorio",
+                  minLength: {
+                    value: 3,
+                    message: "El apellido debe tener al menos 3 caracteres",
+                  },
+                  maxLength: {
+                    value: 100,
+                    message: "El apellido no puede superar los 100 caracteres",
+                  },
+                })}
                 className="form__input"
               />
+
+              {errors.lastName && (
+                <span className="text-red-800">{errors.lastName.message}</span>
+              )}
 
               {/*Fecha de nacimiento*/}
               <label htmlFor="dateOfBirth" className="form__label">
@@ -235,9 +263,47 @@ function MisDatos() {
               </label>
               <input
                 type="date"
-                {...register("dateOfBirth", { required: true })}
+                {...register("dateOfBirth", {
+                  required: "La fecha de nacimiento es obligatoria",
+                  validate: (value) => {
+                    if (!value) return "La fecha de nacimiento es obligatoria";
+
+                    const selectedDate = new Date(value + "T00:00:00");
+                    const today = new Date();
+
+                    if (Number.isNaN(selectedDate.getTime())) {
+                      return "La fecha no es válida";
+                    }
+
+                    if (selectedDate > today) {
+                      return "La fecha no puede ser futura";
+                    }
+
+                    const age = today.getFullYear() - selectedDate.getFullYear();
+                    const monthDiff = today.getMonth() - selectedDate.getMonth();
+                    const dayDiff = today.getDate() - selectedDate.getDate();
+
+                    const realAge =
+                      monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)
+                        ? age - 1
+                        : age;
+
+                    if (realAge < 18) {
+                      return "Debes ser mayor de 18 años";
+                    }
+
+                    if (selectedDate.getFullYear() < 1900) {
+                      return "La fecha de nacimiento no es válida";
+                    }
+
+                    return true;
+                  },
+                })}
                 className="form__input"
               />
+              {errors.dateOfBirth && (
+                <span className="text-red-800">{errors.dateOfBirth.message}</span>
+              )}
 
               {/*Dirección*/}
               <label htmlFor="address" className="form__label">
@@ -246,9 +312,20 @@ function MisDatos() {
               <input
                 type="text"
                 placeholder="Escribe tu dirección"
-                {...register("address", { required: true, maxLength: 200 })}
+                {...register("address", {
+                  required: "La dirección es obligatoria",
+                  minLength: {
+                    value: 5,
+                    message: "La dirección debe tener al menos 5 caracteres",
+                  },
+                  maxLength: {
+                    value: 200,
+                    message: "La dirección no puede superar los 200 caracteres",
+                  },
+                })}
                 className="form__input"
               />
+              {errors.address && <span className="text-red-800">{errors.address.message}</span>}
 
               {/*Ciudad*/}
               <label htmlFor="city" className="form__label">
@@ -256,7 +333,9 @@ function MisDatos() {
               </label>
               <select
                 name="city"
-                {...register("city", { required: true })}
+                {...register("city", {
+                  required: "La ciudad es obligatoria",
+                })}
                 className="form__input"
               >
                 <option value="">Selecciona tu ciudad</option>
@@ -321,6 +400,7 @@ function MisDatos() {
                 <option value="Zamora">Zamora</option>
                 <option value="Zaragoza">Zaragoza</option>
               </select>
+              {errors.city && <span className="text-red-800">{errors.city.message}</span>}
 
               {/* Código postal */}
               <label htmlFor="zipCode" className="form__label">
@@ -329,9 +409,19 @@ function MisDatos() {
               <input
                 type="text"
                 placeholder="Escribe tu código postal"
-                {...register("zipCode", { required: true })}
+                {...register("zipCode", {
+                  required: "El código postal es obligatorio",
+                  pattern: {
+                    value: /^[0-9]{5}$/,
+                    message: "El código postal debe tener 5 números",
+                  },
+                })}
                 className="form__input"
               />
+
+              {errors.zipCode && (
+                <span className="text-red-800">{errors.zipCode.message}</span>
+              )}
             </div>
 
             <div className="w-full flex flex-col gap-2">
@@ -340,10 +430,12 @@ function MisDatos() {
                 Tipo de identificación:
               </label>
               <select
-                {...register("identificationType", { required: true })}
+                {...register("identificationType", {
+                  required: "El tipo de identificación es obligatorio",
+                })}
                 className="form__input"
               >
-                <option value="" selected>
+                <option value="">
                   Seleccionar
                 </option>
                 <option value="dni">DNI</option>
@@ -352,9 +444,9 @@ function MisDatos() {
               </select>
 
               {errors.identificationType && (
-                <p className="text-center">
+                <span className="text-center">
                   {errors.identificationType.message}
-                </p>
+                </span>
               )}
 
               {identificationType && (
@@ -362,7 +454,7 @@ function MisDatos() {
                   type="text"
                   placeholder={placeholderIdentification[identificationType]}
                   {...register("identificationNumber", {
-                    required: true,
+                    required: "El tipo de identificación es obligatorio",
                     pattern: identificationPattern[identificationType],
                   })}
                   className="form__input"
@@ -381,9 +473,16 @@ function MisDatos() {
               </label>
               <input
                 type="email"
-                {...register("email")}
+                {...register("email", {
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                    message: "Email no válido",
+                  },
+                })}
                 className="form__input"
               />
+
+              {errors.email && <span className="text-red-800">{errors.email.message}</span>}
 
               {/*Teléfono*/}
               <label htmlFor="phoneNumber" className="form__label">
@@ -393,12 +492,15 @@ function MisDatos() {
                 type="tel"
                 placeholder="Escribe tu teléfono"
                 {...register("phoneNumber", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 12,
+                  required: "El teléfono es obligatorio",
+                  pattern: {
+                    value: /^[0-9]{9,12}$/,
+                    message: "El teléfono debe tener entre 9 y 12 dígitos",
+                  },
                 })}
                 className="form__input"
               />
+              {errors.phoneNumber && <span className="text-red-800">{errors.phoneNumber.message}</span>}
 
               {/* Alergias */}
               <label htmlFor="allergies" className="form__label">
@@ -418,10 +520,12 @@ function MisDatos() {
                 Compañía de seguro dental:
               </label>
               <select
-                {...register("insuranceCompany", { required: true })}
+                {...register("insuranceCompany", {
+                  required: "La elección de compañía de seguro es obligatoria",
+                })}
                 className="form__input"
               >
-                <option value="" selected>
+                <option value="">
                   Seleccionar
                 </option>
                 <option value="no">No tengo compañía de seguro dental</option>
@@ -432,14 +536,17 @@ function MisDatos() {
                 <option value="dkv">DKV</option>
               </select>
 
-              {errors.insuranceCompany && <p>{errors.insuranceCompany.message}</p>}
+              {errors.insuranceCompany && (
+                <span className="text-red-800">{errors.insuranceCompany.message}</span>
+              )}
 
               {insuranceCompany && insuranceCompany != "no" && (
                 <input
                   type="text"
                   placeholder="123456789123"
                   {...register("insuranceCompanyNumber", {
-                    required: true,
+                    required:
+                      "Este campo es obligatorio si eliges tener compañía de seguro",
                     pattern: insuranceCompanyNumber[insuranceCompany],
                   })}
                   className="form__input"
@@ -486,8 +593,7 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Tipo de identificación:
               </span>{" "}
-              {userData.identificationType}{" "}
-              {userData.identificationNumber}
+              {userData.identificationType} {userData.identificationNumber}
             </p>
             <p>
               <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
@@ -505,8 +611,7 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Compañía de seguro dental:
               </span>{" "}
-              {userData.insuranceCompany}{" "}
-              {userData.insuranceCompanyNumber}
+              {userData.insuranceCompany} {userData.insuranceCompanyNumber}
             </p>
           </div>
 
