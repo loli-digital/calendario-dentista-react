@@ -22,17 +22,17 @@ import { DecorativeShape, Button } from "@/components";
 registerLocale("es", es);
 
 function AuthPhoneNumber() {
-  const [telefonoBusqueda, setTelefonoBusqueda] = useState("");
-  const [citasPaciente, setCitasPaciente] = useState([]);
+  const [phoneNumberSearch, setPhoneNumberSearch] = useState("");
+  const [patientAppointment, setPatientAppointment] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [mensaje, setMensaje] = useState(null);
-  const [eliminarCitaModal, setEliminarCitaModal] = useState(null);
-  const [citaAEditar, setCitaAEditar] = useState(null);
-  const [fecha, setFecha] = useState();
+  const [message, setMessage] = useState(null);
+  const [removeAppointmentModal, setRemoveAppointmentModal] = useState(null);
+  const [editAppointment, setEditAppointment] = useState(null);
+  const [selectedDate, setSelectedDate] = useState();
 
-  async function obtenerCitasPorTelefono(telefono) {
-    const q = query(collection(db, "citas"), where("telefono", "==", telefono));
+  async function getAppointmentWithPhoneNumber(phoneNumber) {
+    const q = query(collection(db, "citas"), where("phoneNumber", "==", phoneNumber));
 
     const querySnapshot = await getDocs(q);
 
@@ -43,20 +43,20 @@ function AuthPhoneNumber() {
           id: doc.id,
           ...data,
           // Convierte Timestamp a Date
-          fecha:
-            data.fecha && data.fecha.toDate ? data.fecha.toDate() : data.fecha,
+          selectedDate:
+            data.selectedDate && data.selectedDate.toDate ? data.selectedDate.toDate() : data.selectedDate,
         };
       })
-      .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      .sort((a, b) => new Date(a.selectedDate) - new Date(b.selectedDate));
   }
 
-  const buscarCitas = async (e) => {
+  const searchAppointment = async (e) => {
     e.preventDefault();
 
     // Validación del teléfono
-    if (!validatePhone(telefonoBusqueda)) {
-      setMensaje("El teléfono introducido debe tener 9 dígitos");
-      setCitasPaciente([]);
+    if (!validatePhone(phoneNumberSearch)) {
+      setMessage("El teléfono introducido debe tener 9 dígitos");
+      setPatientAppointment([]);
       setLoading(false);
       setError(null);
       return;
@@ -64,22 +64,22 @@ function AuthPhoneNumber() {
 
     setLoading(true);
     setError(null);
-    setMensaje(null);
-    setCitasPaciente([]);
+    setMessage(null);
+    setPatientAppointment([]);
 
     try {
-      const citasFiltradas = await obtenerCitasPorTelefono(telefonoBusqueda);
+      const filterAppointment = await getAppointmentWithPhoneNumber(phoneNumberSearch);
 
       //Si no existen citas guardadas con el teléfono (empty state)
 
-      if (citasFiltradas.length === 0) {
-        setMensaje(
+      if (filterAppointment.length === 0) {
+        setMessage(
           "No hemos encontrado citas asociadas a este número de teléfono. Comprueba que el número sea correcto.",
         );
         return;
       }
 
-      setCitasPaciente(citasFiltradas);
+      setPatientAppointment(filterAppointment);
     } catch (err) {
       console.error(err);
       setError("Ocurrió un problema al obtener las citas");
@@ -88,20 +88,20 @@ function AuthPhoneNumber() {
     }
   };
 
-  const eliminarCita = async (id) => {
+  const removeAppointment = async (id) => {
     try {
       await deleteDoc(doc(db, "citas", id));
 
       // Actualizar la lista mostrada
-      const nuevasCitasPaciente = citasPaciente.filter(
-        (cita) => cita.id !== id,
+      const newAppointment = patientAppointment.filter(
+        (appointment) => appointment.id !== id,
       );
 
-      setCitasPaciente(nuevasCitasPaciente);
+      setPatientAppointment(newAppointment);
 
       // Si ya no quedan citas para ese teléfono
-      if (nuevasCitasPaciente.length === 0) {
-        setMensaje("Has eliminado todas tus citas");
+      if (newAppointment.length === 0) {
+        setMessage("Has eliminado todas tus citas");
       }
     } catch (err) {
       console.error(err);
@@ -109,8 +109,8 @@ function AuthPhoneNumber() {
     }
   };
 
-  const guardarCambios = async () => {
-    if (!fecha) {
+  const savedChanges = async () => {
+    if (!selectedDate) {
       setError("Debes seleccionar una fecha y una hora");
       return;
     }
@@ -119,9 +119,9 @@ function AuthPhoneNumber() {
     setLoading(true);
 
     try {
-      await updateDoc(doc(db, "citas", citaAEditar.id), {
-        fecha: Timestamp.fromDate(fecha),
-        hora: fecha.toLocaleTimeString([], {
+      await updateDoc(doc(db, "citas", editAppointment.id), {
+        selectedDate: Timestamp.fromDate(selectedDate),
+        hour: selectedDate.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -129,11 +129,11 @@ function AuthPhoneNumber() {
 
       // Refrescar citas
 
-      const citasActualizadas = await obtenerCitasPorTelefono(telefonoBusqueda);
+      const updatedAppointment = await getAppointmentWithPhoneNumber(phoneNumberSearch);
 
-      setCitasPaciente(citasActualizadas);
-      setCitaAEditar(null);
-      setMensaje("Cita actualizada correctamente");
+      setPatientAppointment(updatedAppointment);
+      setEditAppointment(null);
+      setMessage("Cita actualizada correctamente");
     } catch (err) {
       console.error(err);
       setError("Ocurrió un problema al actualizar la cita");
@@ -154,21 +154,21 @@ function AuthPhoneNumber() {
       <div className="max-w-3xl mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center items-center gap-10">
         {/* Formulario búsqueda de cita */}
         <form
-          onSubmit={buscarCitas}
+          onSubmit={searchAppointment}
           className="w-60 lg:w-96 flex flex-col gap-10 justify-center items-center"
         >
           <label
-            htmlFor="telefonoBusqueda"
+            htmlFor="phoneNumberSearch"
             className="text-lg font-semibold text-cyan-800"
           >
             Introduce tu teléfono móvil:
           </label>
           <input
-            id="telefonoBusqueda"
+            id="phoneNumberSearch"
             type="tel"
-            name="telefonoBusqueda"
-            value={telefonoBusqueda}
-            onChange={(e) => setTelefonoBusqueda(e.target.value)}
+            name="phoneNumberSearch"
+            value={phoneNumberSearch}
+            onChange={(e) => setPhoneNumberSearch(e.target.value)}
             placeholder="Ej: 123456789"
             required
             pattern="[0-9]{9}"
@@ -199,47 +199,47 @@ function AuthPhoneNumber() {
         )}
 
         {/* Mensaje */}
-        {mensaje && !loading && !error && (
+        {message && !loading && !error && (
           <p className="text-cyan-800 text-xl text-center font-bold">
-            {mensaje}
+            {message}
           </p>
         )}
 
         {/* Lista de citas (success state) */}
 
-        {citasPaciente.length > 0 && (
+        {patientAppointment.length > 0 && (
           <div className="w-86 lg:w-xl flex flex-col gap-6">
-            {citasPaciente.map((cita) => (
+            {patientAppointment.map((appointment) => (
               <div
-                key={cita.id}
+                key={appointment.id}
                 className="bg-white text-cyan-700 border-2 border-cyan-700 rounded p-4 shadow"
               >
                 <p className="wrap-anywhere">
-                  <strong>Nombre y apellido/s:</strong> {cita.nombre}{" "}
-                  {cita.apellido}
+                  <strong>Nombre y apellido/s:</strong> {appointment.name}{" "}
+                  {appointment.lastName}
                 </p>
                 <p>
-                  <strong>Teléfono:</strong> {cita.telefono}
+                  <strong>Teléfono:</strong> {appointment.phoneNumber}
                 </p>
                 <p>
-                  <strong>Servicio:</strong> {cita.servicio}
+                  <strong>Servicio:</strong> {appointment.service}
                 </p>
                 <p>
-                  <strong>Profesional:</strong> {cita.profesional}
+                  <strong>Profesional:</strong> {appointment.profesional}
                 </p>
                 <p>
                   <strong>Día:</strong>{" "}
-                  {new Date(cita.fecha).toLocaleDateString("es-ES")}
+                  {new Date(appointment.selectedDate).toLocaleDateString("es-ES")}
                 </p>
                 <p>
-                  <strong>Hora:</strong> {cita.hora}
+                  <strong>Hora:</strong> {appointment.hour}
                 </p>
 
                 <div className="flex flex-row gap-5">
                   <Button
                     onClick={() => {
-                      setEliminarCitaModal(cita);
-                      setMensaje(null);
+                      setRemoveAppointmentModal(appointment);
+                      setMessage(null);
                       setError(null);
                     }}
                     aria-label="Eliminar cita"
@@ -250,13 +250,13 @@ function AuthPhoneNumber() {
 
                   <Button
                     onClick={() => {
-                      setCitaAEditar(cita);
-                      setFecha(
-                        cita.fecha instanceof Date
-                          ? cita.fecha
-                          : cita.fecha.toDate(),
+                      setEditAppointment(appointment);
+                      setSelectedDate(
+                        appointment.selectedDate instanceof Date
+                          ? appointment.selectedDate
+                          : appointment.selectedDate.toDate(),
                       );
-                      setMensaje(null);
+                      setMessage(null);
                       setError(null);
                     }}
                     aria-label="Modificar cita"
@@ -272,7 +272,7 @@ function AuthPhoneNumber() {
 
         {/* Modal para eliminar cita/s */}
 
-        {eliminarCitaModal && (
+        {removeAppointmentModal && (
           <div className="fixed inset-0 bg-cyan-900/80 flex items-center justify-center z-50">
             <div
               className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative flex flex-col justify-center items-center gap-2"
@@ -290,20 +290,20 @@ function AuthPhoneNumber() {
 
               <div className="mb-4 text-cyan-700">
                 <p>
-                  <strong>Nombre:</strong> {eliminarCitaModal.nombre}{" "}
-                  {eliminarCitaModal.apellido}
+                  <strong>Nombre:</strong> {removeAppointmentModal.name}{" "}
+                  {removeAppointmentModal.lastName}
                 </p>
                 <p>
-                  <strong>Servicio:</strong> {eliminarCitaModal.servicio}
+                  <strong>Servicio:</strong> {removeAppointmentModal.service}
                 </p>
                 <p>
                   <strong>Día:</strong>{" "}
-                  {new Date(eliminarCitaModal.fecha).toLocaleDateString(
+                  {new Date(removeAppointmentModal.selectedDate).toLocaleDateString(
                     "es-ES",
                   )}
                 </p>
                 <p>
-                  <strong>Hora:</strong> {eliminarCitaModal.hora}
+                  <strong>Hora:</strong> {removeAppointmentModal.hour}
                 </p>
               </div>
 
@@ -311,8 +311,8 @@ function AuthPhoneNumber() {
                 <Button
                   className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600 focus:ring-red-900 cursor-pointer"
                   onClick={async () => {
-                    await eliminarCita(eliminarCitaModal.id);
-                    setEliminarCitaModal(null);
+                    await removeAppointment(removeAppointmentModal.id);
+                    setRemoveAppointmentModal(null);
                   }}
                   disabled={loading}
                   aria-label={loading ? "Eliminando..." : "Eliminar"}
@@ -321,7 +321,7 @@ function AuthPhoneNumber() {
                 </Button>
 
                 <Button
-                  onClick={() => setEliminarCitaModal(null)}
+                  onClick={() => setRemoveAppointmentModal(null)}
                   className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-500 focus:ring-gray-600 cursor-pointer"
                 >
                   Cancelar
@@ -330,7 +330,7 @@ function AuthPhoneNumber() {
 
               {/* Botón para cerrar el modal */}
               <Button
-                onClick={() => setEliminarCitaModal(null)}
+                onClick={() => setRemoveAppointmentModal(null)}
                 aria-label="Cerrar modal"
                 className="w-5 h-5 absolute top-2 right-2 bg-red-800 text-2xl cursor-pointer hover:bg-red-900 focus:ring-red-900"
               >
@@ -342,7 +342,7 @@ function AuthPhoneNumber() {
 
         {/* Modal para editar cita/s */}
 
-        {citaAEditar && (
+        {editAppointment && (
           <div className="fixed inset-0 bg-cyan-900/80 flex items-center justify-center z-50">
             <div
               className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative flex flex-col justify-center items-center gap-2"
@@ -360,16 +360,16 @@ function AuthPhoneNumber() {
 
               <form>
                 <label
-                  htmlFor="nueva-fecha"
+                  htmlFor="new-date"
                   className="font-medium text-cyan-800 mr-2"
                 >
                   Selecciona el día
                 </label>
                 <DatePicker
-                  id="nueva-fecha"
+                  id="new-date"
                   showIcon
-                  selected={fecha}
-                  onChange={(date) => setFecha(date)}
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
                   minDate={new Date()}
                   dateFormat="Pp"
                   locale="es"
@@ -385,7 +385,7 @@ function AuthPhoneNumber() {
                   timeIntervals={30}
                   timeFormat="HH:mm"
                   timeCaption="Hora"
-                  filterTime={(time) => filterPastHours(time, fecha)}
+                  filterTime={(time) => filterPastHours(time, selectedDate)}
                   // 6 es sábado y 0 es domingo
                   filterDate={(date) =>
                     date.getDay() !== 6 && date.getDay() !== 0
@@ -395,7 +395,7 @@ function AuthPhoneNumber() {
 
                 <div className="mt-5 flex justify-center items-center gap-4">
                   <Button
-                    onClick={guardarCambios}
+                    onClick={savedChanges}
                     disabled={loading}
                     aria-label={loading ? "Guardando..." : "Guardar"}
                     className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 focus:ring-green-700 cursor-pointer"
@@ -403,7 +403,7 @@ function AuthPhoneNumber() {
                     {loading ? "Guardando..." : "Guardar"}
                   </Button>
                   <Button
-                    onClick={() => setCitaAEditar(null)}
+                    onClick={() => setEditAppointment(null)}
                     className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-500 focus:ring-gray-600 cursor-pointer"
                   >
                     Cancelar
@@ -413,7 +413,7 @@ function AuthPhoneNumber() {
 
               {/* Botón para cerrar el modal */}
               <Button
-                onClick={() => setCitaAEditar(null)}
+                onClick={() => setEditAppointment(null)}
                 aria-label="Cerrar modal"
                 className="w-5 h-5 absolute top-2 right-2 bg-red-800 text-2xl cursor-pointer hover:bg-red-900 focus:ring-red-900"
               >
