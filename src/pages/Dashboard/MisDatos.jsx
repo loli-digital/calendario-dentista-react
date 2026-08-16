@@ -217,6 +217,7 @@ function MisDatos() {
                 placeholder="Escribe tu nombre"
                 {...register("name", {
                   required: "El nombre es obligatorio",
+                  setValueAs: (value) => value.trim(),
                   minLength: {
                     value: 3,
                     message: "El nombre debe tener al menos 3 caracteres",
@@ -280,8 +281,10 @@ function MisDatos() {
                       return "La fecha no puede ser futura";
                     }
 
-                    const age = today.getFullYear() - selectedDate.getFullYear();
-                    const monthDiff = today.getMonth() - selectedDate.getMonth();
+                    const age =
+                      today.getFullYear() - selectedDate.getFullYear();
+                    const monthDiff =
+                      today.getMonth() - selectedDate.getMonth();
                     const dayDiff = today.getDate() - selectedDate.getDate();
 
                     const realAge =
@@ -303,7 +306,9 @@ function MisDatos() {
                 className="form__input"
               />
               {errors.dateOfBirth && (
-                <span className="text-red-800">{errors.dateOfBirth.message}</span>
+                <span className="text-red-800">
+                  {errors.dateOfBirth.message}
+                </span>
               )}
 
               {/*Dirección*/}
@@ -326,7 +331,9 @@ function MisDatos() {
                 })}
                 className="form__input"
               />
-              {errors.address && <span className="text-red-800">{errors.address.message}</span>}
+              {errors.address && (
+                <span className="text-red-800">{errors.address.message}</span>
+              )}
 
               {/*Ciudad*/}
               <label htmlFor="city" className="form__label">
@@ -401,7 +408,9 @@ function MisDatos() {
                 <option value="Zamora">Zamora</option>
                 <option value="Zaragoza">Zaragoza</option>
               </select>
-              {errors.city && <span className="text-red-800">{errors.city.message}</span>}
+              {errors.city && (
+                <span className="text-red-800">{errors.city.message}</span>
+              )}
 
               {/* Código postal */}
               <label htmlFor="zipCode" className="form__label">
@@ -412,6 +421,7 @@ function MisDatos() {
                 placeholder="Escribe tu código postal"
                 {...register("zipCode", {
                   required: "El código postal es obligatorio",
+                  setValueAs: (value) => value.trim(),
                   pattern: {
                     value: /^[0-9]{5}$/,
                     message: "El código postal debe tener 5 números",
@@ -436,9 +446,7 @@ function MisDatos() {
                 })}
                 className="form__input"
               >
-                <option value="">
-                  Seleccionar
-                </option>
+                <option value="">Seleccionar</option>
                 <option value="dni">DNI</option>
                 <option value="nie">NIE</option>
                 <option value="passport">Pasaporte</option>
@@ -499,6 +507,7 @@ function MisDatos() {
               <input
                 type="email"
                 {...register("email", {
+                  setValueAs: (value) => value.trim(),
                   pattern: {
                     value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                     message: "Email no válido",
@@ -507,7 +516,9 @@ function MisDatos() {
                 className="form__input"
               />
 
-              {errors.email && <span className="text-red-800">{errors.email.message}</span>}
+              {errors.email && (
+                <span className="text-red-800">{errors.email.message}</span>
+              )}
 
               {/*Teléfono*/}
               <label htmlFor="phoneNumber" className="form__label">
@@ -518,6 +529,7 @@ function MisDatos() {
                 placeholder="Escribe tu teléfono"
                 {...register("phoneNumber", {
                   required: "El teléfono es obligatorio",
+                  setValueAs: (value) => value.trim(),
                   pattern: {
                     value: /^[0-9]{9,12}$/,
                     message: "El teléfono debe tener entre 9 y 12 dígitos",
@@ -525,7 +537,11 @@ function MisDatos() {
                 })}
                 className="form__input"
               />
-              {errors.phoneNumber && <span className="text-red-800">{errors.phoneNumber.message}</span>}
+              {errors.phoneNumber && (
+                <span className="text-red-800">
+                  {errors.phoneNumber.message}
+                </span>
+              )}
 
               {/* Alergias */}
               <label htmlFor="allergies" className="form__label">
@@ -550,9 +566,7 @@ function MisDatos() {
                 })}
                 className="form__input"
               >
-                <option value="">
-                  Seleccionar
-                </option>
+                <option value="">Seleccionar</option>
                 <option value="no">No tengo compañía de seguro dental</option>
                 <option value="asisa">ASISA</option>
                 <option value="sanitas">SANITAS</option>
@@ -562,7 +576,9 @@ function MisDatos() {
               </select>
 
               {errors.insuranceCompany && (
-                <span className="text-red-800">{errors.insuranceCompany.message}</span>
+                <span className="text-red-800">
+                  {errors.insuranceCompany.message}
+                </span>
               )}
 
               {insuranceCompany && insuranceCompany != "no" && (
@@ -572,6 +588,7 @@ function MisDatos() {
                   {...register("insuranceCompanyNumber", {
                     required:
                       "Este campo es obligatorio si eliges tener compañía de seguro",
+                    setValueAs: (value) => value.trim(),
                     pattern: insuranceCompanyNumber[insuranceCompany],
                   })}
                   className="form__input"
@@ -618,7 +635,8 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Tipo de identificación:
               </span>{" "}
-              {userData.identificationType.toUpperCase()} {userData.identificationNumber.toUpperCase()}
+              {userData.identificationType.toUpperCase()}{" "}
+              {userData.identificationNumber.toUpperCase()}
             </p>
             <p>
               <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
@@ -636,7 +654,8 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Compañía de seguro dental:
               </span>{" "}
-              {userData.insuranceCompany.toUpperCase()} {userData.insuranceCompanyNumber}
+              {userData.insuranceCompany.toUpperCase()}{" "}
+              {userData.insuranceCompanyNumber}
             </p>
           </div>
 
