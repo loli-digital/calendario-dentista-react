@@ -5,6 +5,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { useState, useEffect, useContext } from "react";
 import { Button } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 
 function MisDatos() {
   // Lógica para cuando carga la página
@@ -231,7 +233,10 @@ function MisDatos() {
               />
 
               {errors.name && (
-                <span className="text-red-800">{errors.name.message}</span>
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.name.message}
+                </span>
               )}
 
               {/*Apellido/s*/}
@@ -256,7 +261,10 @@ function MisDatos() {
               />
 
               {errors.lastName && (
-                <span className="text-red-800">{errors.lastName.message}</span>
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.lastName.message}
+                </span>
               )}
 
               {/*Fecha de nacimiento*/}
@@ -307,6 +315,7 @@ function MisDatos() {
               />
               {errors.dateOfBirth && (
                 <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
                   {errors.dateOfBirth.message}
                 </span>
               )}
@@ -332,7 +341,10 @@ function MisDatos() {
                 className="form__input"
               />
               {errors.address && (
-                <span className="text-red-800">{errors.address.message}</span>
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.address.message}
+                </span>
               )}
 
               {/*Ciudad*/}
@@ -409,7 +421,10 @@ function MisDatos() {
                 <option value="Zaragoza">Zaragoza</option>
               </select>
               {errors.city && (
-                <span className="text-red-800">{errors.city.message}</span>
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.city.message}
+                </span>
               )}
 
               {/* Código postal */}
@@ -431,7 +446,10 @@ function MisDatos() {
               />
 
               {errors.zipCode && (
-                <span className="text-red-800">{errors.zipCode.message}</span>
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.zipCode.message}
+                </span>
               )}
             </div>
 
@@ -454,6 +472,7 @@ function MisDatos() {
 
               {errors.identificationType && (
                 <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
                   {errors.identificationType.message}
                 </span>
               )}
@@ -496,6 +515,7 @@ function MisDatos() {
 
               {errors.identificationNumber && (
                 <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
                   {errors.identificationNumber.message}
                 </span>
               )}
@@ -517,7 +537,10 @@ function MisDatos() {
               />
 
               {errors.email && (
-                <span className="text-red-800">{errors.email.message}</span>
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.email.message}
+                </span>
               )}
 
               {/*Teléfono*/}
@@ -539,6 +562,7 @@ function MisDatos() {
               />
               {errors.phoneNumber && (
                 <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
                   {errors.phoneNumber.message}
                 </span>
               )}
@@ -577,6 +601,7 @@ function MisDatos() {
 
               {errors.insuranceCompany && (
                 <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
                   {errors.insuranceCompany.message}
                 </span>
               )}
