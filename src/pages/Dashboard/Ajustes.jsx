@@ -9,7 +9,15 @@ function Ajustes() {
   const [isSaving, setIsSaving] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [consent, setConsent] = useState(false);
-  const [contactPreference, setContactPreference] = useState("whatsapp");
+  const [contactPreferences, setContactPreferences] = useState([]);
+
+  const toggleContactPreference = (value) => {
+    setContactPreferences((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value],
+    );
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -24,13 +32,13 @@ function Ajustes() {
       setUserInfo({
         uid: user.uid,
         idPaciente: data.id_paciente,
-        fechaRegistro: data.createdAt?.toDate
+        registrationDate: data.createdAt?.toDate
           ? data.createdAt.toDate()
           : user.metadata.creationTime,
       });
 
       setConsent(Boolean(data.consentForNotifications));
-      setContactPreference(data.preferencia_comunicacion || "whatsapp");
+      setContactPreferences(data.contactPreferences);
       setLoading(false);
     });
 
@@ -47,7 +55,7 @@ function Ajustes() {
     try {
       await updateDoc(doc(db, "users", auth.currentUser.uid), {
         consentForNotifications: consent,
-        preferencia_comunicacion: contactPreference,
+        contactPreferences: contactPreferences,
       });
     } catch (error) {
       console.error("Error al guardar ajustes:", error);
@@ -58,7 +66,7 @@ function Ajustes() {
 
   if (loading) {
     return (
-      <section className="w-full h-full p-10 flex justify-center items-center">
+      <section className="w-full h-full p-3 lg:p-10 flex justify-center items-center">
         <p className="text-center">Cargando datos...</p>
       </section>
     );
@@ -71,17 +79,25 @@ function Ajustes() {
         className="w-full lg:w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
         <div className="form__container--data-show">
-          <p><span className="form__p--mis-datos">ID paciente:</span> {userInfo?.idPaciente ?? "ID no disponible"}</p>
+          {/* ID paciente */}
+          <p>
+            <span className="form__p--mis-datos">ID paciente:</span>{" "}
+            {userInfo?.idPaciente ?? "ID no disponible"}
+          </p>
+
+          {/* Fecha registro paciente */}
           <p>
             <span className="form__p--mis-datos">Fecha registro: </span>
-            {userInfo?.fechaRegistro
-              ? new Date(userInfo.fechaRegistro).toLocaleDateString("es-ES", {
+            {userInfo?.registrationDate
+              ? new Date(userInfo.registrationDate).toLocaleDateString("es-ES", {
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric",
                 })
               : "Fecha no disponible"}
           </p>
+
+          {/* Recibir recordatorios de citas */}
           <div className="flex flex-row gap-2">
             <input
               type="checkbox"
@@ -99,18 +115,46 @@ function Ajustes() {
             </label>
           </div>
 
-          <label htmlFor="contact-preferences" className="form__p--mis-datos">Preferencias de contacto</label>
-          <select
-            name="contact-preferences"
-            id="contact-preferences"
-            value={contactPreference}
-            onChange={(e) => setContactPreference(e.target.value)}
-          >
-            <option value="">Selecciona</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="phone-call">Llamada telefónica</option>
-            <option value="email">Email</option>
-          </select>
+          {/* Preferencias de contacto */}
+          <label htmlFor="contact-preferences" className="form__p--mis-datos">
+            Preferencias de contacto
+          </label>
+          <div className="flex flex-row gap-2">
+            <input
+              type="checkbox"
+              id="whatsapp"
+              className="cursor-pointer"
+              checked={contactPreferences.includes("whatsapp")}
+              onChange={() => toggleContactPreference("whatsapp")}
+            />
+            <label htmlFor="whatsapp" className="cursor-pointer">
+              WhatsApp
+            </label>
+          </div>
+          <div className="flex flex-row gap-2">
+            <input
+              type="checkbox"
+              id="phone-call"
+              className="cursor-pointer"
+              checked={contactPreferences.includes("phone-call")}
+              onChange={() => toggleContactPreference("phone-call")}
+            />
+            <label htmlFor="phone-call" className="cursor-pointer">
+              Llamada telefónica
+            </label>
+          </div>
+          <div className="flex flex-row gap-2">
+            <input
+              type="checkbox"
+              id="email"
+              className="cursor-pointer"
+              checked={contactPreferences.includes("email")}
+              onChange={() => toggleContactPreference("email")}
+            />
+            <label htmlFor="email" className="cursor-pointer">
+              Email
+            </label>
+          </div>
         </div>
         <input
           type="submit"
