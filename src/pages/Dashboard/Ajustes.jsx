@@ -8,17 +8,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 
 function Ajustes() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit } = useForm();
 
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [consent, setConsent] = useState(false);
   const [contactPreferences, setContactPreferences] = useState([]);
+  const [contactPreferencesError, setContactPreferencesError] = useState("");
 
   const toggleContactPreference = (value) => {
     setContactPreferences((prev) =>
@@ -26,6 +23,8 @@ function Ajustes() {
         ? prev.filter((item) => item !== value)
         : [...prev, value],
     );
+
+    setContactPreferencesError("");
   };
 
   useEffect(() => {
@@ -57,6 +56,12 @@ function Ajustes() {
   const handleSave = async () => {
     if (!auth.currentUser) return;
 
+    if (contactPreferences.length === 0) {
+      setContactPreferencesError("Elige una forma de contacto");
+      return;
+    }
+
+    setContactPreferencesError("");
     setIsSaving(true);
 
     try {
@@ -133,9 +138,7 @@ function Ajustes() {
             <input
               type="checkbox"
               id="whatsapp"
-              {...register("contactPreferences", {
-                required: "Elige tu preferencia de contacto",
-              })}
+              name="whatsapp"
               className="cursor-pointer"
               checked={contactPreferences.includes("whatsapp")}
               onChange={() => toggleContactPreference("whatsapp")}
@@ -148,6 +151,7 @@ function Ajustes() {
             <input
               type="checkbox"
               id="phone-call"
+              name="phone-call"
               className="cursor-pointer"
               checked={contactPreferences.includes("phone-call")}
               onChange={() => toggleContactPreference("phone-call")}
@@ -160,6 +164,7 @@ function Ajustes() {
             <input
               type="checkbox"
               id="email"
+              name="email"
               className="cursor-pointer"
               checked={contactPreferences.includes("email")}
               onChange={() => toggleContactPreference("email")}
@@ -169,10 +174,10 @@ function Ajustes() {
             </label>
           </div>
 
-          {errors.contactPreferences && (
+          {contactPreferencesError && (
             <span className="text-red-800">
               <FontAwesomeIcon icon={faSquareXmark} />
-              {errors.contactPreferences.message}
+              {contactPreferencesError}
             </span>
           )}
         </div>
