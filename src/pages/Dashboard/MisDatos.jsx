@@ -17,6 +17,7 @@ function MisDatos() {
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -56,10 +57,10 @@ function MisDatos() {
     passport: "ABC123456",
   };
 
-  const identificationPattern = {
-    dni: /^[0-9]{8}[A-Z]$/,
-    nie: /^[XYZ][0-9]{7}[A-Z]$/,
-    passport: /^[A-Z]{3}[0-9]{6}$/,
+  const documentErrorMessages = {
+    dni: "El DNI debe tener 8 números y una letra final",
+    nie: "El NIE debe empezar por X, Y o Z y terminar con una letra",
+    passport: "El pasaporte debe tener 3 letras y 6 números",
   };
 
   const insuranceCompanyNumber = {
@@ -444,7 +445,7 @@ function MisDatos() {
               </select>
 
               {errors.identificationType && (
-                <span className="text-center">
+                <span className="text-red-800">
                   {errors.identificationType.message}
                 </span>
               )}
@@ -454,17 +455,41 @@ function MisDatos() {
                   type="text"
                   placeholder={placeholderIdentification[identificationType]}
                   {...register("identificationNumber", {
-                    required: "El tipo de identificación es obligatorio",
-                    pattern: identificationPattern[identificationType],
+                    required: "El número de identificación es obligatorio",
+                    validate: (value) => {
+                      if (!value) {
+                        return "El número de identificación es obligatorio";
+                      }
+
+                      const normalized = value.trim().toUpperCase();
+                      const pattern = {
+                        dni: /^[0-9]{8}[A-Z]$/,
+                        nie: /^[XYZ][0-9]{7}[A-Z]$/,
+                        passport: /^[A-Z]{3}[0-9]{6}$/,
+                      }[identificationType];
+
+                      if (!pattern || !pattern.test(normalized)) {
+                        return documentErrorMessages[identificationType];
+                      }
+
+                      return true;
+                    },
                   })}
+                  onChange={(event) => {
+                    const nextValue = event.target.value.toUpperCase();
+                    setValue("identificationNumber", nextValue, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
+                  }}
                   className="form__input"
                 />
               )}
 
               {errors.identificationNumber && (
-                <p className="text-center">
+                <span className="text-red-800">
                   {errors.identificationNumber.message}
-                </p>
+                </span>
               )}
 
               {/*Correo electrónico*/}
@@ -593,7 +618,7 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Tipo de identificación:
               </span>{" "}
-              {userData.identificationType} {userData.identificationNumber}
+              {userData.identificationType.toUpperCase()} {userData.identificationNumber.toUpperCase()}
             </p>
             <p>
               <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
@@ -611,7 +636,7 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Compañía de seguro dental:
               </span>{" "}
-              {userData.insuranceCompany} {userData.insuranceCompanyNumber}
+              {userData.insuranceCompany.toUpperCase()} {userData.insuranceCompanyNumber}
             </p>
           </div>
 
