@@ -54,9 +54,7 @@ function Ajustes() {
     return () => unsubscribe();
   }, []);
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-
+  const handleSave = async () => {
     if (!auth.currentUser) return;
 
     setIsSaving(true);
