@@ -1,10 +1,19 @@
+import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { Button } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 
 function Ajustes() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -75,7 +84,7 @@ function Ajustes() {
   return (
     <section className="w-full h-full p-3 lg:p-10 flex justify-center">
       <form
-        onSubmit={handleSave}
+        onSubmit={handleSubmit(handleSave)}
         className="w-full lg:w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
         <div className="form__container--data-show">
@@ -89,11 +98,14 @@ function Ajustes() {
           <p>
             <span className="form__p--mis-datos">Fecha registro: </span>
             {userInfo?.registrationDate
-              ? new Date(userInfo.registrationDate).toLocaleDateString("es-ES", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                })
+              ? new Date(userInfo.registrationDate).toLocaleDateString(
+                  "es-ES",
+                  {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  },
+                )
               : "Fecha no disponible"}
           </p>
 
@@ -123,6 +135,9 @@ function Ajustes() {
             <input
               type="checkbox"
               id="whatsapp"
+              {...register("contactPreferences", {
+                required: "Elige tu preferencia de contacto",
+              })}
               className="cursor-pointer"
               checked={contactPreferences.includes("whatsapp")}
               onChange={() => toggleContactPreference("whatsapp")}
@@ -155,6 +170,13 @@ function Ajustes() {
               Email
             </label>
           </div>
+
+          {errors.contactPreferences && (
+            <span className="text-red-800">
+              <FontAwesomeIcon icon={faSquareXmark} />
+              {errors.contactPreferences.message}
+            </span>
+          )}
         </div>
         <input
           type="submit"
