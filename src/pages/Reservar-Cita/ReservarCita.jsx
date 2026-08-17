@@ -243,7 +243,7 @@ function ReservarCita() {
                       <option value="">Selecciona un profesional</option>
                       {availableProfessionals.map((professional) => (
                         <option key={professional.id} value={professional.id}>
-                          {professional.name || professional.name || "Sin nombre"}
+                          {professional.name ?? "Sin nombre"}
                         </option>
                       ))}
                     </>
