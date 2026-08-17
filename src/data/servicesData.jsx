@@ -1,32 +1,32 @@
 export const services = [
   {
     id: 1,
-    nombre: "Limpieza",
+    name: "Limpieza",
     profesionalId: [1, 2],
   },
   {
     id: 2,
-    nombre: "Revisión",
+    name: "Revisión",
     profesionalId: [1, 2],
   },
   {
     id: 3,
-    nombre: "Ortodoncia",
+    name: "Ortodoncia",
     profesionalId: [1, 2],
   },
   {
     id: 4,
-    nombre: "Estética dental",
+    name: "Estética dental",
     profesionalId: [2],
   },
   {
     id: 5,
-    nombre: "Odontopediatría",
+    name: "Odontopediatría",
     profesionalId: [1, 2],
   },
   {
     id: 6,
-    nombre: "Prótesis",
+    name: "Prótesis",
     profesionalId: [1],
   },
 ];
