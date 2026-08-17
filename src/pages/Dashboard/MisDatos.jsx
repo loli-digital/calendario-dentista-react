@@ -528,6 +528,7 @@ function MisDatos() {
                 type="email"
                 {...register("email", {
                   setValueAs: (value) => value.trim(),
+                  required: "El email es obligatorio",
                   pattern: {
                     value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                     message: "Email no válido",
