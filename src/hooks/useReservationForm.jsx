@@ -9,7 +9,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [service, setService] = useState("");
   const [professional, setProfessional] = useState("");
-  const [date, setDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,7 +26,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
     setPhoneNumber("");
     setService("");
     setProfessional("");
-    setDate(null);
+    setSelectedDate(null);
   };
 
   const manejarSubmit = async (e) => {
@@ -48,7 +48,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
     }
 
     // Mensaje error si intenta registrar una fecha inválida
-    if (!date || date.getDay() === 0 || date.getDay() === 6) {
+    if (!selectedDate || selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
       setMessage("Seleccione una fecha entre el lunes y el viernes");
       setError(null);
       return;
@@ -73,8 +73,8 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
         phoneNumber,
         service: selectedService.name,
         professional: selectedProfessional.name,
-        date: Timestamp.fromDate(date),
-        hora: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        date: Timestamp.fromDate(selectedDate),
+        hora: selectedDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       });
 
       setTitleSubmit(true);
@@ -85,8 +85,8 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
         phoneNumber,
         service: selectedService.name,
         professional: selectedProfessional.name,
-        date: date.toLocaleDateString("es-ES"),
-        hora: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        date: selectedDate.toLocaleDateString("es-ES"),
+        hora: selectedDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       });
 
       resetForm();
@@ -109,8 +109,8 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
     setService,
     professional,
     setProfessional,
-    date,
-    setDate,
+    selectedDate,
+    setSelectedDate,
     loading,
     error,
     setError,
