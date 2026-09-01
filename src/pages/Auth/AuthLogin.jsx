@@ -46,11 +46,11 @@ function AuthLogin() {
           placeholder="Escribe tu correo electrónico"
           value={email}
           required
-          title="Por favor, escribe un correo válido como: nombre@ejemplo.com"
+          title="Escribe un correo válido como: nombre@ejemplo.com"
           minLength={3}
           maxLength={64}
           onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
+          autoComplete="username"
           className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
         />
 
