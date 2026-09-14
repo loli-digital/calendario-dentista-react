@@ -612,13 +612,19 @@ function MisDatos() {
                   type="text"
                   placeholder="123456789123"
                   {...register("insuranceCompanyNumber", {
-                    required:
-                      "Este campo es obligatorio si eliges tener compañía de seguro",
+                    required: "Escribe tu número de compañía",
                     setValueAs: (value) => value.trim(),
                     pattern: insuranceCompanyNumber[insuranceCompany],
                   })}
                   className="form__input"
                 />
+              )}
+
+              {insuranceCompany != "no" && errors.insuranceCompanyNumber && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.insuranceCompanyNumber.message}
+                </span>
               )}
             </div>
           </div>
@@ -680,8 +686,9 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Compañía de seguro dental:
               </span>{" "}
-              {userData.insuranceCompany.toUpperCase()}{" "}
-              {userData.insuranceCompanyNumber}
+              {userData.insuranceCompany === "no"
+                ? "No"
+                : `${userData.insuranceCompany.toUpperCase()} ${userData.insuranceCompanyNumber}`}
             </p>
           </div>
 
