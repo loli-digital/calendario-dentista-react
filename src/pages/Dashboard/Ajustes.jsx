@@ -93,13 +93,13 @@ function Ajustes() {
         <div className="form__container--data-show">
           {/* ID paciente */}
           <p>
-            <span className="form__p--mis-datos">ID paciente:</span>{" "}
+            <span className="form__p--ajustes">ID paciente:</span>{" "}
             {userInfo?.idPaciente ?? "ID no disponible"}
           </p>
 
           {/* Fecha registro paciente */}
           <p>
-            <span className="form__p--mis-datos">Fecha registro: </span>
+            <span className="form__p--ajustes">Fecha registro: </span>
             {userInfo?.registrationDate
               ? new Date(userInfo.registrationDate).toLocaleDateString(
                   "es-ES",
@@ -131,7 +131,7 @@ function Ajustes() {
           </div>
 
           {/* Preferencias de contacto */}
-          <label htmlFor="contact-preferences" className="form__p--mis-datos">
+          <label htmlFor="contact-preferences" className="form__p--ajustes">
             Preferencias de contacto
           </label>
           <div className="flex flex-row gap-2">
