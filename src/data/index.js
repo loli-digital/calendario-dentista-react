@@ -1,5 +1,5 @@
-export { profesionales } from "./profesionalesData";
+export { professionals } from "./professionalsData";
 export { reviews } from "./reviewsData";
-export { serviciosCard } from "./serviciosCardData";
-export { serviciosCita } from "./serviciosData";
-export { facturas } from "./facturasData";
+export { cardServices } from "./cardServicesData";
+export { services } from "./servicesData";
+export { invoices } from "./invoicesData";

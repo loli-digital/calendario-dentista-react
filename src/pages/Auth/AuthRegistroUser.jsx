@@ -10,11 +10,11 @@ function AuthRegistroUser() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [mensaje, setMensaje] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const generarIDPaciente = () => {
+  const generarIdPaciente = () => {
     const year = new Date().getFullYear().toString().slice(-2);
     const caracteres = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let indiceAleatorio = "";
@@ -33,7 +33,7 @@ function AuthRegistroUser() {
     try {
       setLoading(true);
       setError(null);
-      setMensaje(null);
+      setMessage(null);
 
       // Si las contraseñas no coinciden, mostrar un mensaje de error
       if (password !== confirmPassword) {
@@ -54,17 +54,17 @@ function AuthRegistroUser() {
 
       const user = userCredential.user;
 
-      const IDPaciente = generarIDPaciente();
+      const idPaciente = generarIdPaciente();
 
       // Guarda datos en Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: normalizeEmail,
-        id_paciente: IDPaciente,
+        id_paciente: idPaciente,
         createdAt: serverTimestamp(),
         profileCompleted: false,
       });
 
-      setMensaje("Cuenta creada correctamente");
+      setMessage("Cuenta creada correctamente");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
@@ -166,9 +166,9 @@ function AuthRegistroUser() {
       )}
 
       {/* Mensaje de confirmación de registro de user */}
-      {mensaje && (
+      {message && (
         <div className="w-full lg:w-xl p-4 my-6 bg-green-100 relative flex flex-col gap-2 border border-green-700 text-green-800 rounded shadow-md">
-          <p className="font-bold text-lg mb-2 text-center">{mensaje}</p>
+          <p className="font-bold text-lg mb-2 text-center">{message}</p>
           <p>
             <span className="font-bold underline underline-offset-2">
               <Link to="/auth/login">Inicia sesión</Link>

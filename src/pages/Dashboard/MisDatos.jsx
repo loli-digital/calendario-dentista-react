@@ -5,6 +5,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { useState, useEffect, useContext } from "react";
 import { Button } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 
 function MisDatos() {
   // Lógica para cuando carga la página
@@ -17,22 +19,23 @@ function MisDatos() {
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nombre: "",
-      apellido: "",
-      fechaNacimiento: "",
-      direccion: "",
-      ciudad: "",
-      codigoPostal: "",
-      tipoIdentificacion: "",
-      numIdentificacion: "",
-      telefono: "",
+      name: "",
+      lastName: "",
+      dateOfBirth: "",
+      address: "",
+      city: "",
+      zipCode: "",
+      identificationType: "",
+      identificationNumber: "",
+      phoneNumber: "",
       email: "",
-      alergias: "",
-      companiaSeguro: "",
-      numCompaniaSeguro: "",
+      allergies: "",
+      insuranceCompany: "",
+      insuranceCompanyNumber: "",
     },
   });
 
@@ -47,22 +50,22 @@ function MisDatos() {
   Lo mismo con la compañía de seguro, si ha elegido que SÍ tiene una compañía,
   entonces aparece el input para escribir los números y letras de ésta.
   */
-  const tipoIdentificacion = useWatch({ control, name: "tipoIdentificacion" });
-  const companiaSeguro = useWatch({ control, name: "companiaSeguro" });
+  const identificationType = useWatch({ control, name: "identificationType" });
+  const insuranceCompany = useWatch({ control, name: "insuranceCompany" });
 
-  const placeholderIdentificacion = {
+  const placeholderIdentification = {
     dni: "12345678A",
     nie: "X1234567Y",
-    pasaporte: "ABC123456",
+    passport: "ABC123456",
   };
 
-  const patronIdentificacion = {
-    dni: /^[0-9]{8}[A-Z]$/,
-    nie: /^[XYZ][0-9]{7}[A-Z]$/,
-    pasaporte: /^[A-Z]{3}[0-9]{6}$/,
+  const documentErrorMessages = {
+    dni: "El DNI debe tener 8 números y una letra final",
+    nie: "El NIE debe empezar por X, Y o Z y terminar con una letra",
+    passport: "El pasaporte debe tener 3 letras y 6 números",
   };
 
-  const numCompaniaSeguro = {
+  const insuranceCompanyNumber = {
     asisa: /^[0-9]{12,15}$/,
     sanitas: /^[0-9]{9,12}$/,
     adeslas: /^[0-9]{10,12}$/,
@@ -71,7 +74,7 @@ function MisDatos() {
   };
 
   // Para que se muestre la fecha en día, mes y año
-  const fechaFormateada = (isoDate) => {
+  const formattedDate = (isoDate) => {
     if (!isoDate) return "";
     const [year, month, day] = isoDate.split("-");
     return `${day}/${month}/${year}`;
@@ -89,15 +92,15 @@ function MisDatos() {
       }
 
       // Lógica para mostrar el nombre del user al iniciar sesión
-      const nombreCompleto = [data.nombre, data.apellido]
+      const completeName = [data.name, data.lastName]
         .filter(Boolean)
         .map((valor) => valor.trim())
         .join(" ")
         .trim();
 
-      if (nombreCompleto) {
+      if (completeName) {
         await updateProfile(user, {
-          displayName: nombreCompleto,
+          displayName: completeName,
         });
 
         await refreshUser();
@@ -105,7 +108,7 @@ function MisDatos() {
 
       const dataToSave = {
         ...data,
-        displayName: nombreCompleto,
+        displayName: completeName,
       };
 
       await setDoc(doc(db, "users", user.uid), dataToSave);
@@ -142,20 +145,20 @@ function MisDatos() {
         que se vea la pantalla del formulario para que rellene sus datos*/
         if (!docSnap.exists()) {
           const newData = {
-            nombre: "",
-            apellido: "",
-            fechaNacimiento: "",
-            direccion: "",
-            ciudad: "",
-            codigoPostal: "",
-            tipoIdentificacion: "",
-            numIdentificacion: "",
+            name: "",
+            lastName: "",
+            dateOfBirth: "",
+            address: "",
+            city: "",
+            zipCode: "",
+            identificationType: "",
+            identificationNumber: "",
             // para que se vea el email siempre, ya que se ha registrado con él
             email: user.email,
-            telefono: "",
-            alergias: "",
-            companiaSeguro: "",
-            numCompaniaSeguro: "",
+            phoneNumber: "",
+            allergies: "",
+            insuranceCompany: "",
+            insuranceCompanyNumber: "",
           };
 
           if (isMounted) {
@@ -199,7 +202,7 @@ function MisDatos() {
   }
 
   return (
-    <section className="w-full h-full p-10 flex justify-center">
+    <section className="w-full h-full p-3 lg:p-10 flex justify-center">
       {!hasData ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -208,55 +211,151 @@ function MisDatos() {
           <div className="w-full flex flex-col lg:flex-row gap-2 lg:gap-5">
             <div className="w-full flex flex-col gap-2">
               {/*Nombre*/}
-              <label htmlFor="nombre" className="form__label">
+              <label htmlFor="name" className="form__label">
                 Nombre:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu nombre"
-                {...register("nombre", { required: true, maxLength: 80 })}
+                {...register("name", {
+                  required: "El nombre es obligatorio",
+                  setValueAs: (value) => value.trim(),
+                  minLength: {
+                    value: 3,
+                    message: "El nombre debe tener al menos 3 caracteres",
+                  },
+                  maxLength: {
+                    value: 80,
+                    message: "El nombre no puede superar los 80 caracteres",
+                  },
+                })}
                 className="form__input"
               />
 
+              {errors.name && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.name.message}
+                </span>
+              )}
+
               {/*Apellido/s*/}
-              <label htmlFor="apellido" className="form__label">
+              <label htmlFor="lastName" className="form__label">
                 Apellido/s:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu/s apellido/s"
-                {...register("apellido", { required: true, maxLength: 100 })}
+                {...register("lastName", {
+                  required: "El apellido es obligatorio",
+                  minLength: {
+                    value: 3,
+                    message: "El apellido debe tener al menos 3 caracteres",
+                  },
+                  maxLength: {
+                    value: 100,
+                    message: "El apellido no puede superar los 100 caracteres",
+                  },
+                })}
                 className="form__input"
               />
 
+              {errors.lastName && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.lastName.message}
+                </span>
+              )}
+
               {/*Fecha de nacimiento*/}
-              <label htmlFor="fechaNacimiento" className="form__label">
+              <label htmlFor="dateOfBirth" className="form__label">
                 Fecha de nacimiento:
               </label>
               <input
                 type="date"
-                {...register("fechaNacimiento", { required: true })}
+                {...register("dateOfBirth", {
+                  required: "La fecha de nacimiento es obligatoria",
+                  validate: (value) => {
+                    if (!value) return "La fecha de nacimiento es obligatoria";
+
+                    const selectedDate = new Date(value + "T00:00:00");
+                    const today = new Date();
+
+                    if (Number.isNaN(selectedDate.getTime())) {
+                      return "La fecha no es válida";
+                    }
+
+                    if (selectedDate > today) {
+                      return "La fecha no puede ser futura";
+                    }
+
+                    const age =
+                      today.getFullYear() - selectedDate.getFullYear();
+                    const monthDiff =
+                      today.getMonth() - selectedDate.getMonth();
+                    const dayDiff = today.getDate() - selectedDate.getDate();
+
+                    const realAge =
+                      monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)
+                        ? age - 1
+                        : age;
+
+                    if (realAge < 18) {
+                      return "Debes ser mayor de 18 años";
+                    }
+
+                    if (selectedDate.getFullYear() < 1900) {
+                      return "La fecha de nacimiento no es válida";
+                    }
+
+                    return true;
+                  },
+                })}
                 className="form__input"
               />
+              {errors.dateOfBirth && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.dateOfBirth.message}
+                </span>
+              )}
 
               {/*Dirección*/}
-              <label htmlFor="direccion" className="form__label">
+              <label htmlFor="address" className="form__label">
                 Dirección:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu dirección"
-                {...register("direccion", { required: true, maxLength: 200 })}
+                {...register("address", {
+                  required: "La dirección es obligatoria",
+                  minLength: {
+                    value: 5,
+                    message: "La dirección debe tener al menos 5 caracteres",
+                  },
+                  maxLength: {
+                    value: 200,
+                    message: "La dirección no puede superar los 200 caracteres",
+                  },
+                })}
                 className="form__input"
               />
+              {errors.address && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.address.message}
+                </span>
+              )}
 
               {/*Ciudad*/}
-              <label htmlFor="ciudad" className="form__label">
+              <label htmlFor="city" className="form__label">
                 Ciudad:
               </label>
               <select
-                name="ciudad"
-                {...register("ciudad", { required: true })}
+                name="city"
+                {...register("city", {
+                  required: "La ciudad es obligatoria",
+                })}
                 className="form__input"
               >
                 <option value="">Selecciona tu ciudad</option>
@@ -321,58 +420,104 @@ function MisDatos() {
                 <option value="Zamora">Zamora</option>
                 <option value="Zaragoza">Zaragoza</option>
               </select>
+              {errors.city && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.city.message}
+                </span>
+              )}
 
               {/* Código postal */}
-              <label htmlFor="codigoPostal" className="form__label">
+              <label htmlFor="zipCode" className="form__label">
                 Código postal:
               </label>
               <input
                 type="text"
                 placeholder="Escribe tu código postal"
-                {...register("codigoPostal", { required: true })}
+                {...register("zipCode", {
+                  required: "El código postal es obligatorio",
+                  setValueAs: (value) => value.trim(),
+                  pattern: {
+                    value: /^[0-9]{5}$/,
+                    message: "El código postal debe tener 5 números",
+                  },
+                })}
                 className="form__input"
               />
+
+              {errors.zipCode && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.zipCode.message}
+                </span>
+              )}
             </div>
 
             <div className="w-full flex flex-col gap-2">
               {/*Tipo de identificación*/}
-              <label htmlFor="tipoIdentificacion" className="form__label">
+              <label htmlFor="identificationType" className="form__label">
                 Tipo de identificación:
               </label>
               <select
-                {...register("tipoIdentificacion", { required: true })}
+                {...register("identificationType", {
+                  required: "El tipo de identificación es obligatorio",
+                })}
                 className="form__input"
               >
-                <option value="" selected>
-                  Seleccionar
-                </option>
+                <option value="">Seleccionar</option>
                 <option value="dni">DNI</option>
                 <option value="nie">NIE</option>
-                <option value="pasaporte">Pasaporte</option>
+                <option value="passport">Pasaporte</option>
               </select>
 
-              {errors.tipoIdentificacion && (
-                <p className="text-center">
-                  {errors.tipoIdentificacion.message}
-                </p>
+              {errors.identificationType && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.identificationType.message}
+                </span>
               )}
 
-              {tipoIdentificacion && (
+              {identificationType && (
                 <input
                   type="text"
-                  placeholder={placeholderIdentificacion[tipoIdentificacion]}
-                  {...register("numIdentificacion", {
-                    required: true,
-                    pattern: patronIdentificacion[tipoIdentificacion],
+                  placeholder={placeholderIdentification[identificationType]}
+                  {...register("identificationNumber", {
+                    required: "El número de identificación es obligatorio",
+                    validate: (value) => {
+                      if (!value) {
+                        return "El número de identificación es obligatorio";
+                      }
+
+                      const normalized = value.trim().toUpperCase();
+                      const pattern = {
+                        dni: /^[0-9]{8}[A-Z]$/,
+                        nie: /^[XYZ][0-9]{7}[A-Z]$/,
+                        passport: /^[A-Z]{3}[0-9]{6}$/,
+                      }[identificationType];
+
+                      if (!pattern || !pattern.test(normalized)) {
+                        return documentErrorMessages[identificationType];
+                      }
+
+                      return true;
+                    },
                   })}
+                  onChange={(event) => {
+                    const nextValue = event.target.value.toUpperCase();
+                    setValue("identificationNumber", nextValue, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
+                  }}
                   className="form__input"
                 />
               )}
 
-              {errors.numIdentificacion && (
-                <p className="text-center">
-                  {errors.numIdentificacion.message}
-                </p>
+              {errors.identificationNumber && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.identificationNumber.message}
+                </span>
               )}
 
               {/*Correo electrónico*/}
@@ -381,49 +526,72 @@ function MisDatos() {
               </label>
               <input
                 type="email"
-                {...register("email")}
+                {...register("email", {
+                  setValueAs: (value) => value.trim(),
+                  required: "El email es obligatorio",
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                    message: "Email no válido",
+                  },
+                })}
                 className="form__input"
               />
 
+              {errors.email && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.email.message}
+                </span>
+              )}
+
               {/*Teléfono*/}
-              <label htmlFor="telefono" className="form__label">
+              <label htmlFor="phoneNumber" className="form__label">
                 Teléfono:
               </label>
               <input
                 type="tel"
                 placeholder="Escribe tu teléfono"
-                {...register("telefono", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 12,
+                {...register("phoneNumber", {
+                  required: "El teléfono es obligatorio",
+                  setValueAs: (value) => value.trim(),
+                  pattern: {
+                    value: /^[0-9]{9,12}$/,
+                    message: "El teléfono debe tener entre 9 y 12 dígitos",
+                  },
                 })}
                 className="form__input"
               />
+              {errors.phoneNumber && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.phoneNumber.message}
+                </span>
+              )}
 
               {/* Alergias */}
-              <label htmlFor="alergias" className="form__label">
+              <label htmlFor="allergies" className="form__label">
                 Alergias:
               </label>
               <textarea
-                name="alergias"
-                id="alergias"
+                name="allergies"
+                id="allergies"
                 rows="2"
                 placeholder="Escribe si tienes alguna alergia"
-                {...register("alergias")}
+                {...register("allergies")}
                 className="form__input"
               ></textarea>
 
               {/*Compañía de seguro dental*/}
-              <label htmlFor="companiaSeguro" className="form__label">
+              <label htmlFor="insuranceCompany" className="form__label">
                 Compañía de seguro dental:
               </label>
               <select
-                {...register("companiaSeguro", { required: true })}
+                {...register("insuranceCompany", {
+                  required: "La elección de compañía de seguro es obligatoria",
+                })}
                 className="form__input"
               >
-                <option value="" selected>
-                  Seleccionar
-                </option>
+                <option value="">Seleccionar</option>
                 <option value="no">No tengo compañía de seguro dental</option>
                 <option value="asisa">ASISA</option>
                 <option value="sanitas">SANITAS</option>
@@ -432,18 +600,31 @@ function MisDatos() {
                 <option value="dkv">DKV</option>
               </select>
 
-              {errors.companiaSeguro && <p>{errors.companiaSeguro.message}</p>}
+              {errors.insuranceCompany && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.insuranceCompany.message}
+                </span>
+              )}
 
-              {companiaSeguro && companiaSeguro != "no" && (
+              {insuranceCompany && insuranceCompany != "no" && (
                 <input
                   type="text"
                   placeholder="123456789123"
-                  {...register("numCompaniaSeguro", {
-                    required: true,
-                    pattern: numCompaniaSeguro[companiaSeguro],
+                  {...register("insuranceCompanyNumber", {
+                    required: "Escribe tu número de compañía",
+                    setValueAs: (value) => value.trim(),
+                    pattern: insuranceCompanyNumber[insuranceCompany],
                   })}
                   className="form__input"
                 />
+              )}
+
+              {insuranceCompany != "no" && errors.insuranceCompanyNumber && (
+                <span className="text-red-800">
+                  <FontAwesomeIcon icon={faSquareXmark} />
+                  {errors.insuranceCompanyNumber.message}
+                </span>
               )}
             </div>
           </div>
@@ -456,38 +637,38 @@ function MisDatos() {
           />
         </form>
       ) : (
-        <div className="flex flex-col justify-center items-center gap-10">
+        <div className="flex flex-col justify-center items-center gap-7">
           <div className="form__container--data-show">
             <p>
               <span className="form__p--mis-datos">Nombre:</span>{" "}
-              {userData.nombre}
+              {userData.name}
             </p>
             <p>
               <span className="form__p--mis-datos">Apellido/s:</span>{" "}
-              {userData.apellido}
+              {userData.lastName}
             </p>
             <p>
               <span className="form__p--mis-datos">Fecha de nacimiento:</span>{" "}
-              {fechaFormateada(userData.fechaNacimiento)}
+              {formattedDate(userData.dateOfBirth)}
             </p>
             <p>
               <span className="form__p--mis-datos">Dirección:</span>{" "}
-              {userData.direccion}
+              {userData.address}
             </p>
             <p>
               <span className="form__p--mis-datos">Ciudad:</span>{" "}
-              {userData.ciudad}
+              {userData.city}
             </p>
             <p>
               <span className="form__p--mis-datos">Código postal:</span>{" "}
-              {userData.codigoPostal}
+              {userData.zipCode}
             </p>
             <p>
               <span className="form__p--mis-datos">
                 Tipo de identificación:
               </span>{" "}
-              {userData.tipoIdentificacion.toUpperCase()}{" "}
-              {userData.numIdentificacion}
+              {userData.identificationType.toUpperCase()}{" "}
+              {userData.identificationNumber.toUpperCase()}
             </p>
             <p>
               <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
@@ -495,18 +676,19 @@ function MisDatos() {
             </p>
             <p>
               <span className="form__p--mis-datos">Teléfono:</span>{" "}
-              {userData.telefono}
+              {userData.phoneNumber}
             </p>
             <p>
               <span className="form__p--mis-datos">Alergias:</span>{" "}
-              {userData.alergias}
+              {userData.allergies}
             </p>
             <p>
               <span className="form__p--mis-datos">
                 Compañía de seguro dental:
               </span>{" "}
-              {userData.companiaSeguro.toUpperCase()}{" "}
-              {userData.numCompaniaSeguro}
+              {userData.insuranceCompany === "no"
+                ? "No"
+                : `${userData.insuranceCompany.toUpperCase()} ${userData.insuranceCompanyNumber}`}
             </p>
           </div>
 

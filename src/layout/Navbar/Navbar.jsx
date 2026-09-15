@@ -12,6 +12,8 @@ import {
   faXmark,
   faUser,
   faCalendarDays,
+  faFileInvoiceDollar,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 import { getUserDisplayName } from "@/utils";
@@ -97,7 +99,7 @@ export function Navbar() {
         top-0 left-0 bg-cyan-950 lg:bg-transparent transition-all duration-500 ease-in-out 
         z-40 lg:z-auto ${isMenuOpen ? "block" : "hidden"} lg:block`}
       >
-        <ul className="h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl lg:text-lg">
+        <ul className="w-full h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 text-2xl lg:text-lg">
           {/* Si estoy en Home y NO se ha iniciado sesión, mostrar este menú */}
           {!isRestrictedView && !user && (
             <>
@@ -165,17 +167,45 @@ export function Navbar() {
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
-              <li>Hola, {nombreParaMostrar || user.email}</li>
-              <li className="nav-link" onClick={closeMenu}>
-                <NavLink
-                  to="/dashboard/mis-datos"
-                  className="flex items-center gap-2"
-                >
-                  <FontAwesomeIcon icon={faUser} className="mr-2" />
-                  Mi panel
-                </NavLink>
+              <div className="w-60 lg:w-full flex flex-col lg:flex-row gap-6">
+              <li className="text-lg">
+                Hola, {nombreParaMostrar ?? user.email}
               </li>
-              <Button onClick={() => signOut(auth)}>
+                <li className="nav-link text-lg" onClick={closeMenu}>
+                  <NavLink to="/dashboard/mis-datos">
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Mi panel
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/mis-datos">
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Mis datos
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/mis-citas">
+                    <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
+                    Mis citas
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/mis-facturas">
+                    <FontAwesomeIcon
+                      icon={faFileInvoiceDollar}
+                      className="mr-2"
+                    />
+                    Mis facturas
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/ajustes">
+                    <FontAwesomeIcon icon={faGear} className="mr-2" />
+                    Ajustes
+                  </NavLink>
+                </li>
+              </div>
+              <Button onClick={() => signOut(auth)} className="lg:w-60 text-lg">
                 Cerrar sesión
               </Button>
             </>

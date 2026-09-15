@@ -8,7 +8,7 @@ import { lazy, Suspense, useContext } from "react";
 
 import {
   HomeSkeleton,
-  ReservarCitaSkeleton,
+  AppointmentSkeleton,
   AuthSkeleton,
   CookiesBanner,
 } from "@/components";
@@ -21,7 +21,7 @@ const RedirectIfAuth = lazy(() => import("./router/RedirectIfAuth"));
 const RequireAuth = lazy(() => import("./router/RequireAuth"));
 const AuthHome = lazy(() => import("./pages/Auth/AuthHome"));
 const AuthLogin = lazy(() => import("./pages/Auth/AuthLogin"));
-const AuthTelefono = lazy(() => import("./pages/Auth/AuthTelefono"));
+const AuthPhoneNumber = lazy(() => import("./pages/Auth/AuthPhoneNumber"));
 const AuthRegistroUser = lazy(() => import("./pages/Auth/AuthRegistroUser"));
 
 // Reservar cita
@@ -94,7 +94,7 @@ function App() {
                 path="telefono"
                 element={
                   <Suspense fallback={<AuthSkeleton />}>
-                    <AuthTelefono />
+                    <AuthPhoneNumber />
                   </Suspense>
                 }
               />
@@ -113,7 +113,7 @@ function App() {
           <Route
             path="/reservar-cita"
             element={
-              <Suspense fallback={<ReservarCitaSkeleton />}>
+              <Suspense fallback={<AppointmentSkeleton />}>
                 <ReservarCita />
               </Suspense>
             }
