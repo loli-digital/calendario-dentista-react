@@ -182,8 +182,9 @@ section .swiper-button-next {
 }
 
 .form__label,
-.form__p--mis-datos{
-  font-weight: 500;
+.form__p--mis-datos,
+.form__p--ajustes{
+  font-weight: 700;
   color: oklch(45% 0.085 224.283);
 }
 
