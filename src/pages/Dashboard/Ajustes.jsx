@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { deleteUser, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +12,14 @@ function Ajustes() {
   const { handleSubmit } = useForm();
 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [consent, setConsent] = useState(false);
   const [contactPreferences, setContactPreferences] = useState([]);
   const [contactPreferencesError, setContactPreferencesError] = useState("");
+  // Para redirigir a otra página
+  const navigate = useNavigate();
 
   const toggleContactPreference = (value) => {
     setContactPreferences((prev) =>
@@ -75,6 +79,50 @@ function Ajustes() {
       setIsSaving(false);
     }
   };
+
+  // Para eliminar la cuenta de user
+  const handleDeleteAccount = async () => {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) return;
+
+    const confirmed = window.confirm(
+      "¿Seguro que quieres eliminar tu cuenta y todos tus datos?",
+    );
+
+    if (!confirmed) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Eliminar el documento de usuario en Firestone
+      await deleteDoc(doc(db, "users", currentUser.uid));
+
+      // Elimina la cuenta en Firebase Authentication
+      await deleteUser(currentUser);
+
+      // Redirigimos a la página con el mensaje
+      navigate("/");
+
+      console.info("Tu cuenta y tus datos han sido eliminados");
+    } catch (error) {
+      console.error("Error al eliminar la cuenta: ", error);
+
+      // Si el user lleva mucho tiempo identificado
+      if (error.code === "auth/requires-recent-login") {
+        setError(
+          "Por seguridad, vuelve a iniciar sesión antes de eliminar tu cuenta",
+        );
+      } else {
+        setError("No se pudo eliminar tu cuenta, intentalo más tarde");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  {/* Mientras la página está cargando datos */}
 
   if (loading) {
     return (
@@ -187,7 +235,20 @@ function Ajustes() {
           disabled={isSaving}
           className={`w-40 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
         />
-        <Button className="w-50 mx-auto">Eliminar cuenta y datos</Button>
+        <Button
+          onClick={handleDeleteAccount}
+          disabled={loading}
+          className="w-50 mx-auto bg-red-800 hover:bg-red-900 focus:ring-red-950"
+        >
+          {loading ? "Eliminando" : "Eliminar cuenta y datos"}
+        </Button>
+
+        {error && (
+          <span className="text-red-800">
+            <FontAwesomeIcon icon={faSquareXmark} />
+            {error}
+          </span>
+        )}
       </form>
     </section>
   );
