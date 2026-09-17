@@ -226,7 +226,7 @@ export function Navbar() {
         </ul>
       </nav>
 
-      {/* Botón para reservar cita en Desktop, excepto cuando se ha inciado sesión */}
+      {/* Botón para reservar cita en Desktop, excepto cuando se ha iniciado sesión */}
       {!user && (
         <div className="hidden lg:block">
           <Button to="/reservar-cita" icon={faCalendarDays}>
