@@ -40,6 +40,11 @@ const DashboardMisFacturas = lazy(
 );
 const DashboardAjustes = lazy(() => import("./pages/Dashboard/Ajustes"));
 
+// Página para cuando se elimina una cuenta de user
+const CuentaEliminada = lazy(
+  () => import("./pages/CuentaEliminada/CuentaEliminada"),
+);
+
 function App() {
   const { loading } = useContext(AuthContext);
 
@@ -69,7 +74,7 @@ function App() {
 
           {/* Auth, sólo se accede si el user NO está logueado */}
           <Route element={<RedirectIfAuth />}>
-          {/* Outlet se usa para ver las rutas hijas. 
+            {/* Outlet se usa para ver las rutas hijas. 
           Por ejemplo, al hacer click en Acceder a la cuenta personal, 
           redirigiría a AuthLogin */}
             <Route path="/auth" element={<Outlet />}>
@@ -131,6 +136,22 @@ function App() {
                 }
               >
                 <PoliticaPrivacidad />
+              </Suspense>
+            }
+          />
+
+          {/* Cuenta eliminada */}
+          <Route
+            path="/cuenta-eliminada"
+            element={
+              <Suspense
+                fallback={
+                  <div className="text-center py-10">
+                    Cargando página...
+                  </div>
+                }
+              >
+                <CuentaEliminada />
               </Suspense>
             }
           />
