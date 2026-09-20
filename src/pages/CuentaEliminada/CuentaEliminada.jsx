@@ -13,7 +13,7 @@ function CuentaEliminada() {
 
         <p className="text-cyan-800 font-medium mb-10">Tu cuenta y tus datos han sido eliminados de nuestra base de datos.</p>
 
-        <Button onClick={() => navigate("/auth")}>
+        <Button onClick={() => navigate("/auth/nueva-cuenta")}>
           Crear una nueva cuenta
         </Button>
       </div>
