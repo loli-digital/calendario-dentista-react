@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { deleteUser, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/firebase";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
@@ -18,8 +17,6 @@ function Ajustes() {
   const [consent, setConsent] = useState(false);
   const [contactPreferences, setContactPreferences] = useState([]);
   const [contactPreferencesError, setContactPreferencesError] = useState("");
-  // Para redirigir a otra página
-  const navigate = useNavigate();
 
   const toggleContactPreference = (value) => {
     setContactPreferences((prev) =>
@@ -50,7 +47,7 @@ function Ajustes() {
       });
 
       setConsent(Boolean(data.consentForNotifications));
-      setContactPreferences(data.contactPreferences);
+      setContactPreferences(data.contactPreferences ?? []);
       setLoading(false);
     });
 
@@ -102,8 +99,8 @@ function Ajustes() {
       // Elimina la cuenta en Firebase Authentication
       await deleteUser(currentUser);
 
-      // Redirigimos a la página con el mensaje
-      navigate("/");
+      // Redirigimos a la página de confirmación de eliminación de la cuenta
+      window.location.replace("/cuenta-eliminada");
 
       console.info("Tu cuenta y tus datos han sido eliminados");
     } catch (error) {
