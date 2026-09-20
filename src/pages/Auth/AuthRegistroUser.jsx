@@ -4,10 +4,14 @@ import { auth, db } from "@/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function AuthRegistroUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [message, setMessage] = useState("");
@@ -49,7 +53,7 @@ function AuthRegistroUser() {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         normalizeEmail,
-        password
+        password,
       );
 
       const user = userCredential.user;
@@ -68,11 +72,9 @@ function AuthRegistroUser() {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-
     } catch (error) {
       setError("Ocurrió un problema en el registro. Inténtalo de nuevo");
       console.log(error.message);
-
     } finally {
       setLoading(false);
     }
@@ -114,40 +116,64 @@ function AuthRegistroUser() {
         <label htmlFor="password" className="font-medium text-cyan-800">
           Contraseña
         </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Escribe tu contraseña"
-          value={password}
-          required
-          minLength={8}
-          maxLength={64}
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="new-password"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            id="password"
+            placeholder="Escribe tu contraseña"
+            value={password}
+            required
+            minLength={8}
+            maxLength={64}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+            className="w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
+            aria-label={
+              showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+          >
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </button>
+        </div>
 
         <label htmlFor="confirm-password" className="font-medium text-cyan-800">
           Confirmar contraseña
         </label>
-        <input
-          type="password"
-          name="confirm-password"
-          id="confirm-password"
-          placeholder="Mínimo de 8 caracteres"
-          value={confirmPassword}
-          required
-          minLength={8}
-          maxLength={64}
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          autoComplete="confirm-password"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
-        />
+        <div className="relative">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirm-password"
+            id="confirm-password"
+            placeholder="Mínimo de 8 caracteres"
+            value={confirmPassword}
+            required
+            minLength={8}
+            maxLength={64}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="confirm-password"
+            className="w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword((prev) => !prev)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
+            aria-label={
+              showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+          >
+            <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+          </button>
+        </div>
 
         <input
           type="submit"
