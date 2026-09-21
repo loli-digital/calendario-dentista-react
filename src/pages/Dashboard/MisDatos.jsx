@@ -667,8 +667,8 @@ function MisDatos() {
               <span className="form__p--mis-datos">
                 Tipo de identificación:
               </span>{" "}
-              {userData.identificationType.toUpperCase()}{" "}
-              {userData.identificationNumber.toUpperCase()}
+              {userData.identificationType?.toUpperCase()}{" "}
+              {userData.identificationNumber?.toUpperCase()}
             </p>
             <p>
               <span className="form__p--mis-datos">Correo electrónico:</span>{" "}
@@ -688,7 +688,7 @@ function MisDatos() {
               </span>{" "}
               {userData.insuranceCompany === "no"
                 ? "No"
-                : `${userData.insuranceCompany.toUpperCase()} ${userData.insuranceCompanyNumber}`}
+                : `${userData.insuranceCompany?.toUpperCase()} ${userData.insuranceCompanyNumber}`}
             </p>
           </div>
 
