@@ -230,7 +230,7 @@ function Ajustes() {
           type="submit"
           value={isSaving ? "Guardando..." : "Guardar"}
           disabled={isSaving}
-          className={`w-40 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
+          className={`w-40 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-colors duration-200 ease-in hover:bg-cyan-600 ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
         />
         <Button
           onClick={handleDeleteAccount}
