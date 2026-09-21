@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
-import { Link } from "react-router-dom";
 import { DecorativeShape, Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +16,9 @@ function AuthLogin() {
     );
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("Inicio de sesión correcto");
@@ -35,7 +36,10 @@ function AuthLogin() {
         Inicia sesión
       </h1>
 
-      <form className="w-[350px] lg:w-l mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-5">
+      <form
+        onSubmit={handleLogin}
+        className="w-[350px] lg:w-l mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-5"
+      >
         <label htmlFor="email" className="font-medium text-cyan-800">
           Email
         </label>
@@ -73,30 +77,32 @@ function AuthLogin() {
             autoComplete="current-password"
             className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white"
           />
+          {/* Botón para mostrar u ocultar contraseña */}
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
             className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
-            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+            aria-label={
+              showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
           >
             <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
           </button>
         </div>
 
         {/* Botón para iniciar sesión */}
-        <Button to="/dashboard" onClick={handleLogin} className="w-40 mx-auto">
+        <Button type="submit" className="w-40 mx-auto">
           Iniciar sesión
         </Button>
 
-        {/* Enlace para recuperar la contraseña */}
-        <Link className="text-center mb-0">
-          <button
-            onClick={handleForgotPassword}
-            className="text-cyan-900 cursor-pointer hover:underline"
-          >
-            ¿Olvidaste la contraseña?
-          </button>
-        </Link>
+        {/* Botón de prueba para recuperar la contraseña */}
+        <button
+          type="button"
+          onClick={handleForgotPassword}
+          className="text-cyan-900 cursor-pointer hover:underline"
+        >
+          ¿Olvidaste la contraseña?
+        </button>
 
         {/* Crear nueva cuenta */}
         <p className="mt-5 text-cyan-800 text-center text-m font-bold">
@@ -104,11 +110,7 @@ function AuthLogin() {
         </p>
 
         {/* Botón para crear cuenta */}
-        <Button
-          to="/auth/nueva-cuenta"
-          onClick={handleLogin}
-          className="w-40 mx-auto"
-        >
+        <Button to="/auth/nueva-cuenta" className="w-40 mx-auto">
           Crear cuenta
         </Button>
       </form>
