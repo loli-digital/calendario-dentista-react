@@ -73,6 +73,16 @@ function MisDatos() {
     dkv: /^[0-9]{10,12}$/,
   };
 
+  const insuranceNumberMessage = "El número debe ser entre 10 y 12 caracteres";
+
+  const insuranceCompanyNumberErrorMessages = {
+    asisa: "El número debe ser entre 12 y 15 caracteres",
+    sanitas: "El número debe ser entre 9 y 12 caracteres",
+    adeslas: insuranceNumberMessage,
+    mapfre: insuranceNumberMessage,
+    dkv: insuranceNumberMessage,
+  }
+
   // Para que se muestre la fecha en día, mes y año
   const formattedDate = (isoDate) => {
     if (!isoDate) return "";
@@ -614,7 +624,10 @@ function MisDatos() {
                   {...register("insuranceCompanyNumber", {
                     required: "Escribe tu número de compañía",
                     setValueAs: (value) => value.trim(),
-                    pattern: insuranceCompanyNumber[insuranceCompany],
+                    pattern: {
+                      value: insuranceCompanyNumber[insuranceCompany],
+                      message: insuranceCompanyNumberErrorMessages[insuranceCompany]  
+                    },
                   })}
                   className="form__input"
                 />
