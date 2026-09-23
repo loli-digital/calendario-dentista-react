@@ -15,9 +15,9 @@ export const Button = ({
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 p-3 rounded-sm transition-all duration-200 text-white focus:outline-none focus-visible:ring-2 cursor-pointer shadow-[0_0_5px_black] hover:shadow-[0_0_5px_#fff]";
+    "inline-flex items-center justify-center gap-2 p-3 rounded-sm transition-all duration-200 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer shadow-[0_0_5px_black] hover:shadow-[0_0_5px_#fff]";
   const defaultStyles =
-    "bg-cyan-700  hover:bg-cyan-800  focus-visible:ring-cyan-400";
+    "bg-cyan-700  hover:bg-cyan-800 focus-visible:ring-cyan-800";
   const disabledStyles = "bg-slate-400 text-slate-700 cursor-not-allowed";
   const deletedStyles =
     "bg-red-800 hover:bg-red-900 focus-visible:ring-red-950";
