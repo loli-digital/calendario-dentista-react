@@ -5,7 +5,7 @@ import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/App.css";
 import { professionals, services } from "@/data";
-import { filterPastHours } from "@/utils";
+import { filterPastHours, isTodayUnavailable } from "@/utils";
 import { useReservationForm } from "@/hooks/useReservationForm";
 import { Link } from "react-router-dom";
 import { DecorativeShape } from "@/components";
@@ -54,16 +54,8 @@ function ReservarCita() {
     return () => clearInterval(timer);
   }, []);
 
-  const isAfterTwoPm =
-    now.getHours() > 14 ||
-    (now.getHours() === 14 &&
-      (now.getMinutes() > 0 ||
-        now.getSeconds() > 0 ||
-        now.getMilliseconds() > 0));
-
   return (
     <section className="w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center overflow-hidden bg-cyan-50">
-      
       {/* Forma para detrás de las cards */}
       <DecorativeShape />
 
@@ -174,7 +166,10 @@ function ReservarCita() {
                   className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
                 />
 
-                <label htmlFor="phoneNumber" className="font-medium text-cyan-800">
+                <label
+                  htmlFor="phoneNumber"
+                  className="font-medium text-cyan-800"
+                >
                   Teléfono
                 </label>
                 <input
@@ -299,10 +294,10 @@ function ReservarCita() {
                   filterTime={(time) => filterPastHours(time, selectedDate)}
                   // 6 es sábado y 0 es domingo
                   filterDate={(date) => {
-                    const isWeekend = date.getDay() === 6 || date.getDay() === 0;
-                    const isToday = date.toDateString() === now.toDateString();
+                    const isWeekend =
+                      date.getDay() === 6 || date.getDay() === 0;
 
-                    return !isWeekend && !(isAfterTwoPm && isToday);
+                    return !isWeekend && !isTodayUnavailable(date, now);
                   }}
                   className="w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white"
                 />

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase.js";
-import { validatePhone } from "@/utils/validatePhone";
+import { validatePhone, isTodayUnavailable } from "@/utils";
 
 export function useReservationForm({ services = [], professionals = [] } = {}) {
   const [name, setName] = useState("");
@@ -17,7 +17,11 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
   const [titleSubmit, setTitleSubmit] = useState(false);
 
   const availableProfessionals = useMemo(() => {
-    return professionals.filter((professional) => Array.isArray(professional.services) && professional.services.includes(Number(service)));
+    return professionals.filter(
+      (professional) =>
+        Array.isArray(professional.services) &&
+        professional.services.includes(Number(service)),
+    );
   }, [professionals, service]);
 
   const resetForm = () => {
@@ -60,16 +64,9 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
     }
 
     const now = new Date();
-    const isToday = selectedDate.toDateString() === now.toDateString();
-    const isAfterTwoPm =
-      now.getHours() > 14 ||
-      (now.getHours() === 14 &&
-        (now.getMinutes() > 0 ||
-          now.getSeconds() > 0 ||
-          now.getMilliseconds() > 0));
 
-    if (isToday && isAfterTwoPm) {
-      setError("Después de las 14:00 no se pueden pedir citas para hoy");
+    if (isTodayUnavailable(selectedDate, now)) {
+      setError("Hoy no hay hueco disponible. Pide cita para otro día");
       setMessage(null);
       return;
     }
@@ -88,7 +85,9 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
 
     try {
       if (!selectedService || !selectedProfessional) {
-        throw new Error("No se encontró la información del servicio o profesional");
+        throw new Error(
+          "No se encontró la información del servicio o profesional",
+        );
       }
 
       setLoading(true);
@@ -102,7 +101,10 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
         service: selectedService.name,
         professional: selectedProfessional.name,
         date: Timestamp.fromDate(selectedDate),
-        hora: selectedDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        hora: selectedDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       });
 
       setTitleSubmit(true);
@@ -114,7 +116,10 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
         service: selectedService.name,
         professional: selectedProfessional.name,
         date: selectedDate.toLocaleDateString("es-ES"),
-        hora: selectedDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        hora: selectedDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       });
 
       resetForm();
