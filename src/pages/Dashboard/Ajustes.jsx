@@ -185,7 +185,7 @@ function Ajustes() {
               id="whatsapp"
               name="whatsapp"
               className="cursor-pointer"
-              checked={contactPreferences.includes("whatsapp")}
+              checked={contactPreferences?.includes("whatsapp")}
               onChange={() => toggleContactPreference("whatsapp")}
             />
             <label htmlFor="whatsapp" className="cursor-pointer">
