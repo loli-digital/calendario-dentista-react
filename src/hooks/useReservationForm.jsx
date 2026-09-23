@@ -34,29 +34,57 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
 
     // Validaciones de todos los campos
     if (!name || !lastName || !phoneNumber || !service || !professional) {
-      setMessage("Por favor, rellena todos los campos");
-      setError(null);
+      setError("Por favor, rellena todos los campos");
+      setMessage(null);
       return;
     }
 
     // Validación del teléfono
     if (!validatePhone(phoneNumber)) {
-      setMessage("El teléfono introducido debe tener 9 dígitos");
-      setLoading(false);
-      setError(null);
+      setError("El teléfono introducido debe tener 9 dígitos");
+      setMessage(null);
       return;
     }
 
-    // Mensaje error si intenta registrar una fecha inválida
-    if (!selectedDate || selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
-      setMessage("Seleccione una fecha entre el lunes y el viernes");
-      setError(null);
+    if (!selectedDate) {
+      setError("Selecciona fecha y hora");
+      setMessage(null);
       return;
     }
 
-    const selectedService = services.find((service) => service.id === Number(service));
+    // El calendario no permite estos días, pero se valida también al enviar.
+    if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
+      setError("Seleccione una fecha entre el lunes y el viernes");
+      setMessage(null);
+      return;
+    }
 
-    const selectedProfessional = professionals.find((professional) => professional.id === professional);
+    const now = new Date();
+    const isToday = selectedDate.toDateString() === now.toDateString();
+    const isAfterTwoPm =
+      now.getHours() > 14 ||
+      (now.getHours() === 14 &&
+        (now.getMinutes() > 0 ||
+          now.getSeconds() > 0 ||
+          now.getMilliseconds() > 0));
+
+    if (isToday && isAfterTwoPm) {
+      setError("Después de las 14:00 no se pueden pedir citas para hoy");
+      setMessage(null);
+      return;
+    }
+
+    if (selectedDate.getTime() <= now.getTime()) {
+      setError("La hora seleccionada ya ha pasado. Selecciona otra hora");
+      setMessage(null);
+      return;
+    }
+
+    const selectedService = services.find((s) => s.id === Number(service));
+
+    const selectedProfessional = professionals.find(
+      (p) => p.id === Number(professional),
+    );
 
     try {
       if (!selectedService || !selectedProfessional) {
@@ -90,9 +118,9 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
       });
 
       resetForm();
-    } catch (err) {
+    } catch (error) {
       setError("Ocurrió un problema al reservar la cita. Inténtelo de nuevo.");
-      console.log(err.message);
+      console.log(error.message);
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
@@ -14,6 +14,8 @@ import { DecorativeShape } from "@/components";
 registerLocale("es", es);
 
 function ReservarCita() {
+  const [now, setNow] = useState(() => new Date());
+
   const {
     name,
     setName,
@@ -45,6 +47,19 @@ function ReservarCita() {
       availableProfessionals,
     );
   }, [service, availableProfessionals]);
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 60 * 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const isAfterTwoPm =
+    now.getHours() > 14 ||
+    (now.getHours() === 14 &&
+      (now.getMinutes() > 0 ||
+        now.getSeconds() > 0 ||
+        now.getMilliseconds() > 0));
 
   return (
     <section className="w-full min-h-dvh py-10 px-5 relative flex flex-col justify-start items-center overflow-hidden bg-cyan-50">
@@ -84,7 +99,7 @@ function ReservarCita() {
             <strong>Profesional:</strong> {message.professional}
           </p>
           <p>
-            <strong>Día:</strong> {message.selectedDate}
+            <strong>Día:</strong> {message.date}
           </p>
           <p>
             <strong>Hora:</strong> {message.hora}
@@ -283,9 +298,12 @@ function ReservarCita() {
                   timeCaption="Hora"
                   filterTime={(time) => filterPastHours(time, selectedDate)}
                   // 6 es sábado y 0 es domingo
-                  filterDate={(date) =>
-                    date.getDay() !== 6 && date.getDay() !== 0
-                  }
+                  filterDate={(date) => {
+                    const isWeekend = date.getDay() === 6 || date.getDay() === 0;
+                    const isToday = date.toDateString() === now.toDateString();
+
+                    return !isWeekend && !(isAfterTwoPm && isToday);
+                  }}
                   className="w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white"
                 />
               </div>
