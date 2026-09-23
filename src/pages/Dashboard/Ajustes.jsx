@@ -412,12 +412,12 @@ function Ajustes() {
           >
             <h2
               id="password-modal-title"
-              className="text-xl font-bold text-cyan-800"
+              className="text-xl text-center font-bold text-cyan-800"
             >
               Confirma tu contraseña
             </h2>
 
-            <p id="password-modal-description" className="text-cyan-700">
+            <p id="password-modal-description" className="text-cyan-700 text-center">
               Por seguridad, Firebase necesita que confirmes tu identidad antes
               de eliminar la cuenta.
             </p>
