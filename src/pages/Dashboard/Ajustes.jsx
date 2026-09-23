@@ -18,6 +18,7 @@ function Ajustes() {
   const [contactPreferences, setContactPreferences] = useState([]);
   const [contactPreferencesError, setContactPreferencesError] = useState("");
 
+  // Preferencias de contacto
   const toggleContactPreference = (value) => {
     setContactPreferences((prev) =>
       prev.includes(value)
@@ -28,6 +29,7 @@ function Ajustes() {
     setContactPreferencesError("");
   };
 
+  // Para guardar los datos en Firebase
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -54,6 +56,7 @@ function Ajustes() {
     return () => unsubscribe();
   }, []);
 
+  // Guardar los ajustes al hacer click en el botón
   const handleSave = async () => {
     if (!auth.currentUser) return;
 
@@ -119,8 +122,7 @@ function Ajustes() {
     }
   };
 
-  {/* Mientras la página está cargando datos */}
-
+  // Mientras la página está cargando datos
   if (loading) {
     return (
       <section className="w-full h-full p-3 lg:p-10 flex justify-center items-center">
@@ -133,6 +135,7 @@ function Ajustes() {
     <section className="w-full h-full p-3 lg:p-10 flex justify-center">
       <form
         onSubmit={handleSubmit(handleSave)}
+        aria-busy={isSaving}
         className="w-full lg:w-auto h-auto mx-auto flex flex-col flex-nowrap justify-center items-stretch gap-8"
       >
         <div className="form__container--data-show">
@@ -158,14 +161,17 @@ function Ajustes() {
           </p>
 
           {/* Recibir recordatorios de citas */}
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-2 rounded-sm p-1 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-cyan-700">
             <input
               type="checkbox"
               name="consent-for-notifications"
               id="consent-for-notifications"
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
-              className="cursor-pointer"
+              className="cursor-pointer focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-cyan-600
+                  focus-visible:ring-offset-2"
             />
             <label
               htmlFor="consent-for-notifications"
@@ -176,48 +182,87 @@ function Ajustes() {
           </div>
 
           {/* Preferencias de contacto */}
-          <label htmlFor="contact-preferences" className="form__p--ajustes">
-            Preferencias de contacto
-          </label>
-          <div className="flex flex-row gap-2">
-            <input
-              type="checkbox"
-              id="whatsapp"
-              name="whatsapp"
-              className="cursor-pointer"
-              checked={contactPreferences?.includes("whatsapp")}
-              onChange={() => toggleContactPreference("whatsapp")}
-            />
-            <label htmlFor="whatsapp" className="cursor-pointer">
-              WhatsApp
-            </label>
-          </div>
-          <div className="flex flex-row gap-2">
-            <input
-              type="checkbox"
-              id="phone-call"
-              name="phone-call"
-              className="cursor-pointer"
-              checked={contactPreferences.includes("phone-call")}
-              onChange={() => toggleContactPreference("phone-call")}
-            />
-            <label htmlFor="phone-call" className="cursor-pointer">
-              Llamada telefónica
-            </label>
-          </div>
-          <div className="flex flex-row gap-2">
-            <input
-              type="checkbox"
-              id="email"
-              name="email"
-              className="cursor-pointer"
-              checked={contactPreferences.includes("email")}
-              onChange={() => toggleContactPreference("email")}
-            />
-            <label htmlFor="email" className="cursor-pointer">
-              Email
-            </label>
-          </div>
+          <fieldset
+            aria-describedby={
+              contactPreferencesError ? "contact-preferences-error" : undefined
+            }
+            className="flex flex-col gap-2"
+          >
+            <legend className="form__p--ajustes">
+              Preferencias de contacto
+            </legend>
+
+            <div className="flex flex-row gap-2 mt-2 rounded-sm p-1 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-cyan-700">
+              <input
+                type="checkbox"
+                id="whatsapp"
+                name="whatsapp"
+                checked={contactPreferences.includes("whatsapp")}
+                onChange={() => toggleContactPreference("whatsapp")}
+                className="
+                  cursor-pointer
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-cyan-600
+                  focus-visible:ring-offset-2
+                "
+              />
+              <label htmlFor="whatsapp" className="cursor-pointer">
+                WhatsApp
+              </label>
+            </div>
+
+            <div className="flex flex-row gap-2 rounded-sm p-1 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-cyan-700">
+              <input
+                type="checkbox"
+                id="phone-call"
+                name="phone-call"
+                checked={contactPreferences.includes("phone-call")}
+                onChange={() => toggleContactPreference("phone-call")}
+                className="
+                  cursor-pointer
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-cyan-600
+                  focus-visible:ring-offset-2
+                "
+              />
+              <label htmlFor="phone-call" className="cursor-pointer">
+                Llamada telefónica
+              </label>
+            </div>
+
+            <div className="flex flex-row gap-2 rounded-sm p-1 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-cyan-700">
+              <input
+                type="checkbox"
+                id="email"
+                name="email"
+                checked={contactPreferences.includes("email")}
+                onChange={() => toggleContactPreference("email")}
+                className="
+                  cursor-pointer
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-cyan-600
+                  focus-visible:ring-offset-2
+                "
+              />
+              <label htmlFor="email" className="cursor-pointer">
+                Email
+              </label>
+            </div>
+
+            {contactPreferencesError && (
+              <p
+                id="contact-preferences-error"
+                role="alert"
+                className="text-red-800"
+              >
+                <FontAwesomeIcon icon={faSquareXmark} aria-hidden="true" />
+                <span>{contactPreferencesError}</span>
+              </p>
+            )}
+          </fieldset>
 
           {contactPreferencesError && (
             <span className="text-red-800">
@@ -230,11 +275,11 @@ function Ajustes() {
           type="submit"
           value={isSaving ? "Guardando..." : "Guardar"}
           disabled={isSaving}
-          className={`w-40 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff] ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
+          className={`w-40 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff] ${isSaving ? "bg-cyan-400 cursor-not-allowed" : ""}`}
         />
         <Button
           onClick={handleDeleteAccount}
-          deleteButton = {true}
+          deleteButton={true}
           disabled={loading}
           className="w-50 mx-auto"
         >
