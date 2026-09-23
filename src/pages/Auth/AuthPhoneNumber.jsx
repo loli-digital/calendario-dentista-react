@@ -159,7 +159,7 @@ function AuthPhoneNumber() {
         >
           <label
             htmlFor="phoneNumberSearch"
-            className="text-lg font-semibold text-cyan-800"
+            className="text-lg font-bold text-cyan-800"
           >
             Introduce tu teléfono móvil:
           </label>
@@ -188,19 +188,19 @@ function AuthPhoneNumber() {
 
         {/* Mensaje de loading */}
         {loading && (
-          <p className="text-cyan-800 text-xl text-center font-bold">
+          <p className="text-cyan-800 text-lg text-center font-bold">
             Buscando citas...
           </p>
         )}
 
         {/* Mensaje de error */}
         {error && !loading && (
-          <p className="text-cyan-800 text-xl text-center font-bold">{error}</p>
+          <p className="text-cyan-800 text-lg text-center font-bold">{error}</p>
         )}
 
         {/* Mensaje */}
         {message && !loading && !error && (
-          <p className="text-cyan-800 text-xl text-center font-bold">
+          <p className="text-cyan-800 text-lg text-center font-bold">
             {message}
           </p>
         )}
