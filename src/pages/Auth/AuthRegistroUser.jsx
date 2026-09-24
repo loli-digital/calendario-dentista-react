@@ -73,7 +73,11 @@ function AuthRegistroUser() {
       setPassword("");
       setConfirmPassword("");
     } catch (error) {
-      setError("Ocurrió un problema en el registro. Inténtalo de nuevo");
+      if (error.code === "auth/email-already-in-use") {
+        setError("Este email ya está registrado.");
+      } else {
+        setError("Ocurrió un problema en el registro. Inténtalo de nuevo");
+      }
       console.log(error.message);
     } finally {
       setLoading(false);
