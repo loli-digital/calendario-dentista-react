@@ -36,8 +36,8 @@ function AuthRegistroUser() {
 
     try {
       setLoading(true);
-      setError(null);
-      setMessage(null);
+      setError("");
+      setMessage("");
 
       // Si las contraseñas no coinciden, mostrar un mensaje de error
       if (password !== confirmPassword) {
