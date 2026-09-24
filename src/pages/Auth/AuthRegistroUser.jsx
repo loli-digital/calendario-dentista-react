@@ -114,7 +114,7 @@ function AuthRegistroUser() {
           maxLength={64}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
         />
 
         <label htmlFor="password" className="font-medium text-cyan-800">
@@ -134,12 +134,12 @@ function AuthRegistroUser() {
             title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="new-password"
-            className="w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+            className="peer w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
           />
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer peer-user-invalid:text-red-950"
             aria-label={
               showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
             }
@@ -165,12 +165,12 @@ function AuthRegistroUser() {
             title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
             onChange={(e) => setConfirmPassword(e.target.value)}
             autoComplete="confirm-password"
-            className="w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+            className="peer w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword((prev) => !prev)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer peer-user-invalid:text-red-950"
             aria-label={
               showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"
             }
@@ -190,7 +190,7 @@ function AuthRegistroUser() {
       {/* Mensaje de error de registro de user */}
 
       {error && !loading && (
-        <p className="relative mb-2 text-red-900 text-lg text-center font-bold">
+        <p className="relative my-4 text-red-900 text-lg text-center font-bold">
           {error}
         </p>
       )}
