@@ -164,7 +164,7 @@ function AuthRegistroUser() {
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
             onChange={(e) => setConfirmPassword(e.target.value)}
-            autoComplete="confirm-password"
+            autoComplete="new-password"
             className="peer w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
           />
           <button
