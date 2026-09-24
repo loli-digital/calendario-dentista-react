@@ -190,14 +190,14 @@ function AuthRegistroUser() {
       {/* Mensaje de error de registro de user */}
 
       {error && !loading && (
-        <p className="relative my-4 text-red-900 text-lg text-center font-bold">
+        <p role="alert" className="relative my-4 text-red-900 text-lg text-center font-bold">
           {error}
         </p>
       )}
 
       {/* Mensaje de confirmación de registro de user */}
       {message && (
-        <div className="w-full lg:w-xl p-4 my-6 bg-green-100 relative flex flex-col gap-2 border border-green-700 text-green-800 rounded shadow-md">
+        <div role="status" className="w-full lg:w-xl p-4 my-6 bg-green-100 relative flex flex-col gap-2 border border-green-700 text-green-800 rounded shadow-md">
           <p className="font-bold text-lg mb-2 text-center">{message}</p>
           <p>
             <span className="font-bold underline underline-offset-2">
