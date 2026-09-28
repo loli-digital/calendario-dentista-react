@@ -10,6 +10,9 @@ function AuthLogin() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleForgotPassword = () => {
     alert(
       "Si tu email está registrado, recibirás un email para restablecer la contraseña",
@@ -19,11 +22,28 @@ function AuthLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError("");
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("Inicio de sesión correcto");
+      // Email en minúsculas y sin espacios
+      const normalizeEmail = email.toLowerCase().trim();
+
+      // Conecta con Firebase
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        normalizeEmail,
+        password,
+      );
+      console.log("Inicio de sesión correcto: ", userCredential.user);
+      setError("");
     } catch (error) {
+      if (error.code === "auth/invalid-credential") {
+        setError("El email o la contraseña son incorrectos");
+      }
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,7 +75,7 @@ function AuthLogin() {
           maxLength={64}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="username"
-          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white"
+          className="border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
         />
 
         <label htmlFor="password" className="font-medium text-cyan-800">
@@ -75,13 +95,13 @@ function AuthLogin() {
             title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
-            className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white"
+            className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white peer user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
           />
           {/* Botón para mostrar u ocultar contraseña */}
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-800 hover:cursor-pointer peer-user-invalid:text-red-950"
             aria-label={
               showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
             }
@@ -91,9 +111,12 @@ function AuthLogin() {
         </div>
 
         {/* Botón para iniciar sesión */}
-        <Button type="submit" className="w-40 mx-auto">
-          Iniciar sesión
-        </Button>
+        <input
+          type="submit"
+          disabled={loading}
+          value={loading ? "Iniciando sesión" : "Iniciar sesión"}
+          className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
+        />
 
         {/* Botón de prueba para recuperar la contraseña */}
         <button
@@ -114,6 +137,16 @@ function AuthLogin() {
           Crear cuenta
         </Button>
       </form>
+
+      {/* Mensaje de error */}
+      {error && !loading && (
+        <p
+          role="alert"
+          className="relative my-4 text-red-900 text-lg text-center font-bold"
+        >
+          {error}
+        </p>
+      )}
     </section>
   );
 }
