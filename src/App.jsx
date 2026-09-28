@@ -11,6 +11,7 @@ import {
   AppointmentSkeleton,
   AuthSkeleton,
   CookiesBanner,
+  WhatsAppButton,
 } from "@/components";
 
 // Home
@@ -61,6 +62,10 @@ function App() {
       <CookiesBanner />
       <Navbar />
       <main>
+        {/* Botón WhatsApp para pedir cita */}
+        <WhatsAppButton />
+
+        {/* Rutas */}
         <Routes>
           {/* Home */}
           <Route
@@ -146,9 +151,7 @@ function App() {
             element={
               <Suspense
                 fallback={
-                  <div className="text-center py-10">
-                    Cargando página...
-                  </div>
+                  <div className="text-center py-10">Cargando página...</div>
                 }
               >
                 <CuentaEliminada />
