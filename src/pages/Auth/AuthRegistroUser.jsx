@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import { DecorativeShape } from "@/components";
+import { DecorativeShape, Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -185,6 +185,16 @@ function AuthRegistroUser() {
           disabled={loading}
           className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
         />
+
+        {/* Iniciar sesión */}
+        <p className="mt-5 text-cyan-800 text-center text-m font-bold">
+          ¿Ya tienes cuenta?
+        </p>
+
+        {/* Botón para iniciar sesión */}
+        <Button to="/auth/login" className="w-40 mx-auto">
+          Inicia sesión
+        </Button>
       </form>
 
       {/* Mensaje de error de registro de user */}
