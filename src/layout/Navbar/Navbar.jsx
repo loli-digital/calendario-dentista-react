@@ -14,6 +14,7 @@ import {
   faCalendarDays,
   faFileInvoiceDollar,
   faGear,
+  faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
 import { getUserDisplayName } from "@/utils";
@@ -26,9 +27,9 @@ export function Navbar() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const location = useLocation();
-  const isAcceder = location.pathname.startsWith("/auth");
-  const isReservarCita = location.pathname.startsWith("/reservar-cita");
-  const isRestrictedView = isAcceder || isReservarCita;
+  const isMyAccount = location.pathname.startsWith("/auth/login");
+  const isCreateAccount = location.pathname.startsWith("/auth/nueva-cuenta");
+  const isRestrictedView = isMyAccount || isCreateAccount;
 
   const { user } = useContext(AuthContext);
 
@@ -153,13 +154,27 @@ export function Navbar() {
             </>
           )}
 
+          {/* Menú en pantalla para inicio de sesión o crear cuenta */}
+          {isRestrictedView && (
+            <>
+              <li>
+                <NavLink to="/">
+                  <span aria-hidden="true" className="mr-2">
+                    <FontAwesomeIcon icon={faHouse} />
+                  </span>
+                  Volver a la web
+                </NavLink>
+              </li>
+            </>
+          )}
+
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
               <div className="w-60 lg:w-full flex flex-col lg:flex-row gap-6">
-              <li className="text-lg">
-                Hola, {nombreParaMostrar ?? user.email}
-              </li>
+                <li className="text-lg">
+                  Hola, {nombreParaMostrar ?? user.email}
+                </li>
                 <li className="nav-link text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/mis-datos">
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
