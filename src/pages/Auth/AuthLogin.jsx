@@ -9,13 +9,32 @@ function AuthLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [recoverEmail, setRecoverEmail] = useState("");
   const [recoverPasswordModal, setRecoverPasswordModal] = useState(false);
 
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleForgotPassword = () => {
     setRecoverPasswordModal(true);
+  };
+
+  const handleRecoverPasswordLink = (e) => {
+    e.preventDefault();
+
+    const normalizedEmail = recoverEmail.toLowerCase().trim();
+
+    setError("");
+    setMessage("");
+
+    if (!normalizedEmail) {
+      setError("Introduce tu correo electrónico");
+      return;
+    }
+    setMessage(
+      "Mira en tu bandeja de correo electrónico para reestablecer la contraseña",
+    );
   };
 
   const handleLogin = async (e) => {
@@ -27,7 +46,6 @@ function AuthLogin() {
     try {
       // Email en minúsculas y sin espacios
       const normalizeEmail = email.toLowerCase().trim();
-
       // Conecta con Firebase
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -114,7 +132,7 @@ function AuthLogin() {
           type="submit"
           disabled={loading}
           value={loading ? "Iniciando sesión" : "Iniciar sesión"}
-          className="w-40 mx-auto mt-3 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] hover:shadow-[0_0_5px_#fff] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-800"
+          className="w-40 mx-auto mt-3 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-800"
         />
 
         {/* Botón de prueba para recuperar la contraseña */}
@@ -123,7 +141,7 @@ function AuthLogin() {
           onClick={handleForgotPassword}
           className="text-cyan-900 cursor-pointer hover:underline"
         >
-          ¿Olvidaste la contraseña?
+          ¿Olvidaste tu contraseña?
         </button>
 
         {/* Crear nueva cuenta */}
@@ -174,20 +192,37 @@ function AuthLogin() {
               Por favor, introduce tu correo electrónico
             </p>
 
-            <form className="flex flex-col justify-center items-center gap-5">
+            <form
+              onSubmit={handleRecoverPasswordLink}
+              className="flex flex-col justify-center items-center gap-5"
+            >
               <input
                 type="email"
                 name="recover-password"
                 id="recover-password"
+                value={recoverEmail}
+                required
+                onChange={(e) => setRecoverEmail(e.target.value)}
                 className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white"
               />
 
               <input
                 type="submit"
+                onClick={() => handleRecoverPasswordLink()}
                 value={loading ? "Enviando" : "Enviar"}
-                className="w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] hover:shadow-[0_0_5px_#fff] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-800"
+                className="w-40 mx-auto mt-3 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-800"
               />
             </form>
+
+            {/* Mensaje de error si no escribe email */}
+            {!message && (
+              <p role="alert" className="text-red-900 text-center font-bold">
+                {error}
+              </p>
+            )}
+
+            {/* Mensaje de envío de email para recuperar la contraseña */}
+            {message && <p className="text-cyan-700 text-center">{message}</p>}
 
             <Button
               deleteButton
