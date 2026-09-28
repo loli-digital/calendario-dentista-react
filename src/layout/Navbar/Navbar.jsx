@@ -153,17 +153,6 @@ export function Navbar() {
             </>
           )}
 
-          {/* Menú para Acceder y Reservar Cita */}
-          {isRestrictedView && (
-            <>
-              <li className="nav-link">
-                <NavLink to="/auth" onClick={closeMenu}>
-                  Acceder
-                </NavLink>
-              </li>
-            </>
-          )}
-
           {/* Menú para cuando se ha hecho login */}
           {user && (
             <>
