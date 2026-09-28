@@ -17,6 +17,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { DecorativeShape, Button } from "@/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
@@ -32,7 +34,10 @@ function AuthPhoneNumber() {
   const [selectedDate, setSelectedDate] = useState();
 
   async function getAppointmentWithPhoneNumber(phoneNumber) {
-    const q = query(collection(db, "citas"), where("phoneNumber", "==", phoneNumber));
+    const q = query(
+      collection(db, "citas"),
+      where("phoneNumber", "==", phoneNumber),
+    );
 
     const querySnapshot = await getDocs(q);
 
@@ -44,7 +49,9 @@ function AuthPhoneNumber() {
           ...data,
           // Convierte Timestamp a Date
           selectedDate:
-            data.selectedDate && data.selectedDate.toDate ? data.selectedDate.toDate() : data.selectedDate,
+            data.selectedDate && data.selectedDate.toDate
+              ? data.selectedDate.toDate()
+              : data.selectedDate,
         };
       })
       .sort((a, b) => new Date(a.selectedDate) - new Date(b.selectedDate));
@@ -68,7 +75,8 @@ function AuthPhoneNumber() {
     setPatientAppointment([]);
 
     try {
-      const filterAppointment = await getAppointmentWithPhoneNumber(phoneNumberSearch);
+      const filterAppointment =
+        await getAppointmentWithPhoneNumber(phoneNumberSearch);
 
       //Si no existen citas guardadas con el teléfono (empty state)
 
@@ -129,7 +137,8 @@ function AuthPhoneNumber() {
 
       // Refrescar citas
 
-      const updatedAppointment = await getAppointmentWithPhoneNumber(phoneNumberSearch);
+      const updatedAppointment =
+        await getAppointmentWithPhoneNumber(phoneNumberSearch);
 
       setPatientAppointment(updatedAppointment);
       setEditAppointment(null);
@@ -229,7 +238,9 @@ function AuthPhoneNumber() {
                 </p>
                 <p>
                   <strong>Día:</strong>{" "}
-                  {new Date(appointment.selectedDate).toLocaleDateString("es-ES")}
+                  {new Date(appointment.selectedDate).toLocaleDateString(
+                    "es-ES",
+                  )}
                 </p>
                 <p>
                   <strong>Hora:</strong> {appointment.hour}
@@ -298,9 +309,9 @@ function AuthPhoneNumber() {
                 </p>
                 <p>
                   <strong>Día:</strong>{" "}
-                  {new Date(removeAppointmentModal.selectedDate).toLocaleDateString(
-                    "es-ES",
-                  )}
+                  {new Date(
+                    removeAppointmentModal.selectedDate,
+                  ).toLocaleDateString("es-ES")}
                 </p>
                 <p>
                   <strong>Hora:</strong> {removeAppointmentModal.hour}
@@ -321,8 +332,8 @@ function AuthPhoneNumber() {
                 </Button>
 
                 <Button
-                  onClick={() => setRemoveAppointmentModal(null)}
-                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-500 focus:ring-gray-600 cursor-pointer"
+                  disabled
+                  onClick={() => setRemoveAppointmentModal(null)}                  
                 >
                   Cancelar
                 </Button>
@@ -330,11 +341,12 @@ function AuthPhoneNumber() {
 
               {/* Botón para cerrar el modal */}
               <Button
+                deleteButton
                 onClick={() => setRemoveAppointmentModal(null)}
                 aria-label="Cerrar modal"
-                className="w-5 h-5 absolute top-2 right-2 bg-red-800 text-2xl cursor-pointer hover:bg-red-900 focus:ring-red-900"
+                className="absolute right-2 top-2 h-10 w-10"
               >
-                ×
+                <FontAwesomeIcon icon={faXmark} />
               </Button>
             </div>
           </div>
@@ -413,11 +425,12 @@ function AuthPhoneNumber() {
 
               {/* Botón para cerrar el modal */}
               <Button
+                deleteButton
                 onClick={() => setEditAppointment(null)}
                 aria-label="Cerrar modal"
-                className="w-5 h-5 absolute top-2 right-2 bg-red-800 text-2xl cursor-pointer hover:bg-red-900 focus:ring-red-900"
+                className="absolute right-2 top-2 h-10 w-10"
               >
-                ×
+                <FontAwesomeIcon icon={faXmark} />
               </Button>
             </div>
           </div>
