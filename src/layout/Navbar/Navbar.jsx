@@ -146,8 +146,8 @@ export function Navbar() {
               </li>
 
               <li className="nav-link">
-                <NavLink to="/auth" onClick={closeMenu}>
-                  Acceder
+                <NavLink to="/auth/login" onClick={closeMenu}>
+                  Mi cuenta
                 </NavLink>
               </li>
             </>
