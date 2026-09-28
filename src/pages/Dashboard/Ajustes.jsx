@@ -10,7 +10,7 @@ import { auth, db } from "@/firebase";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import { faSquareXmark, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function Ajustes() {
   const { handleSubmit } = useForm();
@@ -325,7 +325,7 @@ function Ajustes() {
         />
         <Button
           onClick={handleDeleteAccount}
-          deleteButton={true}
+          deleteButton
           disabled={isDeleting}
           className="w-50 mx-auto"
         >
@@ -360,14 +360,16 @@ function Ajustes() {
               ¿Eliminar cuenta?
             </h2>
 
-            <p id="delete-account-description" className="text-cyan-700 text-center">
+            <p
+              id="delete-account-description"
+              className="text-cyan-700 text-center"
+            >
               ¿Seguro que quieres eliminar tu cuenta y todos tus datos? Esta
               acción no se puede deshacer.
             </p>
 
             <div className="mt-4 flex justify-center gap-4">
               <Button
-                type="button"
                 deleteButton
                 onClick={handleConfirmDeleteAccount}
                 disabled={isDeleting}
@@ -376,7 +378,6 @@ function Ajustes() {
               </Button>
 
               <Button
-                type="button"
                 onClick={() => setShowDeleteConfirmation(false)}
                 disabled={isDeleting}
                 className="bg-gray-500 hover:bg-gray-600"
@@ -386,12 +387,12 @@ function Ajustes() {
             </div>
 
             <Button
-              type="button"
+              deleteButton
               onClick={() => setShowDeleteConfirmation(false)}
               aria-label="Cerrar confirmación"
-              className="absolute right-2 top-2 h-8 w-8 bg-red-800 p-1 text-2xl"
+              className="absolute right-2 top-2 h-10 w-10"
             >
-              ×
+              <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
         </div>
@@ -417,7 +418,10 @@ function Ajustes() {
               Confirma tu contraseña
             </h2>
 
-            <p id="password-modal-description" className="text-cyan-700 text-center">
+            <p
+              id="password-modal-description"
+              className="text-cyan-700 text-center"
+            >
               Por seguridad, Firebase necesita que confirmes tu identidad antes
               de eliminar la cuenta.
             </p>
@@ -466,7 +470,6 @@ function Ajustes() {
                 </Button>
 
                 <Button
-                  type="button"
                   onClick={() => {
                     setShowModalPassword(false);
                     setPassword("");
@@ -481,7 +484,7 @@ function Ajustes() {
             </form>
 
             <Button
-              type="button"
+              deleteButton
               onClick={() => {
                 setShowModalPassword(false);
                 setPassword("");
@@ -489,9 +492,9 @@ function Ajustes() {
               }}
               disabled={isDeleting}
               aria-label="Cerrar modal de contraseña"
-              className="absolute right-2 top-2 h-8 w-8 bg-red-800 p-1 text-2xl hover:bg-red-900"
+              className="absolute right-2 top-2 h-10 w-10"
             >
-              ×
+              <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
         </div>
