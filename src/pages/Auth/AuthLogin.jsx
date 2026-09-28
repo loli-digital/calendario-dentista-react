@@ -114,7 +114,7 @@ function AuthLogin() {
           type="submit"
           disabled={loading}
           value={loading ? "Iniciando sesión" : "Iniciar sesión"}
-          className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
+          className="w-40 mx-auto mt-3 p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] hover:shadow-[0_0_5px_#fff] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-800"
         />
 
         {/* Botón de prueba para recuperar la contraseña */}
@@ -182,7 +182,11 @@ function AuthLogin() {
                 className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white"
               />
 
-              <Button className="w-40">Enviar</Button>
+              <input
+                type="submit"
+                value={loading ? "Enviando" : "Enviar"}
+                className="w-40 mx-auto p-3 lg:p-4 rounded-sm shadow-[0_0_5px_black] hover:shadow-[0_0_5px_#fff] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-800"
+              />
             </form>
 
             <Button
@@ -191,7 +195,7 @@ function AuthLogin() {
               onClick={() => setRecoverPasswordModal(false)}
               className="absolute right-2 top-2 h-10 w-10"
             >
-              <FontAwesomeIcon icon={faXmark}/>
+              <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
         </div>
