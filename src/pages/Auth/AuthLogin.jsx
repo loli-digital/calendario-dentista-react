@@ -146,12 +146,12 @@ function AuthLogin() {
 
         {/* Crear nueva cuenta */}
         <p className="mt-5 text-cyan-800 text-center text-m font-bold">
-          Crea una cuenta si eres un/a paciente nuevo/a{" "}
+          ¿Todavía no tienes cuenta?
         </p>
 
         {/* Botón para crear cuenta */}
         <Button to="/auth/nueva-cuenta" className="w-40 mx-auto">
-          Crear cuenta
+          Crea tu cuenta
         </Button>
       </form>
 
