@@ -3,20 +3,19 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { DecorativeShape, Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function AuthLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [recoverPasswordModal, setRecoverPasswordModal] = useState(false);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleForgotPassword = () => {
-    alert(
-      "Si tu email está registrado, recibirás un email para restablecer la contraseña",
-    );
+    setRecoverPasswordModal(true);
   };
 
   const handleLogin = async (e) => {
@@ -146,6 +145,56 @@ function AuthLogin() {
         >
           {error}
         </p>
+      )}
+
+      {/* Modal ¿Olvidaste tu contraseña? */}
+      {recoverPasswordModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-cyan-900/80 px-5"
+          role="presentation"
+        >
+          <div
+            className="relative flex w-full max-w-md flex-col gap-4 rounded-lg bg-white p-6 shadow-lg"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="recover-password-title"
+            aria-describedby="recover-password-description"
+          >
+            <h2
+              id="recover-password-title"
+              className="text-xl text-center font-bold text-cyan-800"
+            >
+              Recuperar tu contraseña
+            </h2>
+
+            <p
+              id="recover-password-description"
+              className="text-cyan-700 text-center"
+            >
+              Por favor, introduce tu correo electrónico
+            </p>
+
+            <form className="flex flex-col justify-center items-center gap-5">
+              <input
+                type="email"
+                name="recover-password"
+                id="recover-password"
+                className="w-full border-2 border-cyan-700 rounded-sm pl-2 pr-10 py-1 bg-white"
+              />
+
+              <Button className="w-40">Enviar</Button>
+            </form>
+
+            <Button
+              deleteButton
+              aria-label="Cerrar modal"
+              onClick={() => setRecoverPasswordModal(false)}
+              className="absolute right-2 top-2 h-10 w-10"
+            >
+              <FontAwesomeIcon icon={faXmark}/>
+            </Button>
+          </div>
+        </div>
       )}
     </section>
   );
