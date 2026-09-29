@@ -20,7 +20,6 @@ const Home = lazy(() => import("./pages/Home/Home"));
 // Auth
 const RedirectIfAuth = lazy(() => import("./router/RedirectIfAuth"));
 const RequireAuth = lazy(() => import("./router/RequireAuth"));
-const AuthHome = lazy(() => import("./pages/Auth/AuthHome"));
 const AuthLogin = lazy(() => import("./pages/Auth/AuthLogin"));
 const AuthPhoneNumber = lazy(() => import("./pages/Auth/AuthPhoneNumber"));
 const AuthRegistroUser = lazy(() => import("./pages/Auth/AuthRegistroUser"));
@@ -86,13 +85,6 @@ function App() {
               {/* Ruta por defecto para Auth */}
               <Route
                 index
-                element={
-                  <Suspense fallback={<AuthSkeleton />}>
-                    <AuthHome />
-                  </Suspense>
-                }
-              />
-              <Route
                 path="login"
                 element={
                   <Suspense fallback={<AuthSkeleton />}>
