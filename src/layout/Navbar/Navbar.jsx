@@ -215,19 +215,6 @@ export function Navbar() {
               </Button>
             </>
           )}
-
-          {/* Botón para reservar cita que se encuentra dentro del menú móvil */}
-          {!user && (
-            <li className="block lg:hidden mt-10 lg:mt-0">
-              <Button
-                to="/reservar-cita"
-                onClick={closeMenu}
-                icon={faCalendarDays}
-              >
-                Reservar cita
-              </Button>
-            </li>
-          )}
         </ul>
       </nav>
 
