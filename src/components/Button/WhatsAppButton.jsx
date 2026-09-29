@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 export const WhatsAppButton = () => {
-  const phoneNumber = "34789789789";
+  const phoneNumber = "34123456789";
   const message = encodeURIComponent("Hola! Me gustaría solicitar cita");
   const url = `https://wa.me/${phoneNumber}?text=${message}`;
 
