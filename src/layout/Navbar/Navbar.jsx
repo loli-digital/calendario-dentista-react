@@ -29,7 +29,8 @@ export function Navbar() {
   const location = useLocation();
   const isMyAccount = location.pathname.startsWith("/auth/login");
   const isCreateAccount = location.pathname.startsWith("/auth/nueva-cuenta");
-  const isRestrictedView = isMyAccount || isCreateAccount;
+  const isBookAppointment = location.pathname.startsWith("/reservar-cita");
+  const isRestrictedView = isMyAccount || isCreateAccount || isBookAppointment;
 
   const { user } = useContext(AuthContext);
 
