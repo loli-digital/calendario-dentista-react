@@ -97,7 +97,7 @@ function AuthRegistroUser() {
 
       <form
         onSubmit={handleRegister}
-        className="w-auto sm:w-[350px] mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-3"
+        className="w-full sm:w-[350px] mx-auto p-6 relative rounded-md shadow-[0_0_5px_gray] border border-slate-200 bg-white flex flex-col justify-center space-y-5"
       >
         <label htmlFor="email" className="font-medium text-cyan-800">
           Email
