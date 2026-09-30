@@ -224,7 +224,7 @@ function MisFacturas() {
           <div className="relative">
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
-              className="absolute top-3.5 left-2 text-xl text-cyan-50"
+              className="pointer-events-none absolute top-3.5 left-1 sm:left-2.5 text-xl text-cyan-50"
             />
             <input
               type="submit"
