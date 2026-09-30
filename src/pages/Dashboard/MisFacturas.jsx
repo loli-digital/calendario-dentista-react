@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileArrowDown,
   faMagnifyingGlass,
+  faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
 function MisFacturas() {
@@ -187,7 +188,7 @@ function MisFacturas() {
             <Button icon={faMagnifyingGlass} className="w-32" type="submit">
               Buscar
             </Button>
-            <Button className="w-32" onClick={handleReset} type="button">
+            <Button icon={faTrash} deleteButton className="w-32" onClick={handleReset} type="button">
               Eliminar
             </Button>
           </div>
