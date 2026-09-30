@@ -115,9 +115,9 @@ function MisFacturas() {
       <form
         action=""
         onSubmit={handleSearch}
-        className="w-full p-3 flex flex-col md:justify-center md:items-center md:gap-4"
+        className="w-full p-3 flex flex-col sm:justify-center sm:items-center sm:gap-4"
       >
-        <div className="flex flex-col md:flex-row md:justify-center md:items-center space-y-1 md:space-y-0 md:space-x-1">
+        <div className="w-full flex flex-col sm:flex-row sm:justify-center sm:items-center space-y-1 sm:space-y-0 sm:space-x-1">
           <label htmlFor="date-start" className="form__label">
             Fecha desde
           </label>
@@ -132,7 +132,7 @@ function MisFacturas() {
                 target: { name: "dateStart", value: e.target.value },
               })
             }
-            className="form__input--invoice w-32 md:mr-3"
+            className="form__input--invoice w-32 sm:mr-3"
           />
 
           <label htmlFor="date-end" className="form__label">
@@ -149,11 +149,11 @@ function MisFacturas() {
                 target: { name: "dateEnd", value: e.target.value },
               })
             }
-            className="form__input--invoice w-32 md:mr-3"
+            className="form__input--invoice w-32 sm:mr-3"
           />
 
           <label htmlFor="number-invoice" className="form__label">
-            Número de factura
+            Nº factura
           </label>
           <input
             type="search"
@@ -170,7 +170,7 @@ function MisFacturas() {
           />
         </div>
 
-        <div className="flex flex-col md:flex-row md:justify-center md:items-center space-y-1 md:space-y-0 md:space-x-1">
+        <div className="w-full flex flex-col sm:flex-row sm:justify-center sm:items-center space-y-1 sm:space-y-0 sm:space-x-1">
           <label htmlFor="tratamiento" className="form__label">
             Tratamiento
           </label>
@@ -184,7 +184,7 @@ function MisFacturas() {
                 target: { name: "tratamiento", value: e.target.value },
               })
             }
-            className="form__input w-37 md:mr-4"
+            className="form__input w-37 sm:mr-4"
           >
             <option value="" selected>
               Seleccionar
@@ -211,34 +211,37 @@ function MisFacturas() {
                 target: { name: "invoiceState", value: e.target.value },
               })
             }
-            className="form__input w-29 md:mr-4"
+            className="form__input w-29 sm:mr-4"
           >
             <option value="">Seleccionar</option>
             <option value="all">Todas</option>
             <option value="paid">Pagadas</option>
             <option value="pendant">Pendientes</option>
           </select>
-
-          <div className="flex gap-2 pt-3 lg:pt-0">
-            <div className="relative">
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute top-3.5 left-2 text-xl text-cyan-50"/>
-              <input
-                type="submit"
-                value="Buscar"
-                className="w-27 md:w-32 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff]"
-              />
-            </div>
-
-            <Button
-              icon={faTrash}
-              deleteButton
-              className="w-32"
-              onClick={handleReset}
-              type="button"
-            >
-              Eliminar
-            </Button>
+        </div>
+        {/* Botones */}
+        <div className="w-full flex sm:justify-center sm:items-center gap-2 pt-3 lg:pt-0">
+          <div className="relative">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="absolute top-3.5 left-2 text-xl text-cyan-50"
+            />
+            <input
+              type="submit"
+              value="Buscar"
+              className="w-27 sm:w-32 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff]"
+            />
           </div>
+
+          <Button
+            icon={faTrash}
+            deleteButton
+            className="w-32"
+            onClick={handleReset}
+            type="button"
+          >
+            Eliminar
+          </Button>
         </div>
       </form>
       {filteredInvoices.length === 0 ? (
