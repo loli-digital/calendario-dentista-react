@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileArrowDown,
   faMagnifyingGlass,
-  faTrash
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 function MisFacturas() {
@@ -57,14 +57,18 @@ function MisFacturas() {
       // Número de factura
       if (
         filters.invoiceNumber &&
-        !String(f.invoiceNumber).toLowerCase().includes(filters.invoiceNumber.toLowerCase())
+        !String(f.invoiceNumber)
+          .toLowerCase()
+          .includes(filters.invoiceNumber.toLowerCase())
       )
         return false;
 
       // Tratamiento
       if (
         filters.tratamiento &&
-        !String(f.description).toLowerCase().includes(filters.tratamiento.toLowerCase())
+        !String(f.description)
+          .toLowerCase()
+          .includes(filters.tratamiento.toLowerCase())
       )
         return false;
 
@@ -95,7 +99,13 @@ function MisFacturas() {
   };
 
   const handleReset = () => {
-    setFilters({ dateStart: "", dateEnd: "", invoiceNumber: "", tratamiento: "", invoiceState: "" });
+    setFilters({
+      dateStart: "",
+      dateEnd: "",
+      invoiceNumber: "",
+      tratamiento: "",
+      invoiceState: "",
+    });
     setFilteredInvoices(originalInvoices);
   };
 
@@ -116,7 +126,12 @@ function MisFacturas() {
             name="date-start"
             id="date-start"
             value={filters.dateStart}
-            onChange={(e) => handleChange({ ...e, target: { name: "dateStart", value: e.target.value } })}
+            onChange={(e) =>
+              handleChange({
+                ...e,
+                target: { name: "dateStart", value: e.target.value },
+              })
+            }
             className="form__input--invoice w-32 md:mr-3"
           />
 
@@ -128,7 +143,12 @@ function MisFacturas() {
             name="dateEnd"
             id="date-end"
             value={filters.dateEnd}
-            onChange={(e) => handleChange({ ...e, target: { name: "dateEnd", value: e.target.value } })}
+            onChange={(e) =>
+              handleChange({
+                ...e,
+                target: { name: "dateEnd", value: e.target.value },
+              })
+            }
             className="form__input--invoice w-32 md:mr-3"
           />
 
@@ -140,7 +160,12 @@ function MisFacturas() {
             name="invoiceNumber"
             id="number-invoice"
             value={filters.invoiceNumber}
-            onChange={(e) => handleChange({ ...e, target: { name: "invoiceNumber", value: e.target.value } })}
+            onChange={(e) =>
+              handleChange({
+                ...e,
+                target: { name: "invoiceNumber", value: e.target.value },
+              })
+            }
             className="form__input--invoice w-20"
           />
         </div>
@@ -153,7 +178,12 @@ function MisFacturas() {
             name="tratamiento"
             id="tratamiento"
             value={filters.tratamiento}
-            onChange={(e) => handleChange({ ...e, target: { name: "tratamiento", value: e.target.value } })}
+            onChange={(e) =>
+              handleChange({
+                ...e,
+                target: { name: "tratamiento", value: e.target.value },
+              })
+            }
             className="form__input w-37 md:mr-4"
           >
             <option value="" selected>
@@ -175,7 +205,12 @@ function MisFacturas() {
             name="invoice-state"
             id="invoice-state"
             value={filters.invoiceState}
-            onChange={(e) => handleChange({ ...e, target: { name: "invoiceState", value: e.target.value } })}
+            onChange={(e) =>
+              handleChange({
+                ...e,
+                target: { name: "invoiceState", value: e.target.value },
+              })
+            }
             className="form__input w-29 md:mr-4"
           >
             <option value="">Seleccionar</option>
@@ -185,10 +220,22 @@ function MisFacturas() {
           </select>
 
           <div className="flex gap-2 pt-3 lg:pt-0">
-            <Button icon={faMagnifyingGlass} className="w-32" type="submit">
-              Buscar
-            </Button>
-            <Button icon={faTrash} deleteButton className="w-32" onClick={handleReset} type="button">
+            <div className="relative">
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute top-3.5 left-2 text-xl text-cyan-50"/>
+              <input
+                type="submit"
+                value="Buscar"
+                className="w-32 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff]"
+              />
+            </div>
+
+            <Button
+              icon={faTrash}
+              deleteButton
+              className="w-32"
+              onClick={handleReset}
+              type="button"
+            >
               Eliminar
             </Button>
           </div>
@@ -196,56 +243,58 @@ function MisFacturas() {
       </form>
       {filteredInvoices.length === 0 ? (
         <div className="w-full h-full flex justify-center items-center py-10">
-          <p className="text-center">No hay facturas que coincidan con los criterios.</p>
+          <p className="text-center">
+            No hay facturas que coincidan con los criterios.
+          </p>
         </div>
       ) : (
         <div className="w-full overflow-auto hidden md:block text-center">
-        {/* Tabla para Desktop */}
-        <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
-          <thead>
-            <tr className="p-3 flex justify-around justify-items-center items-center gap-3 text-cyan-800 border-2 border-cyan-700 rounded-sm shadow-[0_0_5px] shadow-cyan-700">
-              <th className="w-30">Nº</th>
-              <th className="w-30">Fecha</th>
-              <th className="w-30">Tratamiento</th>
-              <th className="w-30">Diente</th>
-              <th className="w-30">Importe</th>
-              <th className="w-30">Total</th>
-              <th className="w-30">Estado</th>
-              <th className="w-30">Descargar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredInvoices.map((invoice, id) => (
-              <tr
-                key={invoice.id}
-                className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
-              >
-                <td className="w-30">{invoice.invoiceNumber}</td>
-                <td className="w-30">{invoice.date}</td>
-                <td className="w-30">{invoice.description}</td>
-                <td className="w-30">{invoice.tooth || "—"}</td>
-                <td className="w-30">{invoice.price}</td>
-                <td className="w-30">{invoice.total}</td>
-                <td
-                  className={`w-30 p-1 rounded-sm border-2 font-semibold ${invoice.paid ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
-                >
-                  {invoice.paid ? "Pagada" : "Pendiente"}
-                </td>
-                <a
-                  href={invoice.file}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-30"
-                >
-                  <FontAwesomeIcon
-                    icon={faFileArrowDown}
-                    className="text-cyan-800"
-                  />
-                </a>
+          {/* Tabla para Desktop */}
+          <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
+            <thead>
+              <tr className="p-3 flex justify-around justify-items-center items-center gap-3 text-cyan-800 border-2 border-cyan-700 rounded-sm shadow-[0_0_5px] shadow-cyan-700">
+                <th className="w-30">Nº</th>
+                <th className="w-30">Fecha</th>
+                <th className="w-30">Tratamiento</th>
+                <th className="w-30">Diente</th>
+                <th className="w-30">Importe</th>
+                <th className="w-30">Total</th>
+                <th className="w-30">Estado</th>
+                <th className="w-30">Descargar</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredInvoices.map((invoice, id) => (
+                <tr
+                  key={invoice.id}
+                  className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
+                >
+                  <td className="w-30">{invoice.invoiceNumber}</td>
+                  <td className="w-30">{invoice.date}</td>
+                  <td className="w-30">{invoice.description}</td>
+                  <td className="w-30">{invoice.tooth || "—"}</td>
+                  <td className="w-30">{invoice.price}</td>
+                  <td className="w-30">{invoice.total}</td>
+                  <td
+                    className={`w-30 p-1 rounded-sm border-2 font-semibold ${invoice.paid ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                  >
+                    {invoice.paid ? "Pagada" : "Pendiente"}
+                  </td>
+                  <a
+                    href={invoice.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-30"
+                  >
+                    <FontAwesomeIcon
+                      icon={faFileArrowDown}
+                      className="text-cyan-800"
+                    />
+                  </a>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
