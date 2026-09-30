@@ -225,7 +225,7 @@ function MisFacturas() {
               <input
                 type="submit"
                 value="Buscar"
-                className="w-32 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff]"
+                className="w-27 md:w-32 mx-auto bg-cyan-700 text-white p-3 cursor-pointer rounded-sm shadow-[0_0_5px_black] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-950 transition-colors duration-200 ease-in hover:bg-cyan-600 hover:shadow-[0_0_5px_#fff]"
               />
             </div>
 
@@ -248,7 +248,7 @@ function MisFacturas() {
           </p>
         </div>
       ) : (
-        <div className="w-full overflow-auto hidden md:block text-center">
+        <div className="w-full overflow-auto hidden lg:block text-center">
           {/* Tabla para Desktop */}
           <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
             <thead>
@@ -299,7 +299,7 @@ function MisFacturas() {
       )}
 
       {/* Tabla para móvil */}
-      <div className="w-full flex flex-col gap-10 md:hidden">
+      <div className="w-full sm:w-70 flex flex-col gap-10 lg:hidden">
         {filteredInvoices.map((invoice) => (
           <div
             key={invoice.id}
