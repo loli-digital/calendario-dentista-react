@@ -40,7 +40,7 @@ function MisCitas() {
     message,
     setMessage,
     availableProfessionals,
-    manejarSubmit,
+    handleSubmit,
   } = useReservationForm({
     services,
     professionals,
@@ -186,7 +186,7 @@ function MisCitas() {
               </p>
               <p>
                 <span className="font-bold text-cyan-700">Hora:</span>{" "}
-                {appointment.hora}
+                {appointment.hour}
               </p>
               <p>
                 <span className="font-bold text-cyan-700">Tratamiento:</span>{" "}
@@ -222,16 +222,16 @@ function MisCitas() {
       {showFormAppointment && (
         <div className="w-full lg:w-xl">
           <form
-            onSubmit={manejarSubmit}
+            onSubmit={handleSubmit}
             className="w-full mx-auto relative p-6 rounded-md shadow-[0_0_5px_black] border border-slate-200 bg-white flex flex-col justify-center lg:space-y-10"
           >
             <div className="w-full flex flex-col gap-5">
               {/* Calendario */}
-              <label htmlFor="fecha-hora" className="font-medium text-cyan-800">
+              <label htmlFor="date" className="font-medium text-cyan-800">
                 Selecciona el día
               </label>
               <DatePicker
-                id="fecha-hora"
+                id="date"
                 showIcon
                 selected={selectedDate}
                 onChange={(date) => {
@@ -362,7 +362,7 @@ function MisCitas() {
             <strong>Fecha:</strong> {message.date}
           </p>
           <p>
-            <strong>Hora:</strong> {message.hora}
+            <strong>Hora:</strong> {message.hour}
           </p>
           <p>
             <strong>Tratamiento:</strong> {message.service}

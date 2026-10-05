@@ -31,7 +31,7 @@ export function useReservationForm({
     setSelectedDate(null);
   };
 
-  const manejarSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!userId) {
@@ -52,7 +52,7 @@ export function useReservationForm({
       return;
     }
 
-    // El calendario no permite estos días, pero se valida también al enviar.
+    // El calendario no permite los domingos (0) y sábados (6), pero se valida también al enviar.
     if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
       setError("Seleccione una fecha entre el lunes y el viernes");
       setMessage(null);
@@ -106,7 +106,7 @@ export function useReservationForm({
         service: selectedService.name,
         professional: selectedProfessional.name,
         date: selectedDate.toLocaleDateString("es-ES"),
-        hora: selectedDate.toLocaleTimeString([], {
+        hour: selectedDate.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -135,7 +135,7 @@ export function useReservationForm({
     message,
     setMessage,
     availableProfessionals,
-    manejarSubmit,
+    handleSubmit,
     resetForm,
   };
 }
