@@ -12,7 +12,6 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { Button } from "@/components";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
-
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
 
@@ -22,6 +21,7 @@ function MisCitas() {
   const [appointmentsLoading, setAppointmentsLoading] = useState(true);
   const [appointmentsError, setAppointmentsError] = useState(null);
   const [refreshAppointments, setRefreshAppointments] = useState(0);
+  const [showFormAppointment, setShowFormAppointment] = useState(false);
 
   const {
     service,
@@ -70,7 +70,9 @@ function MisCitas() {
             return {
               id: appointmentDoc.id,
               ...data,
-              date: data.date?.toDate ? data.date.toDate() : new Date(data.date),
+              date: data.date?.toDate
+                ? data.date.toDate()
+                : new Date(data.date),
             };
           })
           .sort((first, second) => first.date - second.date);
@@ -92,24 +94,36 @@ function MisCitas() {
     };
   }, [user?.uid, refreshAppointments]);
 
+  function handleForm() {
+    setShowFormAppointment(true);
+  }
+
   return (
     <section className="w-full h-full p-3 lg:p-10 flex flex-col justify-center items-center">
-      {appointmentsLoading ? (
+      {appointmentsLoading && (
         <p role="status" className="py-6 text-center">
           Cargando tus citas...
         </p>
-      ) : appointmentsError ? (
+      )}
+
+      {appointmentsError && (
         <p role="alert" className="py-6 text-center text-red-900">
           {appointmentsError}
         </p>
-      ) : appointment.length === 0 ? (
-        <div className="w-full sm:w-lg lg:w-xl bg-green-100 mb-6 relative flex flex-col items-center gap-4 border border-green-700 text-green-800 text-center p-4 rounded shadow-md">
-          <h2 className="font-bold text-lg text-center mb-2">
-            No tienes citas
-          </h2>
-          <p>Solicita una cita para verla aquí.</p>
-          <Button icon={faCalendarDays} className="w-40">Reserva cita</Button>
-        </div>
+      )}
+
+      {appointment.length === 0 ? (
+        !showFormAppointment && (
+          <div className="w-full sm:w-lg lg:w-xl bg-green-100 mb-6 relative flex flex-col items-center gap-4 border border-green-700 text-green-800 text-center p-4 rounded shadow-md">
+            <h2 className="font-bold text-lg text-center mb-2">
+              No tienes citas
+            </h2>
+            <p>Solicita una cita para verla aquí.</p>
+            <Button onClick={handleForm} icon={faCalendarDays} className="w-40">
+              Reserva cita
+            </Button>
+          </div>
+        )
       ) : (
         <div className="w-full overflow-auto hidden sm:block text-center">
           {/* Tabla para ordenador */}
@@ -145,36 +159,37 @@ function MisCitas() {
       {!appointmentsLoading && !appointmentsError && appointment.length > 0 && (
         <div className="w-full flex flex-col gap-5 sm:hidden">
           {appointment.map((appointment) => (
-          <div
-            key={appointment.id}
-            className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
-          >
-            <p>
-              <span className="font-bold text-cyan-700">Fecha:</span>{" "}
-              {appointment.date.toLocaleDateString("es-ES")}
-            </p>
-            <p>
-              <span className="font-bold text-cyan-700">Hora:</span>{" "}
-              {appointment.hora}
-            </p>
-            <p>
-              <span className="font-bold text-cyan-700">Tratamiento:</span>{" "}
-              {appointment.service}
-            </p>
-            <p>
-              <span className="font-bold text-cyan-700">Profesional:</span>{" "}
-              {appointment.professional}
-            </p>
-            <p>
-              <span className="font-bold text-cyan-700">Estado:</span>{" "}
-              {appointment.state ?? "Pendiente"}
-            </p>
-          </div>
+            <div
+              key={appointment.id}
+              className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
+            >
+              <p>
+                <span className="font-bold text-cyan-700">Fecha:</span>{" "}
+                {appointment.date.toLocaleDateString("es-ES")}
+              </p>
+              <p>
+                <span className="font-bold text-cyan-700">Hora:</span>{" "}
+                {appointment.hora}
+              </p>
+              <p>
+                <span className="font-bold text-cyan-700">Tratamiento:</span>{" "}
+                {appointment.service}
+              </p>
+              <p>
+                <span className="font-bold text-cyan-700">Profesional:</span>{" "}
+                {appointment.professional}
+              </p>
+              <p>
+                <span className="font-bold text-cyan-700">Estado:</span>{" "}
+                {appointment.state ?? "Pendiente"}
+              </p>
+            </div>
           ))}
         </div>
       )}
 
       {/* Formulario */}
+      {showFormAppointment && (
         <div className="w-full lg:w-xl">
           <form
             onSubmit={manejarSubmit}
@@ -296,7 +311,8 @@ function MisCitas() {
               className={`w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${loading ? "bg-cyan-400 cursor-not-allowed" : ""}`}
             />
           </form>
-      </div>
+        </div>
+      )}
 
       {/* Mensaje de error al registrar la cita */}
       {error && !loading && (
