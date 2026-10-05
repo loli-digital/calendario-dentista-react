@@ -95,7 +95,7 @@ export function useReservationForm({
         service: selectedService.name,
         professional: selectedProfessional.name,
         date: Timestamp.fromDate(selectedDate),
-        hora: selectedDate.toLocaleTimeString([], {
+        hour: selectedDate.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         }),
