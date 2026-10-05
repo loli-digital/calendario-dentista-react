@@ -102,6 +102,10 @@ function MisCitas() {
     setShowFormAppointment(true);
   }
 
+  function closeForm() {
+    setShowFormAppointment(false);
+  }
+
   return (
     <section className="w-full h-full p-3 lg:p-10 flex flex-col justify-center items-center">
       {appointmentsLoading && (
@@ -130,7 +134,7 @@ function MisCitas() {
       )}
 
       {/* Tabla para ordenador SI hay citas*/}
-      {!showFormAppointment && appointment.length > 0 && (
+      {!appointmentsLoading && !appointmentsError && !showFormAppointment && appointment.length > 0 && (
         <div className="w-full overflow-auto hidden lg:block text-center">
           <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
             <thead>
@@ -185,7 +189,7 @@ function MisCitas() {
       )}
 
       {/* Tabla para móvil SI hay citas*/}
-      {!appointmentsLoading && !appointmentsError && appointment.length > 0 && (
+      {!appointmentsLoading && !appointmentsError && !showFormAppointment && appointment.length > 0 && (
         <div className="w-full py-5 flex flex-col gap-5 justify-center items-center lg:hidden">
           {appointment.map((appointment) => (
             <div
@@ -349,6 +353,7 @@ function MisCitas() {
 
             <input
               type="submit"
+              onClick={closeForm}
               value={loading ? "Reservando cita..." : "Reservar cita"}
               disabled={loading}
               className={`w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${loading ? "bg-cyan-400 cursor-not-allowed" : ""}`}
