@@ -116,21 +116,22 @@ function MisCitas() {
         </p>
       )}
 
-      {appointment.length === 0 ? (
-        !showFormAppointment && (
-          <div className="w-full sm:w-lg lg:w-xl bg-green-100 lg:mb-6 relative flex flex-col items-center gap-4 border border-green-700 text-green-800 text-center p-4 rounded shadow-md">
-            <h2 className="font-bold text-lg text-center mb-2">
-              No tienes citas
-            </h2>
-            <p>Solicita una cita para verla aquí.</p>
-            <Button onClick={handleForm} icon={faCalendarDays} className="w-40">
-              Reserva cita
-            </Button>
-          </div>
-        )
-      ) : (
+      {/* Si no hay citas y no está abierto el formulario, mostrar mensaje */}
+      {!showFormAppointment && appointment.length === 0 && (
+        <div className="w-full sm:w-lg lg:w-xl bg-green-100 lg:mb-6 relative flex flex-col items-center gap-4 border border-green-700 text-green-800 text-center p-4 rounded shadow-md">
+          <h2 className="font-bold text-lg text-center mb-2">
+            No tienes citas
+          </h2>
+          <p>Solicita una cita para verla aquí.</p>
+          <Button onClick={handleForm} icon={faCalendarDays} className="w-40">
+            Reserva cita
+          </Button>
+        </div>
+      )}
+
+      {/* Tabla para ordenador SI hay citas*/}
+      {!showFormAppointment && appointment.length > 0 && (
         <div className="w-full overflow-auto hidden lg:block text-center">
-          {/* Tabla para ordenador */}
           <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
             <thead>
               <tr className="p-3 flex justify-around justify-items-center items-center gap-3 text-cyan-800 border-2 border-cyan-700 rounded-sm shadow-[0_0_5px] shadow-cyan-700">
@@ -176,14 +177,14 @@ function MisCitas() {
           <Button
             onClick={handleForm}
             icon={faCalendarDays}
-            className="w-40 mt-5"
+            className="w-40 my-5"
           >
             Reserva cita
           </Button>
         </div>
       )}
 
-      {/* Tabla para móvil */}
+      {/* Tabla para móvil SI hay citas*/}
       {!appointmentsLoading && !appointmentsError && appointment.length > 0 && (
         <div className="w-full py-5 flex flex-col gap-5 justify-center items-center lg:hidden">
           {appointment.map((appointment) => (
@@ -369,7 +370,7 @@ function MisCitas() {
           <h2 className="font-bold text-lg text-center mb-2">
             ¡Cita reservada!
           </h2>
-          <p>Hola, {message.name}. Tu cita ha sido registrada correctamente.</p>
+          <p>Tu cita ha sido registrada correctamente.</p>
           <p>
             <strong>Fecha:</strong> {message.date}
           </p>
