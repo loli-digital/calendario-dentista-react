@@ -10,7 +10,11 @@ import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Button } from "@/components";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarDays,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Registra el locale 'es' para el calendario en España
 registerLocale("es", es);
@@ -135,6 +139,7 @@ function MisCitas() {
                 <th className="w-30">Tratamiento</th>
                 <th className="w-30">Profesional</th>
                 <th className="w-30">Estado</th>
+                <th className="w-30">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -148,10 +153,22 @@ function MisCitas() {
                   <td className="w-30">{appointment.service}</td>
                   <td className="w-30">{appointment.professional}</td>
                   <td className="w-30">{appointment.state}</td>
+                  <td>
+                    <FontAwesomeIcon icon={faPenToSquare} className="mr-2"/>
+                    Gestionar
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <Button
+            onClick={handleForm}
+            icon={faCalendarDays}
+            className="w-40 mt-5"
+          >
+            Reserva cita
+          </Button>
         </div>
       )}
 
@@ -183,8 +200,21 @@ function MisCitas() {
                 <span className="font-bold text-cyan-700">Estado:</span>{" "}
                 {appointment.state ?? "Pendiente"}
               </p>
+              <p>
+                <span className="font-bold text-cyan-700">Acciones:</span>{" "}
+                <FontAwesomeIcon icon={faPenToSquare} className="mr-2"/>
+                Gestionar
+              </p>
             </div>
           ))}
+
+          <Button
+            onClick={handleForm}
+            icon={faCalendarDays}
+            className="w-40 mt-5"
+          >
+            Reserva cita
+          </Button>
         </div>
       )}
 
