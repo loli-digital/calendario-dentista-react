@@ -118,7 +118,7 @@ function MisCitas() {
 
       {appointment.length === 0 ? (
         !showFormAppointment && (
-          <div className="w-full sm:w-lg lg:w-xl bg-green-100 mb-6 relative flex flex-col items-center gap-4 border border-green-700 text-green-800 text-center p-4 rounded shadow-md">
+          <div className="w-full sm:w-lg lg:w-xl bg-green-100 lg:mb-6 relative flex flex-col items-center gap-4 border border-green-700 text-green-800 text-center p-4 rounded shadow-md">
             <h2 className="font-bold text-lg text-center mb-2">
               No tienes citas
             </h2>
@@ -223,9 +223,9 @@ function MisCitas() {
         <div className="w-full lg:w-xl">
           <form
             onSubmit={handleSubmit}
-            className="w-full mx-auto relative p-6 rounded-md shadow-[0_0_5px_black] border border-slate-200 bg-white flex flex-col justify-center lg:space-y-10"
+            className="w-full mx-auto relative p-6 rounded-md shadow-[0_0_5px_black] border border-slate-200 bg-white flex flex-col justify-center gap-6 lg:space-y-10"
           >
-            <div className="w-full flex flex-col gap-5">
+            <div className="w-full flex flex-col gap-5 lg:mb-0">
               {/* Calendario */}
               <label htmlFor="date" className="font-medium text-cyan-800">
                 Selecciona el día
@@ -260,7 +260,7 @@ function MisCitas() {
                 filterDate={(date) =>
                   date.getDay() !== 6 && date.getDay() !== 0
                 }
-                className="w-full mb-10 py-1! pl-9! lg:mb-0 border-2 border-cyan-700 rounded-sm bg-white"
+                className="w-full py-1! pl-9! border-2 border-cyan-700 rounded-sm bg-white"
               />
 
               {/* Tratamiento */}
