@@ -129,7 +129,7 @@ function MisCitas() {
           </div>
         )
       ) : (
-        <div className="w-full overflow-auto hidden sm:block text-center">
+        <div className="w-full overflow-auto hidden lg:block text-center">
           {/* Tabla para ordenador */}
           <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
             <thead>
@@ -148,13 +148,24 @@ function MisCitas() {
                   key={appointment.id}
                   className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
                 >
-                  <td className="w-30">{appointment.date.toLocaleDateString("es-ES")}</td>
+                  <td className="w-30">
+                    {appointment.date.toLocaleDateString("es-ES")}
+                  </td>
                   <td className="w-30">{appointment.hour}</td>
                   <td className="w-30">{appointment.service}</td>
                   <td className="w-30">{appointment.professional}</td>
-                  <td className="w-30">{appointment.state}</td>
-                  <td>
-                    <FontAwesomeIcon icon={faPenToSquare} className="mr-2"/>
+                  <td className="w-30">
+                    <span
+                      className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                    >
+                      {appointment.state ? "Confirmada" : "Pendiente"}
+                    </span>
+                  </td>
+                  <td className="w-30 cursor-pointer">
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      className="text-cyan-700 mr-2"
+                    />
                     Gestionar
                   </td>
                 </tr>
@@ -174,7 +185,7 @@ function MisCitas() {
 
       {/* Tabla para móvil */}
       {!appointmentsLoading && !appointmentsError && appointment.length > 0 && (
-        <div className="w-full flex flex-col gap-5 sm:hidden">
+        <div className="w-full py-5 flex flex-col gap-5 justify-center items-center lg:hidden">
           {appointment.map((appointment) => (
             <div
               key={appointment.id}
@@ -198,21 +209,21 @@ function MisCitas() {
               </p>
               <p>
                 <span className="font-bold text-cyan-700">Estado:</span>{" "}
-                {appointment.state ?? "Pendiente"}
+                <span
+                  className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                >
+                  {appointment.state ? "Confirmada" : "Pendiente"}
+                </span>
               </p>
               <p>
                 <span className="font-bold text-cyan-700">Acciones:</span>{" "}
-                <FontAwesomeIcon icon={faPenToSquare} className="mr-2"/>
+                <FontAwesomeIcon icon={faPenToSquare} className="mr-2" />
                 Gestionar
               </p>
             </div>
           ))}
 
-          <Button
-            onClick={handleForm}
-            icon={faCalendarDays}
-            className="w-40 mt-5"
-          >
+          <Button onClick={handleForm} icon={faCalendarDays} className="w-40">
             Reserva cita
           </Button>
         </div>
@@ -347,14 +358,14 @@ function MisCitas() {
 
       {/* Mensaje de error al registrar la cita */}
       {error && !loading && (
-        <p className="relative mt-5 text-red-900 text-xl text-center font-bold">
+        <p className="relative my-5 text-red-900 text-xl text-center font-bold">
           {error}
         </p>
       )}
 
       {/* Mensaje de confirmación de cita */}
       {message && (
-        <div className="w-full lg:w-xl bg-green-100 mb-6 relative flex flex-col gap-2 border border-green-700 text-green-800 p-4 rounded shadow-md">
+        <div className="w-full lg:w-xl bg-green-100 my-6 relative flex flex-col gap-2 border border-green-700 text-green-800 p-4 rounded shadow-md">
           <h2 className="font-bold text-lg text-center mb-2">
             ¡Cita reservada!
           </h2>
