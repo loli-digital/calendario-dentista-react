@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase.js";
+import { isBookingTimeAllowed } from "@/utils";
 
 export function useReservationForm({
   services = [],
@@ -60,8 +61,8 @@ export function useReservationForm({
 
     const now = new Date();
 
-    if (selectedDate.getTime() <= now.getTime()) {
-      setError("La hora seleccionada ya ha pasado. Selecciona otra hora");
+    if (!isBookingTimeAllowed(selectedDate, now)) {
+      setError("Selecciona una hora al menos con 2 horas de antelación");
       setMessage(null);
       return;
     }
