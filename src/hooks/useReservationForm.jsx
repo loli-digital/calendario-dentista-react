@@ -1,12 +1,14 @@
 import { useState, useMemo } from "react";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase.js";
-import { validatePhone, isTodayUnavailable } from "@/utils";
+import { isTodayUnavailable } from "@/utils";
 
-export function useReservationForm({ services = [], professionals = [] } = {}) {
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+export function useReservationForm({
+  services = [],
+  professionals = [],
+  userId,
+  onReservationCreated,
+} = {}) {
   const [service, setService] = useState("");
   const [professional, setProfessional] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
@@ -14,7 +16,6 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const [titleSubmit, setTitleSubmit] = useState(false);
 
   const availableProfessionals = useMemo(() => {
     return professionals.filter(
@@ -25,27 +26,22 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
   }, [professionals, service]);
 
   const resetForm = () => {
-    setName("");
-    setLastName("");
-    setPhoneNumber("");
     setService("");
     setProfessional("");
     setSelectedDate(null);
   };
 
   const manejarSubmit = async (e) => {
-    if (e && e.preventDefault) e.preventDefault();
+    e.preventDefault();
 
-    // Validaciones de todos los campos
-    if (!name || !lastName || !phoneNumber || !service || !professional) {
-      setError("Por favor, rellena todos los campos");
+    if (!userId) {
+      setError("Inicia sesión para solicitar una cita");
       setMessage(null);
       return;
     }
 
-    // Validación del teléfono
-    if (!validatePhone(phoneNumber)) {
-      setError("El teléfono introducido debe tener 9 dígitos");
+    if (!service || !professional) {
+      setError("Selecciona un tratamiento y un profesional");
       setMessage(null);
       return;
     }
@@ -95,9 +91,7 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
       setMessage(null);
 
       await addDoc(collection(db, "citas"), {
-        name,
-        lastName,
-        phoneNumber,
+        userId,
         service: selectedService.name,
         professional: selectedProfessional.name,
         date: Timestamp.fromDate(selectedDate),
@@ -105,14 +99,10 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
           hour: "2-digit",
           minute: "2-digit",
         }),
+        state: "Pendiente",
       });
 
-      setTitleSubmit(true);
-
       setMessage({
-        name,
-        lastName,
-        phoneNumber,
         service: selectedService.name,
         professional: selectedProfessional.name,
         date: selectedDate.toLocaleDateString("es-ES"),
@@ -123,21 +113,16 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
       });
 
       resetForm();
+      onReservationCreated?.();
     } catch (error) {
       setError("Ocurrió un problema al reservar la cita. Inténtelo de nuevo.");
-      console.log(error.message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
   return {
-    name,
-    setName,
-    lastName,
-    setLastName,
-    phoneNumber,
-    setPhoneNumber,
     service,
     setService,
     professional,
@@ -149,7 +134,6 @@ export function useReservationForm({ services = [], professionals = [] } = {}) {
     setError,
     message,
     setMessage,
-    titleSubmit,
     availableProfessionals,
     manejarSubmit,
     resetForm,
