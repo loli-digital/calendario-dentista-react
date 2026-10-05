@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase.js";
-import { isTodayUnavailable } from "@/utils";
 
 export function useReservationForm({
   services = [],
@@ -60,12 +59,6 @@ export function useReservationForm({
     }
 
     const now = new Date();
-
-    if (isTodayUnavailable(selectedDate, now)) {
-      setError("Hoy no hay hueco disponible. Pide cita para otro día");
-      setMessage(null);
-      return;
-    }
 
     if (selectedDate.getTime() <= now.getTime()) {
       setError("La hora seleccionada ya ha pasado. Selecciona otra hora");
