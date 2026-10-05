@@ -1,4 +1,4 @@
 export { validatePhone } from "./validatePhone";
 export { validateDocumentNumber } from "./validateDocumentNumber";
-export { filterPastHours } from "./filterPastHours";
+export { isBookingTimeAllowed } from "./isBookingTimeAllowed";
 export { getUserDisplayName } from "./getUserDisplayName";
