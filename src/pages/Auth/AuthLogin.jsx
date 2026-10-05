@@ -229,8 +229,8 @@ function AuthLogin() {
               aria-label="Cerrar modal"
               onClick={() => setRecoverPasswordModal(false)}
               className="absolute right-2 top-2 h-10 w-10"
+              icon={faXmark}
             >
-              <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
         </div>

@@ -391,8 +391,8 @@ function Ajustes() {
               onClick={() => setShowDeleteConfirmation(false)}
               aria-label="Cerrar confirmación"
               className="absolute right-2 top-2 h-10 w-10"
+              icon={faXmark}
             >
-              <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
         </div>
@@ -493,8 +493,8 @@ function Ajustes() {
               disabled={isDeleting}
               aria-label="Cerrar modal de contraseña"
               className="absolute right-2 top-2 h-10 w-10"
+              icon={faXmark}
             >
-              <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
         </div>
