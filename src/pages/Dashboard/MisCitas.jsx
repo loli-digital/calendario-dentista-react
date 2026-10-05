@@ -148,7 +148,7 @@ function MisCitas() {
                   key={appointment.id}
                   className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
                 >
-                  <td className="w-30">{appointment.date}</td>
+                  <td className="w-30">{appointment.date.toLocaleDateString("es-ES")}</td>
                   <td className="w-30">{appointment.hour}</td>
                   <td className="w-30">{appointment.service}</td>
                   <td className="w-30">{appointment.professional}</td>
