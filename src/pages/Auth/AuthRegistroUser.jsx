@@ -186,6 +186,16 @@ function AuthRegistroUser() {
           className="w-40 mx-auto p-3 mt-5 lg:p-4 rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in bg-cyan-700 text-white cursor-pointer hover:bg-cyan-600"
         />
 
+        {/* Mensaje de error de registro de user */}
+        {error && !loading && (
+          <p
+            role="alert"
+            className="relative my-4 text-red-900 text-lg text-center font-bold"
+          >
+            {error}
+          </p>
+        )}
+
         {/* Iniciar sesión */}
         <p className="mt-5 text-cyan-800 text-center text-m font-bold">
           ¿Ya tienes cuenta?
@@ -197,17 +207,12 @@ function AuthRegistroUser() {
         </Button>
       </form>
 
-      {/* Mensaje de error de registro de user */}
-
-      {error && !loading && (
-        <p role="alert" className="relative my-4 text-red-900 text-lg text-center font-bold">
-          {error}
-        </p>
-      )}
-
       {/* Mensaje de confirmación de registro de user */}
       {message && (
-        <div role="status" className="w-full lg:w-xl p-4 my-6 bg-green-100 relative flex flex-col gap-2 border border-green-700 text-green-800 rounded shadow-md">
+        <div
+          role="status"
+          className="w-full lg:w-xl p-4 my-6 bg-green-100 relative flex flex-col gap-2 border border-green-700 text-green-800 rounded shadow-md"
+        >
           <p className="font-bold text-lg mb-2 text-center">{message}</p>
           <p>
             <span className="font-bold underline underline-offset-2">
