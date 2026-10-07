@@ -21,7 +21,7 @@ export const professionals = [
     specialization3: "Implantología",
     studies: "Valencia",
     experience: "10",
-    services: [1, 2, 3, 5, 6],
+    services: [1, 2, 3, 4, 6, 7],
   },
   {
     id: 2,
@@ -45,6 +45,6 @@ export const professionals = [
     specialization3: "Estética dental",
     studies: "Valencia",
     experience: "12",
-    services: [1, 2, 3, 4, 5],
+    services: [1, 2, 3, 4, 5, 6],
   },
 ];
