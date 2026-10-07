@@ -109,7 +109,7 @@ function MisCitas() {
   }
 
   // Función para mostrar la tabla de citas, después de haber reservado cita
-  function handleViewAppointments(){
+  function handleViewAppointments() {
     setMessage(null);
   }
 
@@ -143,7 +143,8 @@ function MisCitas() {
       {/* Tabla para ordenador SI hay citas*/}
       {!appointmentsLoading &&
         !appointmentsError &&
-        !showFormAppointment && !message && 
+        !showFormAppointment &&
+        !message &&
         appointment.length > 0 && (
           <div className="w-full overflow-auto hidden lg:block text-center">
             <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
@@ -201,7 +202,8 @@ function MisCitas() {
       {/* Tabla para móvil SI hay citas*/}
       {!appointmentsLoading &&
         !appointmentsError &&
-        !showFormAppointment && !message && 
+        !showFormAppointment &&
+        !message &&
         appointment.length > 0 && (
           <div className="w-full py-5 flex flex-col gap-5 justify-center items-center lg:hidden">
             {appointment.map((appointment) => (
@@ -400,7 +402,13 @@ function MisCitas() {
           <p>
             <strong>Profesional:</strong> {message.professional}
           </p>
-          <Button onClick={handleViewAppointments} icon={faCalendarCheck} className="w-40 mx-auto my-2">Ver mis citas</Button>
+          <Button
+            onClick={handleViewAppointments}
+            icon={faCalendarCheck}
+            className="w-40 mx-auto my-2"
+          >
+            Ver mis citas
+          </Button>
         </div>
       )}
     </section>
