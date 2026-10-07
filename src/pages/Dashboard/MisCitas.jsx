@@ -13,6 +13,7 @@ import { Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
+  faCalendarCheck,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,8 +46,10 @@ function MisCitas() {
     services,
     professionals,
     userId: user?.uid,
-    onReservationCreated: () =>
-      setRefreshAppointments((current) => current + 1),
+    onReservationCreated: () => {
+      setRefreshAppointments((current) => current + 1);
+      setShowFormAppointment(false);
+    },
   });
 
   useEffect(() => {
@@ -98,12 +101,16 @@ function MisCitas() {
     };
   }, [user?.uid, refreshAppointments]);
 
+  // Función para mostrar el formulario
   function handleForm() {
+    setMessage(null);
+    setError(null);
     setShowFormAppointment(true);
   }
 
-  function closeForm() {
-    setShowFormAppointment(false);
+  // Función para mostrar la tabla de citas, después de haber reservado cita
+  function handleViewAppointments(){
+    setMessage(null);
   }
 
   return (
@@ -134,105 +141,111 @@ function MisCitas() {
       )}
 
       {/* Tabla para ordenador SI hay citas*/}
-      {!appointmentsLoading && !appointmentsError && !showFormAppointment && appointment.length > 0 && (
-        <div className="w-full overflow-auto hidden lg:block text-center">
-          <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
-            <thead>
-              <tr className="p-3 flex justify-around justify-items-center items-center gap-3 text-cyan-800 border-2 border-cyan-700 rounded-sm shadow-[0_0_5px] shadow-cyan-700">
-                <th className="w-30">Fecha</th>
-                <th className="w-30">Hora</th>
-                <th className="w-30">Tratamiento</th>
-                <th className="w-30">Profesional</th>
-                <th className="w-30">Estado</th>
-                <th className="w-30">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {appointment.map((appointment, id) => (
-                <tr
-                  key={appointment.id}
-                  className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
-                >
-                  <td className="w-30">
-                    {appointment.date.toLocaleDateString("es-ES")}
-                  </td>
-                  <td className="w-30">{appointment.hour}</td>
-                  <td className="w-30">{appointment.service}</td>
-                  <td className="w-30">{appointment.professional}</td>
-                  <td className="w-30">
-                    <span
-                      className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
-                    >
-                      {appointment.state ? "Confirmada" : "Pendiente"}
-                    </span>
-                  </td>
-                  <td className="w-30 cursor-pointer">
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      className="text-cyan-700 mr-2"
-                    />
-                    Gestionar
-                  </td>
+      {!appointmentsLoading &&
+        !appointmentsError &&
+        !showFormAppointment && !message && 
+        appointment.length > 0 && (
+          <div className="w-full overflow-auto hidden lg:block text-center">
+            <table className="w-3xl mx-auto pt-10 flex flex-col justify-start gap-1">
+              <thead>
+                <tr className="p-3 flex justify-around justify-items-center items-center gap-3 text-cyan-800 border-2 border-cyan-700 rounded-sm shadow-[0_0_5px] shadow-cyan-700">
+                  <th className="w-30">Fecha</th>
+                  <th className="w-30">Hora</th>
+                  <th className="w-30">Tratamiento</th>
+                  <th className="w-30">Profesional</th>
+                  <th className="w-30">Estado</th>
+                  <th className="w-30">Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {appointment.map((appointment, id) => (
+                  <tr
+                    key={appointment.id}
+                    className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
+                  >
+                    <td className="w-30">
+                      {appointment.date.toLocaleDateString("es-ES")}
+                    </td>
+                    <td className="w-30">{appointment.hour}</td>
+                    <td className="w-30">{appointment.service}</td>
+                    <td className="w-30">{appointment.professional}</td>
+                    <td className="w-30">
+                      <span
+                        className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                      >
+                        {appointment.state ? "Confirmada" : "Pendiente"}
+                      </span>
+                    </td>
+                    <td className="w-30 cursor-pointer">
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        className="text-cyan-700 mr-2"
+                      />
+                      Gestionar
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-          <Button
-            onClick={handleForm}
-            icon={faCalendarDays}
-            className="w-40 my-5"
-          >
-            Reserva cita
-          </Button>
-        </div>
-      )}
+            <Button
+              onClick={handleForm}
+              icon={faCalendarDays}
+              className="w-40 my-5"
+            >
+              Reserva cita
+            </Button>
+          </div>
+        )}
 
       {/* Tabla para móvil SI hay citas*/}
-      {!appointmentsLoading && !appointmentsError && !showFormAppointment && appointment.length > 0 && (
-        <div className="w-full py-5 flex flex-col gap-5 justify-center items-center lg:hidden">
-          {appointment.map((appointment) => (
-            <div
-              key={appointment.id}
-              className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
-            >
-              <p>
-                <span className="font-bold text-cyan-700">Fecha:</span>{" "}
-                {appointment.date.toLocaleDateString("es-ES")}
-              </p>
-              <p>
-                <span className="font-bold text-cyan-700">Hora:</span>{" "}
-                {appointment.hour}
-              </p>
-              <p>
-                <span className="font-bold text-cyan-700">Tratamiento:</span>{" "}
-                {appointment.service}
-              </p>
-              <p>
-                <span className="font-bold text-cyan-700">Profesional:</span>{" "}
-                {appointment.professional}
-              </p>
-              <p>
-                <span className="font-bold text-cyan-700">Estado:</span>{" "}
-                <span
-                  className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
-                >
-                  {appointment.state ? "Confirmada" : "Pendiente"}
-                </span>
-              </p>
-              <p>
-                <span className="font-bold text-cyan-700">Acciones:</span>{" "}
-                <FontAwesomeIcon icon={faPenToSquare} className="mr-2" />
-                Gestionar
-              </p>
-            </div>
-          ))}
+      {!appointmentsLoading &&
+        !appointmentsError &&
+        !showFormAppointment && !message && 
+        appointment.length > 0 && (
+          <div className="w-full py-5 flex flex-col gap-5 justify-center items-center lg:hidden">
+            {appointment.map((appointment) => (
+              <div
+                key={appointment.id}
+                className="p-4 flex flex-col justify-start gap-2 rounded-sm border-2 border-cyan-700 shadow-[0_0_5px] shadow-cyan-700 bg-white"
+              >
+                <p>
+                  <span className="font-bold text-cyan-700">Fecha:</span>{" "}
+                  {appointment.date.toLocaleDateString("es-ES")}
+                </p>
+                <p>
+                  <span className="font-bold text-cyan-700">Hora:</span>{" "}
+                  {appointment.hour}
+                </p>
+                <p>
+                  <span className="font-bold text-cyan-700">Tratamiento:</span>{" "}
+                  {appointment.service}
+                </p>
+                <p>
+                  <span className="font-bold text-cyan-700">Profesional:</span>{" "}
+                  {appointment.professional}
+                </p>
+                <p>
+                  <span className="font-bold text-cyan-700">Estado:</span>{" "}
+                  <span
+                    className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                  >
+                    {appointment.state ? "Confirmada" : "Pendiente"}
+                  </span>
+                </p>
+                <p>
+                  <span className="font-bold text-cyan-700">Acciones:</span>{" "}
+                  <FontAwesomeIcon icon={faPenToSquare} className="mr-2" />
+                  Gestionar
+                </p>
+              </div>
+            ))}
 
-          <Button onClick={handleForm} icon={faCalendarDays} className="w-40">
-            Reserva cita
-          </Button>
-        </div>
-      )}
+            <Button onClick={handleForm} icon={faCalendarDays} className="w-40">
+              Reserva cita
+            </Button>
+          </div>
+        )}
 
       {/* Formulario */}
       {showFormAppointment && (
@@ -353,7 +366,6 @@ function MisCitas() {
 
             <input
               type="submit"
-              onClick={closeForm}
               value={loading ? "Reservando cita..." : "Reservar cita"}
               disabled={loading}
               className={`w-40 mx-auto bg-cyan-700 text-white p-3 lg:p-4 cursor-pointer rounded-sm shadow-[0_0_5px_black] transition-colors duration-200 ease-in hover:bg-cyan-600 ${loading ? "bg-cyan-400 cursor-not-allowed" : ""}`}
@@ -388,6 +400,7 @@ function MisCitas() {
           <p>
             <strong>Profesional:</strong> {message.professional}
           </p>
+          <Button onClick={handleViewAppointments} icon={faCalendarCheck} className="w-40 mx-auto my-2">Ver mis citas</Button>
         </div>
       )}
     </section>
