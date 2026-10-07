@@ -127,6 +127,16 @@ function AuthLogin() {
           </button>
         </div>
 
+        {/* Mensaje de error */}
+        {error && !loading && (
+          <p
+            role="alert"
+            className="relative my-4 text-red-900 text-lg text-center font-bold"
+          >
+            {error}
+          </p>
+        )}
+
         {/* Botón para iniciar sesión */}
         <input
           type="submit"
@@ -154,16 +164,6 @@ function AuthLogin() {
           Crea tu cuenta
         </Button>
       </form>
-
-      {/* Mensaje de error */}
-      {error && !loading && (
-        <p
-          role="alert"
-          className="relative my-4 text-red-900 text-lg text-center font-bold"
-        >
-          {error}
-        </p>
-      )}
 
       {/* Modal ¿Olvidaste tu contraseña? */}
       {recoverPasswordModal && (
@@ -230,8 +230,7 @@ function AuthLogin() {
               onClick={() => setRecoverPasswordModal(false)}
               className="absolute right-2 top-2 h-10 w-10"
               icon={faXmark}
-            >
-            </Button>
+            ></Button>
           </div>
         </div>
       )}
