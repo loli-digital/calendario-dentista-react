@@ -274,9 +274,9 @@ function MisCitas() {
                     <td className="w-30">{appointment.professional}</td>
                     <td className="w-30">
                       <span
-                        className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                        className="p-1 rounded-sm border-2 font-semibold bg-yellow-300 border-yellow-500 text-yellow-800"
                       >
-                        {appointment.state ? "Confirmada" : "Pendiente"}
+                        {appointment.state}
                       </span>
                     </td>
                     <td className="w-30">
@@ -337,9 +337,9 @@ function MisCitas() {
                 <p>
                   <span className="font-bold text-cyan-700">Estado:</span>{" "}
                   <span
-                    className={`p-1 rounded-sm border-2 font-semibold ${appointment.state ? "bg-green-600 border-green-700 text-green-50" : "bg-yellow-300 border-yellow-500 text-yellow-800"}`}
+                    className="p-1 rounded-sm border-2 font-semibold bg-yellow-300 border-yellow-500 text-yellow-800"
                   >
-                    {appointment.state ? "Confirmada" : "Pendiente"}
+                    {appointment.state}
                   </span>
                 </p>
                 <p>
