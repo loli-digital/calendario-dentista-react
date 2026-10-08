@@ -8,13 +8,23 @@ import { professionals, services } from "@/data";
 import { isBookingTimeAllowed } from "@/utils";
 import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  deleteDoc,
+  doc,
+  Timestamp,
+} from "firebase/firestore";
 import { Button } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
   faCalendarCheck,
   faPenToSquare,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Registra el locale 'es' para el calendario en España
@@ -27,6 +37,10 @@ function MisCitas() {
   const [appointmentsError, setAppointmentsError] = useState(null);
   const [refreshAppointments, setRefreshAppointments] = useState(0);
   const [showFormAppointment, setShowFormAppointment] = useState(false);
+  const [modalEditAppointment, setModalEditAppointment] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [modalEditDateAppointment, setModalEditDateAppointment] = useState();
+  const [removeAppointmentModal, setRemoveAppointmentModal] = useState(null);
 
   const {
     service,
@@ -36,6 +50,7 @@ function MisCitas() {
     selectedDate,
     setSelectedDate,
     loading,
+    setLoading,
     error,
     setError,
     message,
@@ -49,6 +64,7 @@ function MisCitas() {
     onReservationCreated: () => {
       setRefreshAppointments((current) => current + 1);
       setShowFormAppointment(false);
+      setModalEditAppointment(false);
     },
   });
 
@@ -103,15 +119,101 @@ function MisCitas() {
 
   // Función para mostrar el formulario
   function handleForm() {
+    setShowFormAppointment(true);
+    setModalEditAppointment(false);
     setMessage(null);
     setError(null);
-    setShowFormAppointment(true);
   }
 
   // Función para mostrar la tabla de citas, después de haber reservado cita
   function handleViewAppointments() {
     setMessage(null);
   }
+
+  // Función para gestionar la cita (se abre un modal)
+  function handleEditAppointment(appointment) {
+    setSelectedAppointment(appointment);
+    setModalEditAppointment(true);
+    setMessage(null);
+    setError(null);
+  }
+
+  // Modal para modificar fecha de la cita
+  function handleEditDateAppointment() {
+    setModalEditDateAppointment(true);
+    setModalEditAppointment(false);
+    setMessage(null);
+    setError(null);
+  }
+
+  // Para guardar la nueva fecha de la cita
+  const savedChanges = async () => {
+    if (!selectedAppointment?.id) {
+      setError("No se encontró la cita que quieres modificar");
+    }
+
+    if (!selectedDate) {
+      setError("Debes seleccionar una fecha y una hora");
+      return;
+    }
+
+    // Para desactivar el botón Guardar mientras se actualiza la lista de citas
+    setLoading(true);
+    setError(null);
+
+    try {
+      await updateDoc(doc(db, "citas", selectedAppointment.id), {
+        date: Timestamp.fromDate(selectedDate),
+        hour: selectedDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+      });
+
+      // Refrescar citas
+      setRefreshAppointments((current) => current + 1);
+
+      setModalEditDateAppointment(false);
+      setModalEditAppointment(false);
+      setSelectedAppointment(null);
+      setSelectedDate(null);
+      setMessage(null);
+    } catch (err) {
+      console.error(err);
+      setError("Ocurrió un problema al actualizar la cita");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Función para eliminar la cita
+  const removeAppointment = async (id) => {
+    if (!id) {
+      setError("No se encontró la cita que quieres cancelar");
+      return false;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      await deleteDoc(doc(db, "citas", id));
+
+      // Actualizar la lista mostrada
+      setAppointment((currentAppointments) =>
+        currentAppointments.filter((item) => item.id !== id),
+      );
+
+      return true;
+    } catch (err) {
+      console.error(err);
+      setError("Ocurrió un problema al eliminar la cita");
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="w-full h-full p-3 lg:p-10 flex flex-col justify-center items-center">
@@ -165,7 +267,7 @@ function MisCitas() {
                     className={`${id % 2 === 0 ? "bg-white" : "bg-cyan-50"} p-3 flex justify-around justify-items-center items-center gap-3 border-b-2 border-b-cyan-600`}
                   >
                     <td className="w-30">
-                      {appointment.date.toLocaleDateString("es-ES")}
+                      {appointment.date?.toLocaleDateString("es-ES")}
                     </td>
                     <td className="w-30">{appointment.hour}</td>
                     <td className="w-30">{appointment.service}</td>
@@ -177,12 +279,17 @@ function MisCitas() {
                         {appointment.state ? "Confirmada" : "Pendiente"}
                       </span>
                     </td>
-                    <td className="w-30 cursor-pointer">
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        className="text-cyan-700 mr-2"
-                      />
-                      Gestionar
+                    <td className="w-30">
+                      <button
+                        onClick={() => handleEditAppointment(appointment)}
+                        className="p-2 cursor-pointer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          className="text-cyan-700 mr-2"
+                        />
+                        Gestionar
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -213,7 +320,7 @@ function MisCitas() {
               >
                 <p>
                   <span className="font-bold text-cyan-700">Fecha:</span>{" "}
-                  {appointment.date.toLocaleDateString("es-ES")}
+                  {appointment.date?.toLocaleDateString("es-ES")}
                 </p>
                 <p>
                   <span className="font-bold text-cyan-700">Hora:</span>{" "}
@@ -237,8 +344,16 @@ function MisCitas() {
                 </p>
                 <p>
                   <span className="font-bold text-cyan-700">Acciones:</span>{" "}
-                  <FontAwesomeIcon icon={faPenToSquare} className="mr-2" />
-                  Gestionar
+                  <button
+                    onClick={() => handleEditAppointment(appointment)}
+                    className="p-2 cursor-pointer"
+                  >
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      className="text-cyan-700 mr-2"
+                    />
+                    Gestionar
+                  </button>
                 </p>
               </div>
             ))}
@@ -409,6 +524,237 @@ function MisCitas() {
           >
             Ver mis citas
           </Button>
+        </div>
+      )}
+
+      {/* Modal para gestionar la cita */}
+      {modalEditAppointment && selectedAppointment && (
+        <div className="fixed inset-0 bg-cyan-900/80 flex items-center justify-center z-50">
+          <div
+            className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative flex flex-col justify-center gap-4 text-cyan-900"
+            id="dialog_eliminar_cita"
+            role="dialog"
+            aria-labelledby="dialog_eliminar_cita_label"
+            aria-modal="true"
+          >
+            <h3
+              id="dialog_modificar_cita_label"
+              className="text-xl font-bold mb-4 text-cyan-800 text-center"
+            >
+              Gestionar cita
+            </h3>
+            <p>
+              <strong className="text-cyan-700">Fecha:</strong>{" "}
+              {selectedAppointment.date?.toLocaleDateString("es-ES")}
+            </p>
+            <p>
+              <strong className="text-cyan-700">Hora:</strong>{" "}
+              {selectedAppointment.hour}
+            </p>
+            <p>
+              <strong className="text-cyan-700">Tratamiento:</strong>{" "}
+              {selectedAppointment.service}
+            </p>
+            <p>
+              <strong className="text-cyan-700">Profesional:</strong>{" "}
+              {selectedAppointment.professional}
+            </p>
+            <div className="inline-flex gap-10 mx-auto mt-4">
+              <Button onClick={handleEditDateAppointment}>
+                Modificar fecha
+              </Button>
+              <Button
+                deleteButton
+                onClick={() => {
+                  setRemoveAppointmentModal(selectedAppointment);
+                  setMessage(null);
+                  setError(null);
+                }}
+                aria-label="Cancelar cita"
+              >
+                Cancelar cita
+              </Button>
+            </div>
+            {/* Botón para cerrar el modal */}
+            <Button
+              deleteButton
+              onClick={() => {
+                (setModalEditAppointment(null), setSelectedAppointment(null));
+              }}
+              aria-label="Cerrar modal"
+              className="absolute right-2 top-2 h-10 w-10"
+              icon={faXmark}
+            ></Button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal para modificar la fecha de la cita */}
+      {modalEditDateAppointment && (
+        <div className="fixed inset-0 bg-cyan-900/80 flex items-center justify-center z-50">
+          <div
+            className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative flex flex-col justify-center items-center gap-2"
+            id="dialog_modificar_cita"
+            role="dialog"
+            aria-labelledby="dialog_modificar_cita_label"
+            aria-modal="true"
+          >
+            <h3
+              id="dialog_modificar_cita_label"
+              className="text-xl font-bold mb-4 text-cyan-800"
+            >
+              Editar fecha
+            </h3>
+
+            <form>
+              <label
+                htmlFor="new-date"
+                className="font-medium text-cyan-800 mr-2"
+              >
+                Selecciona el día
+              </label>
+              <DatePicker
+                id="date"
+                showIcon
+                selected={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                  setError(null);
+                  setMessage(null);
+                }}
+                minDate={new Date()}
+                dateFormat="Pp"
+                locale="es"
+                showTimeSelect
+                minTime={setHours(
+                  setMinutes(new Date().setHours(0, 0, 0, 0), 0),
+                  9,
+                )}
+                maxTime={setHours(
+                  setMinutes(new Date().setHours(0, 0, 0, 0), 0),
+                  19,
+                )}
+                timeIntervals={60}
+                timeFormat="HH:mm"
+                timeCaption="Hora"
+                // Se filtra el tiempo para que la cita sea con 2 horas de antelación a la hora actual
+                filterTime={(time) => isBookingTimeAllowed(time)}
+                // 6 es sábado y 0 es domingo
+                filterDate={(date) =>
+                  date.getDay() !== 6 && date.getDay() !== 0
+                }
+                className="w-full py-1! pl-9! border-2 border-cyan-700 rounded-sm bg-white"
+              />
+
+              <div className="mt-5 flex justify-center items-center gap-4">
+                <Button
+                  onClick={savedChanges}
+                  disabled={loading}
+                  aria-label={loading ? "Guardando..." : "Guardar"}
+                  className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 focus:ring-green-700 cursor-pointer"
+                >
+                  {loading ? "Guardando..." : "Guardar"}
+                </Button>
+                <Button
+                  onClick={() => setModalEditDateAppointment(null)}
+                  disabled={loading}
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-500 focus:ring-gray-600 cursor-pointer"
+                >
+                  {loading ? "Cancelando..." : "Cancelar"}
+                </Button>
+              </div>
+            </form>
+
+            {/* Botón para cerrar el modal */}
+            <Button
+              deleteButton
+              onClick={() => setModalEditDateAppointment(null)}
+              aria-label="Cerrar modal"
+              className="absolute right-2 top-2 h-10 w-10"
+              icon={faXmark}
+            ></Button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal para eliminar cita/s */}
+
+      {removeAppointmentModal && (
+        <div className="fixed inset-0 bg-cyan-900/10 flex items-center justify-center z-50">
+          <div
+            className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative flex flex-col justify-center gap-4 text-cyan-900"
+            id="dialog_eliminar_cita"
+            role="dialog"
+            aria-labelledby="dialog_eliminar_cita_label"
+            aria-modal="true"
+          >
+            <h3
+              id="dialog_eliminar_cita_label"
+              className="text-xl font-bold mb-4 text-cyan-800"
+            >
+              ¿Seguro que quieres cancelar la cita?
+            </h3>
+            <p>
+              <strong className="text-cyan-700">Fecha:</strong>{" "}
+              {selectedAppointment.date?.toLocaleDateString("es-ES")}
+            </p>
+            <p>
+              <strong className="text-cyan-700">Hora:</strong>{" "}
+              {selectedAppointment.hour}
+            </p>
+            <p>
+              <strong className="text-cyan-700">Tratamiento:</strong>{" "}
+              {selectedAppointment.service}
+            </p>
+            <p>
+              <strong className="text-cyan-700">Profesional:</strong>{" "}
+              {selectedAppointment.professional}
+            </p>
+
+            <div className="mt-5 flex justify-center items-center gap-4">
+              <Button
+                deleteButton
+                onClick={async () => {
+                  const deleted = await removeAppointment(
+                    removeAppointmentModal.id,
+                  );
+
+                  if (deleted) {
+                    setRemoveAppointmentModal(null);
+                    setModalEditAppointment(false);
+                    setSelectedAppointment(null);
+                  }
+                }}
+                disabled={loading}
+                aria-label={loading ? "Cancelando cita..." : "Cancelar cita"}
+              >
+                {loading ? "Cancelando cita..." : "Cancelar cita"}
+              </Button>
+
+              <Button
+                onClick={() => {
+                  (setRemoveAppointmentModal(null),
+                    setModalEditAppointment(null));
+                }}
+                aria-label="Volver"
+                className="bg-slate-500 text-slate-700 cursor-not-allowed focus-visible:ring-slate-950 hover:bg-slate-400"
+              >
+                Volver
+              </Button>
+            </div>
+
+            {/* Botón para cerrar el modal */}
+            <Button
+              deleteButton
+              onClick={() => {
+                (setRemoveAppointmentModal(null),
+                  setModalEditAppointment(null));
+              }}
+              aria-label="Cerrar modal"
+              className="absolute right-2 top-2 h-10 w-10"
+              icon={faXmark}
+            ></Button>
+          </div>
         </div>
       )}
     </section>
