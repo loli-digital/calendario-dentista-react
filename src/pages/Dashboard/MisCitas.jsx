@@ -5,7 +5,7 @@ import { es } from "date-fns/locale/es";
 import { setHours, setMinutes } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { professionals, services } from "@/data";
-import { isBookingTimeAllowed } from "@/utils";
+import { isBookingTimeAllowed, appointments } from "@/utils";
 import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import {
@@ -61,6 +61,7 @@ function MisCitas() {
     services,
     professionals,
     userId: user?.uid,
+    existingAppointments: appointment,
     onReservationCreated: () => {
       setRefreshAppointments((current) => current + 1);
       setShowFormAppointment(false);
@@ -401,7 +402,11 @@ function MisCitas() {
                 timeFormat="HH:mm"
                 timeCaption="Hora"
                 // Se filtra el tiempo para que la cita sea con 2 horas de antelación a la hora actual
-                filterTime={(time) => isBookingTimeAllowed(time)}
+                filterTime={(time) =>
+                  !appointmentsLoading &&
+                  isBookingTimeAllowed(time) &&
+                  appointments(appointment, time)
+                }
                 // 6 es sábado y 0 es domingo
                 filterDate={(date) =>
                   date.getDay() !== 6 && date.getDay() !== 0
