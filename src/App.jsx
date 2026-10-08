@@ -21,7 +21,6 @@ const Home = lazy(() => import("./pages/Home/Home"));
 const RedirectIfAuth = lazy(() => import("./router/RedirectIfAuth"));
 const RequireAuth = lazy(() => import("./router/RequireAuth"));
 const AuthLogin = lazy(() => import("./pages/Auth/AuthLogin"));
-const AuthPhoneNumber = lazy(() => import("./pages/Auth/AuthPhoneNumber"));
 const AuthRegistroUser = lazy(() => import("./pages/Auth/AuthRegistroUser"));
 
 // Reservar cita
@@ -89,14 +88,6 @@ function App() {
                 element={
                   <Suspense fallback={<AuthSkeleton />}>
                     <AuthLogin />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="telefono"
-                element={
-                  <Suspense fallback={<AuthSkeleton />}>
-                    <AuthPhoneNumber />
                   </Suspense>
                 }
               />
