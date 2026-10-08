@@ -32,7 +32,9 @@ export function useReservationForm({
     setSelectedDate(null);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
     if (!userId) {
       setError("Inicia sesión para solicitar una cita");
       setMessage(null);
