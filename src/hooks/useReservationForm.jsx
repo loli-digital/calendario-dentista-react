@@ -1,12 +1,13 @@
 import { useState, useMemo } from "react";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase.js";
-import { isBookingTimeAllowed } from "@/utils";
+import { isBookingTimeAllowed, appointments } from "@/utils";
 
 export function useReservationForm({
   services = [],
   professionals = [],
   userId,
+  existingAppointments = [],
   onReservationCreated,
 } = {}) {
   const [service, setService] = useState("");
@@ -31,9 +32,7 @@ export function useReservationForm({
     setSelectedDate(null);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!userId) {
       setError("Inicia sesión para solicitar una cita");
       setMessage(null);
@@ -48,6 +47,12 @@ export function useReservationForm({
 
     if (!selectedDate) {
       setError("Selecciona fecha y hora");
+      setMessage(null);
+      return;
+    }
+
+    if(!appointments(existingAppointments, selectedDate)){
+      setError("Ya tienes una cita reservada para ese día y esa hora");
       setMessage(null);
       return;
     }
