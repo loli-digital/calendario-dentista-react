@@ -1,5 +1,5 @@
 import { CardService } from "@/components";
-import { services } from "@/data";
+import { cardServices } from "@/data";
 import { DecorativeShape } from "@/components";
 
 export function Servicios() {
@@ -17,7 +17,7 @@ export function Servicios() {
       {/* Lista de servicios */}
 
       <div className="w-full xl:w-6xl lg:px-5 xl:px-0 flex flex-wrap justify-center items-center gap-16 lg:gap-10 xl:gap-16 z-20">
-        {services.map((service) => (
+        {cardServices.map((service) => (
           <CardService
             key={service.id}
             imgAVIF={service.imgAVIF}
