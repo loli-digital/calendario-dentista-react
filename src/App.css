@@ -86,7 +86,7 @@
 
 /* Animaciones Hero Section*/
 
-@media (width >=768px) and (prefers-reduced-motion: no-preference){
+@media (width >=768px) and (prefers-reduced-motion: no-preference) {
   /*Animación slide in top*/
 
   .slide-in-top {
@@ -191,6 +191,82 @@
 
 .services-card__p {
   color: #000;
+}
+
+/*Home - Professionals*/
+
+.professional-card {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.professional-card img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 7px oklch(44% 0.098 224.283));
+  transition: all 0.15s ease-in-out;
+}
+
+.professional-card img:hover {
+  transform: scale(1.05);
+}
+
+.professional-card__container-info {
+  width: 100%;
+  padding: 1rem 2rem;
+  position: relative;
+  border: 2px solid oklch(45% 0.085 224.283);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 10px #053345;
+}
+
+.professional-card__container-info:hover {
+  box-shadow: 0 0 20px #053345;
+  transform: translateY(-6px);
+}
+
+.professional-card__container-info--h3 {
+  margin: 0.75rem 0;
+  color: oklch(45% 0.085 224.283);
+  font-size: 1.875rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.professional-card__container-info--p {
+  text-align: center;
+}
+
+.professional-card__container-info--specialization-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.professional-card__container-info--specialization-list li {
+  background-color: #083344;
+  color: #fff;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  list-style: none;
+}
+
+.professional-card__container-info--details {
+  margin-left: 0.75rem;
+}
+
+.professional-card__container-info--details li {
+  list-style: disc;
 }
 
 /*Estilos Swiper - librería*/
