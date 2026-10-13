@@ -19,8 +19,8 @@ export function CardService({
         <img loading="lazy" src={img} alt={alt} />
       </picture>
 
-      <div className="services-card--container-info">
-        <div className="services-card--icon">
+      <div className="services-card__container-info">
+        <div className="services-card__icon">
           <FontAwesomeIcon
             icon={icon}
             aria-hidden="true"
@@ -28,8 +28,8 @@ export function CardService({
             size="lg"
           />
         </div>
-        <h3 className="services-card--h3">{title}</h3>
-        <p className="services-card--p">{description}</p>
+        <h3 className="services-card__h3">{title}</h3>
+        <p className="services-card__p">{description}</p>
       </div>
     </article>
   );

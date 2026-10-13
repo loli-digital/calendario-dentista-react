@@ -156,7 +156,7 @@
   transform: scale(1.06);
 }
 
-.services-card--container-info {
+.services-card__container-info {
   padding: 1rem;
   padding-bottom: 1.25rem;
   position: relative;
@@ -168,7 +168,7 @@
   border-bottom-right-radius: 8px;
 }
 
-.services-card--icon {
+.services-card__icon {
   padding: 0.75rem;
   background-color: #fff;
   position: absolute;
@@ -178,14 +178,14 @@
   border-radius: 100%;
 }
 
-.services-card--h3 {
+.services-card__h3 {
   margin: 0.75rem 0;
   color: oklch(45% 0.085 224.283);
   font-weight: bold;
   font-size: 1.875rem;
 }
 
-.services-card--p {
+.services-card__p {
   color: #000;
 }
 
