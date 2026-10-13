@@ -121,6 +121,74 @@
   }
 }
 
+/*Home - Services Card*/
+
+.services-card {
+  width: 18rem;
+  height: 24rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #053345;
+  transition: all 0.2s ease;
+}
+
+.services-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px #053345;
+}
+
+.services-card picture {
+  display: block;
+  overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.services-card img {
+  width: 18rem;
+  height: 12rem;
+  display: block;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: transform 0.4s ease;
+}
+
+.services-card:hover img {
+  transform: scale(1.06);
+}
+
+.services-card--container-info {
+  padding: 1rem;
+  padding-bottom: 1.25rem;
+  position: relative;
+  border-bottom: 2px solid oklch(45% 0.085 224.283);
+  border-left: 2px solid oklch(45% 0.085 224.283);
+  border-right: 2px solid oklch(45% 0.085 224.283);
+  background-color: #fff;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.services-card--icon {
+  padding: 0.75rem;
+  background-color: #fff;
+  position: absolute;
+  top: -1.75rem;
+  left: 0.5rem;
+  border: 2px solid oklch(45% 0.085 224.283);
+  border-radius: 100%;
+}
+
+.services-card--h3 {
+  margin: 0.75rem 0;
+  color: oklch(45% 0.085 224.283);
+  font-weight: bold;
+  font-size: 1.875rem;
+}
+
+.services-card--p {
+  color: #000;
+}
+
 /*Estilos Swiper - librería*/
 
 :root {
@@ -173,7 +241,7 @@ section .swiper-button-next {
 }
 
 /*Estilos formularios en general*/
-.form__container--data-show{
+.form__container--data-show {
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -187,13 +255,13 @@ section .swiper-button-next {
 
 .form__label,
 .form__p--mis-datos,
-.form__p--ajustes{
+.form__p--ajustes {
   font-weight: 700;
   color: oklch(45% 0.085 224.283);
 }
 
 .form__input,
-.form__input--invoice{
+.form__input--invoice {
   border: 2px solid oklch(52% 0.105 223.128);
   border-radius: 4px;
   background-color: #fff;
@@ -204,7 +272,7 @@ section .swiper-button-next {
 }
 
 .form__input--invoice {
-  padding: 0.10rem;
+  padding: 0.1rem;
 }
 
 input:focus,
