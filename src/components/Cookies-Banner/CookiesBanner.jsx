@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./CookiesBanner.css";
 
 export function CookiesBanner() {
   const [visible, setVisible] = useState(() => {
