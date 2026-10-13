@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/*Accesibilidad*/
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-top,
+  .slide-in-bottom {
+    -webkit-animation: none;
+    animation: none;
+  }
+}
+
 /*Navbar*/
 
 .nav-link {
@@ -77,7 +86,7 @@
 
 /* Animaciones Hero Section*/
 
-@media (width >=768px) {
+@media (width >=768px) and (prefers-reduced-motion: no-preference){
   /*Animación slide in top*/
 
   .slide-in-top {
