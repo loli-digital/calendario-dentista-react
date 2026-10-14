@@ -159,7 +159,7 @@ export function Navbar() {
           {isRestrictedView && (
             <>
               <li>
-                <NavLink to="/">
+                <NavLink to="/" className="nav-link">
                   <span aria-hidden="true" className="mr-2">
                     <FontAwesomeIcon icon={faHouse} />
                   </span>
