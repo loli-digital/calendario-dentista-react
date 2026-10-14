@@ -44,7 +44,7 @@ export function Footer() {
             <FontAwesomeIcon icon={faPhone} color={color} />
             <h3 className="text-xl">Teléfono</h3>
           </div>
-          <p>963 963 963</p>
+          <p>963 000 000</p>
           <p>789 789 789</p>
         </div>
 
