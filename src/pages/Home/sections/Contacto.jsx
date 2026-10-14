@@ -42,7 +42,7 @@ export function Contacto() {
               <span className="mr-1">
                 <FontAwesomeIcon icon={faPhone} color={color} />
               </span>
-              963 963 963
+              963 000 000
             </p>
             <p>
               <span className="mr-1">
