@@ -65,7 +65,7 @@ export function Navbar() {
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
       {/* Logo */}
       <div className="z-50">
-        <NavLink to={user ? "/dashboard/mis-datos" : "/"}>
+        <NavLink to={"/"}>
           <img
             src={logo}
             fetchPriority="high"
@@ -175,6 +175,12 @@ export function Navbar() {
               <div className="w-60 lg:w-full flex flex-col lg:flex-row gap-6">
                 <li className="text-lg">
                   Hola, {nombreParaMostrar ?? user.email}
+                </li>
+                <li className="hidden lg:block lg:nav-link text-lg" onClick={closeMenu}>
+                  <NavLink to="/dashboard/mis-datos">
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Mi panel
+                  </NavLink>
                 </li>
                 <li className="block lg:hidden text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/mis-datos">
