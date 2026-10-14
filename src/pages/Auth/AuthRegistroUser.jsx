@@ -125,13 +125,13 @@ function AuthRegistroUser() {
             type={showPassword ? "text" : "password"}
             name="password"
             id="password"
-            placeholder="Escribe tu contraseña"
+            placeholder="Mínimo 12 caracteres"
             value={password}
             required
-            minLength={8}
-            maxLength={64}
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
+            minLength={12}
+            maxLength={30}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,}"
+            title="La contraseña debe contener un mínimo de 12 caracteres. Y al menos un número, una mayúscula y una minúscula"
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="new-password"
             className="peer w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
@@ -156,13 +156,13 @@ function AuthRegistroUser() {
             type={showConfirmPassword ? "text" : "password"}
             name="confirm-password"
             id="confirm-password"
-            placeholder="Mínimo de 8 caracteres"
+            placeholder="Mínimo 12 caracteres"
             value={confirmPassword}
             required
-            minLength={8}
-            maxLength={64}
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="La contraseña debe contener al menos un número, una mayúscula y una minúscula"
+            minLength={12}
+            maxLength={30}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,}"
+            title="La contraseña debe contener un mínimo de 12 caracteres. Y al menos un número, una mayúscula y una minúscula"
             onChange={(e) => setConfirmPassword(e.target.value)}
             autoComplete="new-password"
             className="peer w-full border-2 border-cyan-700 rounded-sm pl-2 py-1 bg-white user-invalid:border-red-900 user-invalid:text-red-900 user-invalid:bg-red-300"
