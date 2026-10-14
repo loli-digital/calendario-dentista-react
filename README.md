@@ -1,6 +1,6 @@
 # 🦷 Clínica dental App
 
-Aplicación web completa para la gestión de citas en una clínica dental, con operaciones CRUD, autenticación y persistencia de datos en tiempo real.
+Aplicación web para la gestión de citas de una clínica dental. Incluye autenticación, reservas y un dashboard privado para consultar y gestionar los datos de cada paciente.
 
 ## 🚀 Demo 
 
@@ -22,15 +22,25 @@ Aplicación web completa para la gestión de citas en una clínica dental, con o
 - Gestión completa de citas (crear, editar, eliminar)
 - Persistencia de datos en tiempo real con Firebase
 - Filtrado de profesionales según servicio
-- Sistema de mensajes (error, éxito, loading)
+- Gestión de estados (error, éxito, loading)
+- Dashboard privado para pacientes con datos personales, citas, facturas y ajustes de cuenta
 - Diseño responsive
 
 ## 🧩 Funcionalidad destacada
 
-Sistema de gestión de citas que permite a los usuarios:
-- Reservar citas en tiempo real  
-- Consultar citas mediante teléfono  
-- Modificar o cancelar reservas  
+Sistema de gestión que permite a los usuarios:
+- Acceder al dashboard personal tras iniciar sesión
+- Reservar citas en tiempo real
+- Consultar, modificar o cancelar citas  
+
+### Dashboard del paciente
+
+El dashboard requiere una cuenta iniciada y reúne estas secciones:
+
+- **Mis datos:** consultar, completar y editar la información personal, de contacto y del seguro dental.
+- **Mis citas:** consultar las citas ordenadas por fecha, reservar nuevas citas y cambiar la fecha o cancelar una cita existente.
+- **Mis facturas:** consultar facturas de ejemplo, filtrarlas por intervalo de fechas, número, tratamiento y estado, y abrir sus archivos PDF.
+- **Ajustes:** consultar el ID y la fecha de registro, configurar los recordatorios y las preferencias de contacto, o eliminar la cuenta mediante un flujo de confirmación.
 
 ## 🧠 Aprendizajes clave
 
@@ -49,21 +59,33 @@ Sistema de gestión de citas que permite a los usuarios:
 
 ### Reservar cita
 
-![Formulario para reservar cita](reservar-cita.png)
+![Página para reservar cita mediante WhatsApp o cuenta de usuario/a](reservar-cita.png)
 
-![Mensaje de confirmación de la cita reservada](mensaje-confirmacion-reservar-cita.png)
+### Iniciar sesión y crear cuenta de paciente
 
-### Mis Citas
+![Formulario para iniciar sesión](inicio-sesion.png)
 
-![Página para acceder a mis citas](mis-citas.png)
+![Formulario para crear cuenta](crear-cuenta.png)
 
-![Acceso rápido (mediante número de teléfono registrado en el formulario)](mis-citas-acceso-rapido.png)
+### Dashboard
 
-![Ver cita reservada](mis-citas-acceso-rapido-ver-cita.png)
+#### Mis citas
 
-![Modificar cita](mis-citas-acceso-rapido-modificar-cita.png)
+![Sección de citas del dashboard](mis-citas.png)
 
-![Eliminar cita](mis-citas-acceso-rapido-eliminar-cita.png)
+[Ver demostración de la gestión de citas (CRUD)](citas-crud.mp4)
+
+#### Mis datos
+
+![Sección de datos personales del dashboard](mis-datos.png)
+
+#### Mis facturas
+
+![Sección de facturas del dashboard](mis-facturas.png)
+
+#### Ajustes
+
+![Preferencias y ajustes de cuenta del dashboard](ajustes.png)
 
 ## Bibliografía
 
