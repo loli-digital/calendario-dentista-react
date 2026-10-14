@@ -73,7 +73,7 @@ El dashboard requiere una cuenta iniciada y reúne estas secciones:
 
 ![Sección de citas del dashboard](mis-citas.png)
 
-[Ver demostración de la gestión de citas (CRUD)](citas-crud.mp4)
+[Ver demostración de la gestión de citas (CRUD)](https://github.com/loli-digital/calendario-dentista-react/issues/21)
 
 #### Mis datos
 
