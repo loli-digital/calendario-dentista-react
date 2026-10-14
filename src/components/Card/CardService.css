@@ -4,6 +4,7 @@
   border-radius: 8px;
   box-shadow: 0 0 10px #053345;
   transition: all 0.2s ease;
+  background-color: #fff;
   border: 2px solid oklch(45% 0.085 224.283);
 }
 
@@ -31,9 +32,7 @@
 
 .services-card__container-info {
   padding: 1rem;
-  padding-bottom: 1.25rem;
   position: relative;
-  background-color: #fff;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }

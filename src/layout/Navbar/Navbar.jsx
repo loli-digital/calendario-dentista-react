@@ -159,7 +159,7 @@ export function Navbar() {
           {isRestrictedView && (
             <>
               <li>
-                <NavLink to="/">
+                <NavLink to="/" className="nav-link">
                   <span aria-hidden="true" className="mr-2">
                     <FontAwesomeIcon icon={faHouse} />
                   </span>
@@ -182,19 +182,19 @@ export function Navbar() {
                     Mi panel
                   </NavLink>
                 </li>
-                <li className="block lg:hidden text-lg">
+                <li className="block lg:hidden text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/mis-datos">
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
                     Mis datos
                   </NavLink>
                 </li>
-                <li className="block lg:hidden text-lg">
+                <li className="block lg:hidden text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/mis-citas">
                     <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
                     Mis citas
                   </NavLink>
                 </li>
-                <li className="block lg:hidden text-lg">
+                <li className="block lg:hidden text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/mis-facturas">
                     <FontAwesomeIcon
                       icon={faFileInvoiceDollar}
@@ -203,7 +203,7 @@ export function Navbar() {
                     Mis facturas
                   </NavLink>
                 </li>
-                <li className="block lg:hidden text-lg">
+                <li className="block lg:hidden text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/ajustes">
                     <FontAwesomeIcon icon={faGear} className="mr-2" />
                     Ajustes
