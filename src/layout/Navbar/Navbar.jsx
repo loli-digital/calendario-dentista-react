@@ -65,7 +65,7 @@ export function Navbar() {
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
       {/* Logo */}
       <div className="z-50">
-        <NavLink to={"/"}>
+        <NavLink to={"/"} onClick={closeMenu}>
           <img
             src={logo}
             fetchPriority="high"
