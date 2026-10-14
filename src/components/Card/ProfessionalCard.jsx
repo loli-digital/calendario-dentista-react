@@ -1,3 +1,5 @@
+import "./ProfessionalCard.css";
+
 export function ProfessionalCard({
   imgAVIF,
   imgWEBP,
