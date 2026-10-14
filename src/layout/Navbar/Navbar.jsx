@@ -176,12 +176,6 @@ export function Navbar() {
                 <li className="text-lg">
                   Hola, {nombreParaMostrar ?? user.email}
                 </li>
-                <li className="nav-link text-lg" onClick={closeMenu}>
-                  <NavLink to="/dashboard/mis-datos">
-                    <FontAwesomeIcon icon={faUser} className="mr-2" />
-                    Mi panel
-                  </NavLink>
-                </li>
                 <li className="block lg:hidden text-lg" onClick={closeMenu}>
                   <NavLink to="/dashboard/mis-datos">
                     <FontAwesomeIcon icon={faUser} className="mr-2" />
