@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import "./WhatsAppButton.css";
 
 export const WhatsAppButton = () => {
   const phoneNumber = "34123456789";
@@ -12,7 +13,7 @@ export const WhatsAppButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"
-      className="fixed bottom-10 md:bottom-35 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-3xl text-white border-2 border-white transition-colors shadow-[0_0_5px_black] hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+      className="whatsapp-button"
     >
       <span aria-hidden="true">
         <FontAwesomeIcon icon={faWhatsapp} />
