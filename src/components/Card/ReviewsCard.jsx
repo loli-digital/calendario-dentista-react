@@ -1,4 +1,5 @@
 import { RatingStars } from "../RatingStars/RatingStars";
+import "./ReviewsCard.css";
 
 export function ReviewsCard({ imagen, alt, nombre, rating, texto }) {
   return (
