@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./CookiesBanner.css";
 
 export function CookiesBanner() {
   const [visible, setVisible] = useState(() => {
@@ -15,8 +16,8 @@ export function CookiesBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full z-50 bg-cyan-900 text-white px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg animate-fadeIn">
-      <span className="text-base md:text-lg">
+    <div className="cookies-banner__container">
+      <span className="md:text-lg">
         Utilizamos cookies propias para mejorar la experiencia de usuario y
         analizar el tráfico. Al continuar navegando aceptas nuestra{" "}
         <Link
@@ -29,7 +30,7 @@ export function CookiesBanner() {
       </span>
       <button
         onClick={handleAccept}
-        className="bg-cyan-700 hover:bg-cyan-600 text-white font-semibold px-6 py-2 rounded shadow transition-colors duration-200"
+        className="cookies-banner__button"
         aria-label="Aceptar cookies"
       >
         Aceptar

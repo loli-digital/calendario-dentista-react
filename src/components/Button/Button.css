@@ -1,0 +1,56 @@
+.button--base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 5px #000;
+}
+
+.button--base:hover {
+  box-shadow: 0 0 5px #fff;
+}
+
+.button--base:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.button--default {
+  background-color: #0e7490;
+}
+
+.button--default:hover {
+  background-color: #155e75;
+}
+
+.button--default:focus-visible {
+  outline-color: #155e75;
+}
+
+.button--disabled {
+  background-color: #94a3b8;
+  color: #334155;
+  cursor: not-allowed;
+}
+
+.button--disabled:focus-visible {
+  outline-color: #020617;
+}
+
+.button--delete {
+  background-color: #991b1b;
+}
+
+.button--delete:hover {
+  background-color: #7f1d1d;
+}
+
+.button--delete:focus-visible {
+  outline-color: #450a0a;
+}

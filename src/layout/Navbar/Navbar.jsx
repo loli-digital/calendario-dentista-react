@@ -1,33 +1,78 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 import logo from "@/assets/img/logo-clinica.png";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faXmark,
+  faUser,
+  faCalendarDays,
+  faFileInvoiceDollar,
+  faGear,
+  faHouse,
+} from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components";
+import { getUserDisplayName } from "@/utils";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
   const location = useLocation();
-  const isMisCitas = location.pathname.startsWith("/mis-citas");
-  const isReservarCita = location.pathname.startsWith("/reservar-cita");
-  const isRestrictedView = isMisCitas || isReservarCita;
+  const isMyAccount = location.pathname.startsWith("/auth/login");
+  const isCreateAccount = location.pathname.startsWith("/auth/nueva-cuenta");
+  const isBookAppointment = location.pathname.startsWith("/reservar-cita");
+  const isRestrictedView = isMyAccount || isCreateAccount || isBookAppointment;
+
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const cargarDatosUsuario = async () => {
+      if (!user?.uid) {
+        setUserData(null);
+        return;
+      }
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setUserData(docSnap.data());
+        } else {
+          setUserData(null);
+        }
+      } catch (error) {
+        console.error("Error al cargar datos del usuario en la navbar", error);
+        setUserData(null);
+      }
+    };
+
+    cargarDatosUsuario();
+  }, [user]);
+
+  const nombreParaMostrar = getUserDisplayName(user, userData);
 
   return (
     <header className="w-full h-24 relative flex justify-between items-center bg-cyan-950 px-4 lg:px-8">
       {/* Logo */}
       <div className="z-50">
-        <Link to="/">
+        <NavLink to={user ? "/dashboard/mis-datos" : "/"}>
           <img
             src={logo}
             fetchPriority="high"
             alt="Logo Clínica Dental Navarro"
             className="w-20 xl:w-30 h-auto cursor-pointer object-contain"
           />
-        </Link>
+        </NavLink>
       </div>
 
       {/* Botón menú móvil */}
@@ -38,7 +83,7 @@ export function Navbar() {
         aria-label={
           isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
         }
-        className="text-white text-3xl md:hidden focus:outline-none z-50"
+        className="text-white text-3xl lg:hidden focus:outline-none z-50"
       >
         {isMenuOpen ? (
           // Icono cerrar
@@ -52,15 +97,13 @@ export function Navbar() {
       {/* Menú navegación */}
       <nav
         id="menu-principal"
-        className={`w-full h-[550px] md:w-auto md:h-auto text-white text-lg absolute md:relative 
-        top-0 left-0 bg-cyan-950 md:bg-transparent transition-all duration-500 ease-in-out 
-        z-40 md:z-auto ${isMenuOpen ? "block" : "hidden"} md:block`}
+        className={`w-full h-[550px] lg:w-auto lg:h-auto text-white text-lg absolute lg:relative 
+        top-0 left-0 bg-cyan-950 lg:bg-transparent transition-all duration-500 ease-in-out 
+        z-40 lg:z-auto ${isMenuOpen ? "block" : "hidden"} lg:block`}
       >
-        <ul className="h-full md:h-auto mt-10 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 lg:gap-20 text-2xl md:text-lg">
-         
-          {/* Si estoy en Home, mostrar este menú */}
-
-          {!isRestrictedView && (
+        <ul className="w-full h-full lg:h-auto mt-10 lg:mt-0 flex flex-col lg:flex-row justify-center items-center gap-8 text-2xl lg:text-lg">
+          {/* Si estoy en Home y NO se ha iniciado sesión, mostrar este menú */}
+          {!isRestrictedView && !user && (
             <>
               <li>
                 <button
@@ -105,34 +148,84 @@ export function Navbar() {
               </li>
 
               <li className="nav-link">
-                <Link to="/mis-citas" onClick={closeMenu}>
-                  Mis citas
-                </Link>
+                <NavLink to="/auth/login" onClick={closeMenu}>
+                  Mi cuenta
+                </NavLink>
               </li>
             </>
           )}
 
+          {/* Menú en pantalla para inicio de sesión o crear cuenta */}
           {isRestrictedView && (
             <>
-              <li className="nav-link">
-                <Link to="/mis-citas" onClick={closeMenu}>
-                  Mis citas
-                </Link>
+              <li>
+                <NavLink to="/">
+                  <span aria-hidden="true" className="mr-2">
+                    <FontAwesomeIcon icon={faHouse} />
+                  </span>
+                  Volver a la web
+                </NavLink>
               </li>
             </>
           )}
 
-          {/* Botón móvil */}
-          <li className="block md:hidden mt-10 md:mt-0">
-            <Button onClick={closeMenu} /> 
-          </li>
+          {/* Menú para cuando se ha hecho login */}
+          {user && (
+            <>
+              <div className="w-60 lg:w-full flex flex-col lg:flex-row gap-6">
+                <li className="text-lg">
+                  Hola, {nombreParaMostrar ?? user.email}
+                </li>
+                <li className="nav-link text-lg" onClick={closeMenu}>
+                  <NavLink to="/dashboard/mis-datos">
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Mi panel
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/mis-datos">
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Mis datos
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/mis-citas">
+                    <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
+                    Mis citas
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/mis-facturas">
+                    <FontAwesomeIcon
+                      icon={faFileInvoiceDollar}
+                      className="mr-2"
+                    />
+                    Mis facturas
+                  </NavLink>
+                </li>
+                <li className="block lg:hidden text-lg">
+                  <NavLink to="/dashboard/ajustes">
+                    <FontAwesomeIcon icon={faGear} className="mr-2" />
+                    Ajustes
+                  </NavLink>
+                </li>
+              </div>
+              <Button onClick={() => signOut(auth)} className="lg:w-60 text-lg">
+                Cerrar sesión
+              </Button>
+            </>
+          )}
         </ul>
       </nav>
 
-      {/* Botón escritorio */}
-      <div className="hidden md:block">
-        <Button />
-      </div>
+      {/* Botón para reservar cita en Desktop, excepto cuando se ha iniciado sesión */}
+      {!user && (
+        <div className="hidden lg:block">
+          <Button to="/reservar-cita" icon={faCalendarDays}>
+            Reservar cita
+          </Button>
+        </div>
+      )}
     </header>
   );
 }
