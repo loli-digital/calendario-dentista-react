@@ -1,4 +1,4 @@
-export function ReservarCitaSkeleton() {
+export function AppointmentSkeleton() {
   // Arrays de objetos con id único para evitar el warning de key
   const input = [
     { id: "input-1" },

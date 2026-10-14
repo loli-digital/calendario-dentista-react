@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/*Accesibilidad*/
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-top,
+  .slide-in-bottom {
+    -webkit-animation: none;
+    animation: none;
+  }
+}
+
 /*Navbar*/
 
 .nav-link {
@@ -23,9 +32,61 @@
   background: #ffffff;
 }
 
+/* Title styles */
+.title__section {
+  padding: 2.5rem 0;
+  position: relative;
+  color: oklch(45% 0.085 224.283);
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+}
+
+/* Container style */
+
+.container__section {
+  width: 100%;
+  min-height: 100dvh;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  background-color: #ecfeff;
+}
+
+/* Dashboard section styles */
+.aside {
+  width: 11rem;
+  height: auto;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: oklch(52% 0.105 223.128);
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 5px #000;
+}
+
+.aside__navlink {
+  width: 100%;
+  padding: 1.5rem;
+  border-bottom: 1px solid #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.aside__navlink:last-child {
+  border-bottom: none;
+}
+
 /* Animaciones Hero Section*/
 
-@media (width >=768px) {
+@media (width >=768px) and (prefers-reduced-motion: no-preference) {
   /*Animación slide in top*/
 
   .slide-in-top {
@@ -120,9 +181,43 @@ section .swiper-button-next {
   }
 }
 
-/*Estilos input formulario*/
+/*Estilos formularios en general*/
+.form__container--data-show {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  gap: 1rem;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 5px black;
+}
 
-input:focus {
+.form__label,
+.form__p--mis-datos,
+.form__p--ajustes {
+  font-weight: 700;
+  color: oklch(45% 0.085 224.283);
+}
+
+.form__input,
+.form__input--invoice {
+  border: 2px solid oklch(52% 0.105 223.128);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.form__input {
+  padding: 0.25rem;
+}
+
+.form__input--invoice {
+  padding: 0.1rem;
+}
+
+input:focus,
+textarea:focus {
   border: 2px solid oklch(30.152% 0.0565 230.191);
   background-color: oklch(98.412% 0.01893 201.193);
 }

@@ -1,4 +1,4 @@
-export function MisCitasSkeleton() {
+export function AuthSkeleton() {
   // Array de objetos con id único para evitar el warning de key
   const elementos = [{ id: "elemento-1" }, { id: "elemento-2" }];
 

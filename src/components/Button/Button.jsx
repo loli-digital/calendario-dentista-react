@@ -1,17 +1,67 @@
 import { Link } from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCalendarDays} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./Button.css";
 
-export const Button = () => {
+export const Button = ({
+  to,
+  type = "button",
+  onClick,
+  children,
+  className = "",
+  deleteButton = false,
+  disabled = false,
+  ariaLabel,
+  icon,
+  iconPosition = "left",
+  ...props
+}) => {
+  const baseStyles = "button--base";
+  
+  const getStateStyles = () => {
+    if (disabled) return "button--disabled";
+    if (deleteButton) return "button--delete";
+    return "button--default";
+  };
+
+  const classNames = `${baseStyles} ${getStateStyles()} ${className}`;
+
+  const content = (
+    <>
+      {icon && iconPosition === "left" && (
+        <FontAwesomeIcon icon={icon} aria-hidden="true" />
+      )}
+      {children}
+      {icon && iconPosition === "right" && (
+        <FontAwesomeIcon icon={icon} aria-hidden="true" />
+      )}
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link
+        to={to}
+        className={classNames}
+        onClick={onClick}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {content}
+      </Link>
+    );
+  }
+
   return (
-    <Link
-      to="/reservar-cita"
-      className="bg-cyan-700 text-white p-3 rounded-sm shadow-[0_0_5px_black] z-50 transition-all duration-200 ease-in-out hover:bg-cyan-800 hover:shadow-[0_0_5px_#fff]"
+    <button
+      {...props}
+      type={type}
+      className={classNames}
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      aria-disabled={disabled}
     >
-      Reserva tu cita ya
-      <span className="ml-1">
-        <FontAwesomeIcon icon={faCalendarDays} color="#fff"/>
-      </span>
-    </Link>
+      {content}
+    </button>
   );
 };
