@@ -25,21 +25,32 @@ function PoliticaPrivacidad() {
         </h2>
         <p className="mb-4">
           A través del formulario de reserva de citas se pueden recoger los
-          siguientes datos personales:
+          siguientes datos:
         </p>
         <ul className="list-disc pl-6 mb-4">
           <li>Nombre</li>
-          <li>Apellidos</li>
+          <li>Apellido/s</li>
+          <li>Fecha de nacimiento</li>
+          <li>Dirección</li>
+          <li>Ciudad</li>
+          <li>Código postal</li>
+          <li>Tipo de identificación (DNI, NIE o Pasaporte)</li>
+          <li>Correo electrónico</li>
           <li>Número de teléfono</li>
+          <li>Alergias</li>
+          <li>Compañía de seguro y su número de identificación</li>
           <li>Servicio solicitado</li>
           <li>Profesional seleccionado</li>
           <li>Fecha y hora de la cita</li>
         </ul>
-        <p className="mb-4 italic text-cyan-800">
-          Nota: No es necesario introducir un número de teléfono real para
-          utilizar la aplicación. Puedes usar un número ficticio como{" "}
-          <span className="font-semibold">123456789</span> para probar la
-          funcionalidad.
+        <p className="italic text-cyan-800">
+          Nota: Esta página web es una demo. Por favor, no utilices tus datos
+          reales.
+        </p>
+        <p className="italic text-cyan-800">
+          Puedes usar un email ficticio como{" "}
+          <span className="font-semibold">micorreo@gmail.com</span> para probar
+          la funcionalidad.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4 text-cyan-900">
@@ -64,9 +75,7 @@ function PoliticaPrivacidad() {
         </h2>
         <p className="mb-4">
           Los datos de las citas se almacenan únicamente en servicios externos
-          de base de datos (Firebase). El único dato guardado en el
-          almacenamiento local del navegador es la preferencia de aceptación del
-          banner de cookies, que no contiene información personal.
+          de base de datos (Firebase de Google).
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4 text-cyan-900">
