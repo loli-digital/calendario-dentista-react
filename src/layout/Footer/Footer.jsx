@@ -60,7 +60,7 @@ export function Footer() {
 
         {/* Política de privacidad & Copyright & Redes sociales */}
         <div className="w-50 flex flex-col items-center gap-2">
-          <Link to="/privacidad" className="hover:underline">
+          <Link to="/privacidad" className="nav-link">
             Política de privacidad
           </Link>
 
