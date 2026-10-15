@@ -212,7 +212,8 @@ function MisDatos() {
   }
 
   return (
-    <section className="w-full h-full p-3 lg:p-10 flex justify-center">
+    <section className="w-full h-full p-3 lg:p-10 flex flex-col justify-center gap-3">
+      <h3 className="text-cyan-900 text-center font-bold">Esta web es una demo. Por favor, no escribas tus datos personales.</h3>
       {!hasData ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -650,7 +651,7 @@ function MisDatos() {
           />
         </form>
       ) : (
-        <div className="flex flex-col justify-center items-center gap-7">
+        <div className="flex flex-col justify-center items-center gap-4">
           <div className="form__container--data-show">
             <p>
               <span className="form__p--mis-datos">Nombre:</span>{" "}
