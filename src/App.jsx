@@ -10,7 +10,6 @@ import {
   HomeSkeleton,
   AppointmentSkeleton,
   AuthSkeleton,
-  CookiesBanner,
   WhatsAppButton,
 } from "@/components";
 
@@ -57,7 +56,6 @@ function App() {
 
   return (
     <>
-      <CookiesBanner />
       <Navbar />
       <main>
         {/* Botón WhatsApp para pedir cita */}

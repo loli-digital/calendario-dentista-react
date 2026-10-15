@@ -8,4 +8,3 @@ export { AppointmentSkeleton } from "./Skeleton/AppointmentSkeleton";
 export { Button } from "./Button/Button";
 export { WhatsAppButton } from "./Button/WhatsAppButton";
 export { DecorativeShape } from "./DecorativeShape/DecorativeShape";
-export { CookiesBanner } from "./Cookies-Banner/CookiesBanner";
